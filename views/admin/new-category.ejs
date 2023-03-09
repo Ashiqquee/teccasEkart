@@ -1,0 +1,51 @@
+<%- include('../layouts/header.ejs') %>
+
+<div class="row">
+  <div class="d-flex justify-content-center align-items-center mt-5">
+    <h4>ADD NEW CATEGORY</h4>
+  </div>
+  <div class="d-flex justify-content-center align-items-center mt-5">
+    <form method="post" class="mx-1 mx-md-4">
+      <div class="d-flex flex-row align-items-center mb-4">
+        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+        <div class="form-outline flex-fill mb-0">
+          <input
+            type="text"
+            name="name"
+            id="form3Example1c"
+            class="form-control"
+          />
+          <label class="form-label" for="form3Example1c">Category Name</label>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <input
+          type="submit"
+          value="Add category"
+          class="btn border"
+          style="background-color: #1c8899"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  const nameInput = form.querySelector('input[name="name"]');
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const categoryName = nameInput.value.trim();
+
+    if (categoryName === "") {
+      alert("Please enter a category name.");
+      return;
+    }
+
+    form.submit();
+  });
+</script>
+
+<%- include('../layouts/footer.ejs')%>

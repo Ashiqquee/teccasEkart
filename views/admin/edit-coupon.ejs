@@ -1,0 +1,189 @@
+<%- include('../layouts/header.ejs') %>
+
+<section class="h-100 gradient-form" style="background-color: #eee;">
+  <div class="container  h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10 ">
+        <div class="card rounded-3 text-black ">
+          <div class="row g-0 d-flex justify-content-center align-items-center">
+            <div class="col-lg-6">
+              <div class="card-body p-md-5 mx-md-4">
+
+                <div class="text-center">
+                  <h4 class="mt-1 mb-5 pb-1">TECCAS E-WORLD</h4>
+                  
+                </div>
+                <div >
+                  <h5 class="mt-1 mb-4 pb-1 ms-5">Edit Coupon Details</h5>
+                  
+                </div>
+      
+                      <form action="" method="post" class="mx-1 mx-md-4">
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <input type="text" name="couponName" value="<%= coupon.couponName %>" id="form3Example1c" class="form-control" required/>
+                            <label class="form-label" for="form3Example1c">Enter Copon Name</label>
+                          </div>
+                        </div>
+      
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <input type="text" name="couponCode" value="<%= coupon.couponCode %>" id="form3Example1c" class="form-control" required/>
+                            <label class="form-label" for="form3Example1c">Enter Code</label>
+                          </div>
+                        </div>
+      
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <input type="date" name="startDate" value="<%= coupon.startDate%>" id="form3Example3c" class="form-control" required/>
+                            <label class="form-label" for="form3Example3c">start date</label>
+                          </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <input type="date" name="endDate" value="<%= coupon.endDate %>" id="form3Example3c" class="form-control" required/>
+                            <label class="form-label" for="form3Example3c">end date</label>
+                          </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <input type="number" name="maxDiscount" value="<%= coupon.maxDiscount %>" id="form3Example3c" class="form-control" required/>
+                            <label class="form-label" for="form3Example3c">Max Discount</label>
+                          </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <input type="number" name="quantity" value="<%= coupon.quantity %>" id="form3Example3c" class="form-control" required/>
+                            <label class="form-label" for="form3Example3c">Quantity</label>
+                          </div>
+                        </div>
+
+                        <input type="hidden" name="id" value="<%= coupon._id %>" />
+      
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                          <input type="submit" value="Update Coupon" class="btn btn-success btn-lg"/>
+                        </div>
+
+                        <br>
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <a class="btn btn-primary", href="/admin/" class="fs-4">Go Dashboard</a>
+                        </div>
+
+                        <% 
+
+                              if(typeof message !== 'undefined' ){
+                                
+                                %>
+                                    <div class="alert alert-danger" role="alert">
+                                        <%= message %>
+                                    </div>
+
+                                <% 
+
+                              }
+                        %>
+      
+                      </form>
+      
+                    </div>
+                    
+      
+
+              </div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    
+ 
+
+
+
+
+
+
+
+<script>
+  
+const form = document.querySelector('form');
+
+
+form.addEventListener('submit', function(event) {
+  
+  const couponName = form.elements['couponName'];
+  const couponCode = form.elements['couponCode'];
+  const startDate = form.elements['startDate'];
+  const endDate = form.elements['endDate'];
+  const maxDiscount = form.elements['maxDiscount'];
+  const quantity = form.elements['quantity'];
+
+  
+  let isValid = true;
+
+  if (couponName.value.trim() === '') {
+    couponName.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    couponName.classList.remove('is-invalid');
+  }
+
+  if (couponCode.value.trim() === '') {
+    couponCode.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    couponCode.classList.remove('is-invalid');
+  }
+
+  if (startDate.value.trim() === '') {
+    startDate.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    startDate.classList.remove('is-invalid');
+  }
+
+  if (endDate.value.trim() === '') {
+    endDate.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    endDate.classList.remove('is-invalid');
+  }
+
+  if (maxDiscount.value.trim() === '' || isNaN(maxDiscount.value)) {
+    maxDiscount.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    maxDiscount.classList.remove('is-invalid');
+  }
+
+  if (quantity.value.trim() === '' || isNaN(quantity.value)) {
+    quantity.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    quantity.classList.remove('is-invalid');
+  }
+
+  
+  if (!isValid) {
+    event.preventDefault();
+  }
+});
+  
+</script>
+
+
+<%- include('../layouts/footer.ejs') %>

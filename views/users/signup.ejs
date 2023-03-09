@@ -1,0 +1,163 @@
+<%- include('../layouts/header.ejs') %>
+
+<section class="h-100 gradient-form" style="background-color: #eee">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black">
+          <div class="row g-0 d-flex justify-content-center align-items-center">
+            <div class="col-lg-6">
+              <div class="card-body p-md-5 mx-md-4">
+                <div class="text-center">
+                  <h4 class="mt-1 mb-5 pb-1">TECCAS E-WORLD</h4>
+                </div>
+                <div>
+                  <h5 class="mt-1 mb-4 pb-1 ms-5">Sign Up</h5>
+                </div>
+
+                <form action="/signup" method="post" class="mx-1 mx-md-4">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="text"
+                        name="name"
+                        id="form3Example1c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example1c"
+                        >Your Name</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="email"
+                        name="email"
+                        id="form3Example3c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example3c"
+                        >Your Email</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="text"
+                        name="mno"
+                        id="phone"
+                        class="form-control"
+                      />
+
+                      <label class="form-label" for="form3Example3c"
+                        >Your Mobile</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="password"
+                        name="pwd"
+                        id="form3Example3c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example3c"
+                        >Your Password</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <input
+                      type="submit"
+                      value="Sign Up"
+                      class="btn border"
+                      style="background-color: #1c8899"
+                    />
+                  </div>
+
+                  <div class="mt-5">
+                    <p>
+                      already have an account?
+                      <a
+                        class="btn border-primary rounded-0 te"
+                        style="background-color: #1c8899"
+                        href="/login"
+                        >Login Here</a
+                      >
+                    </p>
+                  </div>
+
+                  <% if(typeof message !== 'undefined' ){ %>
+                  <div class="alert alert-success" role="alert">
+                    <%= message %>
+                  </div>
+
+                  <% } %> <% if(typeof msg !== 'undefined' ){ %>
+                  <div class="alert alert-danger" role="alert"><%= msg %></div>
+
+                  <% } %>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector('form');
+const nameInput = document.querySelector('input[name="name"]');
+const emailInput = document.querySelector('input[name="email"]');
+const mobileInput = document.querySelector('input[name="mno"]');
+const passwordInput = document.querySelector('input[name="pwd"]');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); 
+
+  
+  if (!nameInput.value || !emailInput.value || !mobileInput.value || !passwordInput.value) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(emailInput.value)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  
+  const mobileRegex = /^[0-9]{10}$/;
+  if (!mobileRegex.test(mobileInput.value)) {
+    alert('Please enter a valid 10-digit mobile number.');
+    return;
+  }
+
+  
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+  if (!passwordRegex.test(passwordInput.value)) {
+    alert('Please enter a password that is at least 8 characters long and includes at least one uppercase letter, one lowercase letter, one number, and one special character.');
+    return;
+  }
+
+  
+  form.submit();
+});
+
+</script>
+
+<%- include('../layouts/footer.ejs')%>

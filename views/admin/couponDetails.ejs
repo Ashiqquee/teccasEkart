@@ -1,0 +1,68 @@
+<%- include('../layouts/header.ejs') %>
+
+<div class="d-flex mt-5 ms-3">
+  <a class="btn btn-primary" href="/admin/coupon-dashboard">Back</a>
+</div>
+
+<div class="row">
+<div class="d-flex justify-content-center ">
+  <h1>Coupon Details</h1>
+</div>
+</div>
+
+<div class="container">
+
+  <div class="row ">
+    <div>
+
+
+
+      <table class="table table-bordered table-striped table-dark mt-5">
+        <thead>
+         <tr>
+           <th scope="col">Name</th>
+           <th scope="col">Code</th>
+           <th scope="col">start Date</th>
+           <th scope="col">End Date</th>
+           <th scope="col">Max Discount</th>
+           <th scope="col">Quantity</th>
+           <th scope="col">Status</th>
+      
+           </tr>
+        </thead>
+        <tbody>
+                <% if(coupon.length>0){
+                    for(let i=0;i<coupon.length;i++){
+                     %>
+                     <tr>
+                                <td><%= coupon[i].couponName %></td>
+                                <td><%= coupon[i].couponCode %></td>
+                                <td><%= coupon[i].startDate %></td>
+                                <td><%= coupon[i].endDate %></td>
+                                <td><%= coupon[i].maxDiscount %></td>
+                                <td><%= coupon[i].quantity %></td>
+                                <td><%= coupon[i].status === 0 ?  "Active" : "Inactive" %></td>
+                            </tr>
+                    <% }
+                } else{
+                    %>
+             <tr>
+                 <td colspan="5">Code Not Found</td>
+             </tr>
+        <% } %>
+                </tbody>
+            </table>
+
+
+    </div>
+  </div>
+</div>
+
+
+<%- include('../layouts/footer.ejs') %>
+
+
+
+
+
+  
