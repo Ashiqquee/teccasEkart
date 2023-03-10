@@ -196,6 +196,8 @@
                     <h4>New product</h4>
                 </div>
             </div>
+
+
             <!-- <div class="col-lg-8 col-md-8">
                 <ul class="filter__controls">
                     <li class="active" data-filter="*">All</li>
@@ -204,33 +206,39 @@
                     
                 </ul>
             </div> -->
+
+
         </div>
-      <div class="row property__gallery">
-  <% for (let i = 0; i < product.length; i++) { %>
+        <div class="d-flex ">
+  <div class="row property__gallery">
+  <% for (let i = 0; i < product.length; i++) {
+        if (product[i].status === 0) { %>
     <div class="col-lg-3 col-md-4 col-sm-6 mix women">
       <div class="product__item">
-        <!-- <div class="product__item__pic set-bg" data-setbg="productImage/<%= product[i].image %>"> -->
-             <a href="" class="product-item md-height bg-gray d-block">
-      <img src="productImages/<%= product[i].productImages %>" alt="Image" class="img-fluid">
+        
+             <a href="" class=" product__item__pic set-bg ">
+       <img src="productImages/<%= product[i].productImages %>" alt="Image" class="img-fluid">
     </a>
-          <ul class="product__hover">
-            <li><img  src="productImages/<%=product[i].image %>" class="image-popup"><span class="arrow_expand"></span>></li>
+          <ul class="product__hover mb-5">
+            
             <li><a href=""><span class="icon_heart_alt"></span></a></li>
             <li><a href=""><span class="icon_bag_alt"></span></a></li>
           </ul>
         </div>
-        <div class="product__item__text">
+        <div class="product__item__text ">
           <h6><a href=""><%= product[i].productName %></a></h6>
           <div class="product__price">Rs. <%= product[i].price %></div>
         </div>
       </div>
     </div>
-  <% } %>
+  <% } } %>
+
+</div>
 </div>
 
 
 
-    </div>
+    
 </section>
 <!-- Product Section End -->
 

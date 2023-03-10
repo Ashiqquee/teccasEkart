@@ -297,6 +297,8 @@ const updateCoupon = async (req, res) => {
 
 ////////////////////category Controller/////////////////////////////
 
+
+
 const categoryDashboard = async (req, res) => {
   try {
     const categoryData = await Category.find();
@@ -327,8 +329,8 @@ const newCategory = async (req, res) => {
 const addCategory = async (req, res) => {
   try {
     const name = req.body.name;
-    if (!name || name.trim().length < 4) {
-      return res.render("categoryDash", {
+    if (!name || name.trim().length < 3) {
+      return res.render("new-category", {
         message: "Please enter a valid name",
       });
     }
@@ -336,7 +338,7 @@ const addCategory = async (req, res) => {
       name: req.body.name,
     });
     if (existingCategory) {
-      return res.render("categoryDash", {
+      return res.render("new-category", {
         message: "Category is Already added",
       });
       console.log("scene");
@@ -399,6 +401,9 @@ const insertProduct = async (req, res) => {
     });
 
     const productData = await product.save();
+    if(productData){
+      res.redirect('/admin/product-dashboard')
+    }
   } catch (error) {
     console.log(error);
   }
