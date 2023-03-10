@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>teccas</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+   <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+  
+
+
+<div class="d-flex mt-5 ms-3">
+  <a class="btn btn-primary" href="/admin/product-dashboard">Back</a>
+</div>
+
+<div class="row">
+<div class="d-flex justify-content-center ">
+  <h1 style="font-family: 'EB Garamond', serif;">Products Details</h1>
+</div>
+</div>
+
+<div class="container">
+
+  <div class="row ">
+    <div>
+
+
+
+      <table id="productTable" class="table table-striped table-bordered table-sm mt-4">
+        <thead>
+         <tr style="font-family: 'EB Garamond', serif;">
+           <th scope="row">Name</th>
+           <th scope="row">Price</th>
+           <th scope="row">Images</th>
+           <th scope="row">Description</th>
+           <th scope="row">Color</th>
+           <th scope="row">Quantity</th>
+           <th scope="row">Category</th>
+           <th scope="row">Brand</th>
+           <th scope="row">Status</th>
+      
+           </tr>
+        </thead>
+        <tbody>
+                <% if(product.length>0){
+                    for(let i=0;i<product.length;i++){
+                     %>
+                     <tr>
+                                <td><%= product[i].productName %></td>
+                                <td><%= product[i].price %></td>
+                                <td ><img style="width:80px;height: 80px;" class="img-fluid" src="/productImages/<%=product[i].productImages %>"></td>
+                                <td><%= product[i].description %></td>
+                                <td><%= product[i].color %></td>
+                                <td><%= product[i].quantity %></td>
+                                 <td><%= product[i].category.name %></td>
+                                <td><%= product[i].brand %></td>
+                                <td><%= product[i].status === 0 ?  "Active" : "Inactive" %></td>
+                            </tr>
+                    <% }
+                } else{
+                    %>
+             <tr>
+                 <td colspan="5">Code Not Found</td>
+             </tr>
+        <% } %>
+                </tbody>
+            </table>
+
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    $('#productTable').DataTable();
+  });
+</script>  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
+

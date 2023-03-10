@@ -4,6 +4,7 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const bcrypt = require("bcrypt");
 
+
 ////////////////////Admin Controller/////////////////////////////
 
 const loadLogin = async (req, res) => {
@@ -75,45 +76,9 @@ const securePassword = async (password) => {
   }
 };
 
-const newUserLoad = async (req, res) => {
-  try {
-    res.render("new-user");
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
-const addUser = async (req, res) => {
-  try {
-    const name = req.body.name;
-    const email = req.body.email;
-    const mno = req.body.mno;
 
-    if (!name || name.trim().length < 4) {
-      return res.render("new-user", { msg: "Please enter a valid name" });
-    }
 
-    const spassword = await securePassword(req.body.pwd);
-
-    const user = new User({
-      name: name,
-      email: email,
-      mobile: mno,
-      password: spassword,
-      is_admin: 0,
-    });
-
-    const userData = await user.save();
-
-    if (userData) {
-      res.redirect("/admin/dashboard");
-    } else {
-      res.render("new-user", { msg: "Something wrong" });
-    }
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 const blockUser = async (req, res) => {
   try {
@@ -310,6 +275,7 @@ const editCouponLoad = async (req, res) => {
 
 const updateCoupon = async (req, res) => {
   try {
+
     const couponData = await Coupon.findByIdAndUpdate(
       { _id: req.body.id },
       {
@@ -411,6 +377,73 @@ const addProduct = async (req, res) => {
   }
 };
 
+
+const insertProduct = async (req, res) => {
+  try {
+    const category = await Category.findOne({ name: req.body.category });
+    console.log(req.files);
+    let arrImages = [];
+    if (req.files) {
+      req.files.forEach((file) => arrImages.push(file.filename));
+    }
+    const product = new Product({
+      productName: req.body.productName,
+      price: req.body.price,
+      description: req.body.description,
+      quantity: req.body.quantity,
+      color: req.body.color,
+      category: category._id,
+      brand: req.body.brand,
+      status: 0,
+      productImages: arrImages,
+    });
+
+    const productData = await product.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+
+const productDetails = async (req, res) => {
+  try {
+    const productData = await Product.find().populate("category").lean()
+    res.render("productDetails", { product: productData });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+const blockProduct = async (req, res) => {
+  try {
+    const id = req.query.id;
+    await Product.updateOne({ _id: new Object(id) }, { $set: { status: 1 } });
+    res.redirect("/admin/product-dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+const unBlockProduct = async (req, res) => {
+  try {
+    const id = req.query.id;
+    await Product.updateOne({ _id: new Object(id) }, { $set: { status: 0 } });
+    res.redirect("/admin/product-dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+
 ////////////////////Logout Controller/////////////////////////////
 
 const logout = async (req, res) => {
@@ -428,8 +461,6 @@ module.exports = {
   loadDashboard,
   logout,
   adminDashboard,
-  newUserLoad,
-  addUser,
   editUserLoad,
   updateUser,
   blockUser,
@@ -449,4 +480,8 @@ module.exports = {
   addCategory,
   productDashboard,
   addProduct,
+  insertProduct,
+  productDetails,
+  blockProduct,
+  unBlockProduct,
 };

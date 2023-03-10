@@ -1,134 +1,142 @@
 <%- include('../layouts/header.ejs') %>
 
-<section class="h-100 gradient-form" style="background-color: #eee;">
-  <div class="container  h-100">
+<section
+  class="vh-100 gradient-form d-flex justify-content-center align-items-center"
+  style="background-color: #1e3932"
+>
+  <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-xl-10 ">
-        <div class="card rounded-3 text-black ">
+      <div class="col-xl-10">
+        <div class="text-black">
           <div class="row g-0 d-flex justify-content-center align-items-center">
             <div class="col-lg-6">
-              <div class="card-body p-md-5 mx-md-4">
-
+              <div
+                class="card-body p-md-5 mx-md-4 border border-primary"
+                style="background-color: #d0d0d0; border-radius: 10px"
+              >
                 <div class="text-center">
-                  <h4 class="mt-1 mb-5 pb-1">TECCAS E-WORLD</h4>
-                  
+                  <h4
+                    class="mt-1 mb-5 pb-1"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    TECCAS EKART
+                  </h4>
                 </div>
-                <div >
-                  <h5 class="mt-1 mb-4 pb-1 ms-5">Update User Info</h5>
-                  
+                <div>
+                  <h5
+                    class="mt-1 mb-1 pb-1 ms-5"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    Update User
+                  </h5>
                 </div>
-      
-                      <form action="" method="post" class="mx-1 mx-md-4">
-      
-                        <div class="d-flex flex-row align-items-center mb-4">
-                          <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                          <div class="form-outline flex-fill mb-0">
-                            <input type="text" name="name" value="<%= user.name %>" id="form3Example1c" class="form-control" required/>
-                            <label class="form-label" for="form3Example1c">Your Name</label>
-                          </div>
-                        </div>
-      
-                        <div class="d-flex flex-row align-items-center mb-4">
-                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                          <div class="form-outline flex-fill mb-0">
-                            <input type="email" name="email" value="<%= user.email %>" id="form3Example3c" class="form-control" required/>
-                            <label class="form-label" for="form3Example3c">Your Email</label>
-                          </div>
-                        </div>
 
-                        <div class="d-flex flex-row align-items-center mb-4">
-                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                          <div class="form-outline flex-fill mb-0">
-                            <input type="text" name="mno" value="<%= user.mobile %>" id="form3Example3c" class="form-control" required/>
-                            <label class="form-label" for="form3Example3c">Your Mobile</label>
-                          </div>
-                        </div>
-
-                        <input type="hidden" name="id" value="<%= user._id %>" />
-      
-                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <input type="submit" value="Update User" class="btn btn-success btn-lg"/>
-                        </div>
-
-                        <br>
-                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                            <a class="btn btn-primary", href="/admin/dashboard" class="fs-4">Go Dashboard</a>
-                        </div>
-
-                        <% 
-
-                              if(typeof message !== 'undefined' ){
-                                
-                                %>
-                                    <div class="alert alert-danger" role="alert">
-                                        <%= message %>
-                                    </div>
-
-                                <% 
-
-                              }
-                        %>
-      
-                      </form>
-      
+                <form action="/signup" method="post" class="mx-1 mx-md-4">
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="text"
+                        name="name"
+                        id="form3Example1c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example1c"
+                        >Your Name</label
+                      >
                     </div>
-                    
-      
+                  </div>
 
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="email"
+                        name="email"
+                        id="form3Example3c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example3c"
+                        >Your Email</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="text"
+                        name="mno"
+                        id="phone"
+                        class="form-control"
+                      />
+
+                      <label class="form-label" for="form3Example3c"
+                        >Your Mobile</label
+                      >
+                    </div>
+                  </div>
+
+                  <input
+                    type="submit"
+                    value="Sign Up"
+                    class="btn border btn-success ms-3 mt-2"
+                  />
+
+                  <% if(typeof message !== 'undefined' ){ %>
+                  <div class="alert alert-success" role="alert">
+                    <%= message %>
+                  </div>
+
+                  <% } %> <% if(typeof msg !== 'undefined' ){ %>
+                  <div class="alert alert-danger" role="alert"><%= msg %></div>
+
+                  <% } %>
+                </form>
               </div>
-              
             </div>
-            
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-    
- <script>
 
-  
-const form = document.querySelector('form');
-const nameInput = form.querySelector('input[name="name"]');
-const emailInput = form.querySelector('input[name="email"]');
-const mobileInput = form.querySelector('input[name="mno"]');
+<script>
+  const form = document.querySelector("form");
+  const nameInput = document.querySelector('input[name="name"]');
+  const emailInput = document.querySelector('input[name="email"]');
+  const mobileInput = document.querySelector('input[name="mno"]');
 
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-form.addEventListener('submit', (event) => {
- 
-  event.preventDefault();
+    if (!nameInput.value || !emailInput.value || !mobileInput.value) {
+      alert("Please fill in all required fields.");
+      return;
+    }
 
-  
-  if (nameInput.value.trim() === '') {
-    alert('Please enter your name.');
-    nameInput.focus();
-    return;
-  }
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(emailInput.value)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
-  
-  if (emailInput.value.trim() === '') {
-    alert('Please enter your email address.');
-    emailInput.focus();
-    return;
-  }
+    const mobileRegex = /^[0-9]{10}$/;
+    if (!mobileRegex.test(mobileInput.value)) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
 
- 
-  if (mobileInput.value.trim() === '') {
-    alert('Please enter your mobile number.');
-    mobileInput.focus();
-    return;
-  }
-
-  
-  form.submit();
-});
-
-
+    form.submit();
+  });
 </script>
 
-
-<%- include('../layouts/footer.ejs') %>
-
-
-
+<%- include('../layouts/footer.ejs')%>

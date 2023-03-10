@@ -1,22 +1,41 @@
 <%- include('../layouts/header.ejs') %>
 
-<section class="h-100 gradient-form" style="background-color: #eee">
-  <div class="container h-100">
+<section class="vh-100 gradient-form d-flex justify-content-center align-items-center" style="background-color: #1e3932">
+  <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-xl-10">
-        <div class="card rounded-3 text-black">
+        <div class="text-black">
           <div class="row g-0 d-flex justify-content-center align-items-center">
             <div class="col-lg-6">
-              <div class="card-body p-md-5 mx-md-4">
+              <div
+                class="card-body p-md-5 mx-md-4 border border-primary "
+                style="background-color: #d0d0d0; border-radius: 10px"
+              >
                 <div class="text-center">
-                  <h4 class="mt-1 mb-5 pb-1">TECCAS E-WORLD</h4>
+                  <h4
+                    class="mt-1 mb-5 pb-1"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    TECCAS EKART
+                  </h4>
                 </div>
                 <div>
-                  <h5 class="mt-1 mb-4 pb-1 ms-5">Sign Up</h5>
+                  <h5
+                    class="mt-1 mb-1 pb-1 ms-5"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    Sign Up
+                  </h5>
                 </div>
 
                 <form action="/signup" method="post" class="mx-1 mx-md-4">
-                  <div class="d-flex flex-row align-items-center mb-4">
+                  <div class="d-flex flex-row align-items-center mb-1">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <input
@@ -31,7 +50,7 @@
                     </div>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
+                  <div class="d-flex flex-row align-items-center mb-1">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <input
@@ -46,7 +65,7 @@
                     </div>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
+                  <div class="d-flex flex-row align-items-center mb-1">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <input
@@ -62,7 +81,7 @@
                     </div>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
+                  <div class="d-flex flex-row align-items-center mb-1">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <input
@@ -77,36 +96,33 @@
                     </div>
                   </div>
 
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                  
                     <input
                       type="submit"
                       value="Sign Up"
-                      class="btn border"
-                      style="background-color: #1c8899"
+                      class="btn border btn-success ms-3 mt-2"
+                      
                     />
-                  </div>
 
-                  <div class="mt-5">
+                     <% if(typeof msg !== 'undefined' ){ %>
+                  
+                   <p style="font-size: small; color: red;font-family: 'EB Garamond', serif;" class="ms-3"> <%= msg %></p>
+                  
+
+                  <% } %> 
+                 
+
+                  <div class="mt-5 ms-4">
                     <p>
                       already have an account?
-                      <a
-                        class="btn border-primary rounded-0 te"
-                        style="background-color: #1c8899"
-                        href="/login"
-                        >Login Here</a
-                      >
+                      <a class="te" href="/login">Login Here</a>
                     </p>
                   </div>
 
-                  <% if(typeof message !== 'undefined' ){ %>
-                  <div class="alert alert-success" role="alert">
-                    <%= message %>
-                  </div>
+                  
+                      
 
-                  <% } %> <% if(typeof msg !== 'undefined' ){ %>
-                  <div class="alert alert-danger" role="alert"><%= msg %></div>
-
-                  <% } %>
+                 
                 </form>
               </div>
             </div>
@@ -118,46 +134,48 @@
 </section>
 
 <script>
-  const form = document.querySelector('form');
-const nameInput = document.querySelector('input[name="name"]');
-const emailInput = document.querySelector('input[name="email"]');
-const mobileInput = document.querySelector('input[name="mno"]');
-const passwordInput = document.querySelector('input[name="pwd"]');
+  const form = document.querySelector("form");
+  const nameInput = document.querySelector('input[name="name"]');
+  const emailInput = document.querySelector('input[name="email"]');
+  const mobileInput = document.querySelector('input[name="mno"]');
+  const passwordInput = document.querySelector('input[name="pwd"]');
 
-form.addEventListener('submit', function(event) {
-  event.preventDefault(); 
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-  
-  if (!nameInput.value || !emailInput.value || !mobileInput.value || !passwordInput.value) {
-    alert('Please fill in all required fields.');
-    return;
-  }
+    if (
+      !nameInput.value ||
+      !emailInput.value ||
+      !mobileInput.value ||
+      !passwordInput.value
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
 
-  
-  const emailRegex = /\S+@\S+\.\S+/;
-  if (!emailRegex.test(emailInput.value)) {
-    alert('Please enter a valid email address.');
-    return;
-  }
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(emailInput.value)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
-  
-  const mobileRegex = /^[0-9]{10}$/;
-  if (!mobileRegex.test(mobileInput.value)) {
-    alert('Please enter a valid 10-digit mobile number.');
-    return;
-  }
+    const mobileRegex = /^[0-9]{10}$/;
+    if (!mobileRegex.test(mobileInput.value)) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
 
-  
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
-  if (!passwordRegex.test(passwordInput.value)) {
-    alert('Please enter a password that is at least 8 characters long and includes at least one uppercase letter, one lowercase letter, one number, and one special character.');
-    return;
-  }
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+    if (!passwordRegex.test(passwordInput.value)) {
+      alert(
+        "Please enter a password that is at least 8 characters long and includes at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
+      return;
+    }
 
-  
-  form.submit();
-});
-
+    form.submit();
+  });
 </script>
 
 <%- include('../layouts/footer.ejs')%>

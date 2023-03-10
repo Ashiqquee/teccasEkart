@@ -1,12 +1,13 @@
 const User = require("../models/userModel");
+const Product = require("../models/productModel");
 const bcrypt = require("bcrypt");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const accountsid = process.env.TWILIO_ACCOUNT_SID;
 const authtoken = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_SERVICE_SID = process.env.TWILIO_SERVICE_SID;
-const client = require('twilio')(accountsid,authtoken);
+const client = require("twilio")(accountsid, authtoken);
 
 
 const loadRegister = async (req, res) => {
@@ -28,8 +29,6 @@ const securePassword = async (password) => {
 
 const insertUser = async (req, res) => {
   try {
-    
-
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
       return res.render("signup", {
@@ -64,7 +63,7 @@ const insertUser = async (req, res) => {
       });
     }
     const spassword = await securePassword(req.body.pwd);
-     
+
     const user = new User({
       name: req.body.name,
       email: req.body.email,
@@ -73,9 +72,9 @@ const insertUser = async (req, res) => {
       is_admin: 0,
       is_blocked: 0,
     });
-    
+
     const userData = await user.save();
-  
+
     if (userData) {
       req.session.phone = req.body.mno;
       client.verify.v2
@@ -85,7 +84,7 @@ const insertUser = async (req, res) => {
           console.log(req.body.mno);
         })
         .catch((err) => {
-          
+          console.log(err);
         });
       res.render("verifySignup");
     } else {
@@ -95,7 +94,6 @@ const insertUser = async (req, res) => {
     console.log(error.message);
   }
 };
-
 
 const otpVerify = async (req, res) => {
   const { otp } = req.body;
@@ -107,8 +105,8 @@ const otpVerify = async (req, res) => {
     .then(async (verification_check) => {
       if (verification_check.status == "approved") {
         req.session.otpcorrect = true;
-        // Update the user's is_verified field in the database
-        await User.updateOne({ phone }, { $set: { is_verified: 1 } });
+
+        await User.updateOne({ mobile: phone }, { $set: { is_verified: 1 } });
         res.redirect("/login");
       } else {
       }
@@ -118,9 +116,6 @@ const otpVerify = async (req, res) => {
       console.log(error);
     });
 };
-
-
-
 
 const loginLoad = async (req, res) => {
   try {
@@ -145,7 +140,7 @@ const verifyLogin = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, userData.password);
 
     if (!passwordMatch) {
-      return res.render("login");
+      return res.render("login" ,{message:"Email or Password incorrect"});
     }
 
     if (userData.is_blocked === 1) {
@@ -168,12 +163,79 @@ const verifyLogin = async (req, res) => {
 const loadHome = async (req, res) => {
   try {
     const session = req.session.user_id;
-    res.render("home", { session });
+    const productData = await Product.find();
+    res.render("home", { session,product: productData });
   } catch (error) {
     console.log(error);
   }
 };
 
+const resetPassword = async (req, res) => {
+  try {
+    res.render("resetPassword");
+  } catch (error) {
+    console.log(err);
+  }
+};
+
+const sendReset = async (req, res) => {
+  try {
+    if (!req.body.mno) {
+      throw new Error("Mobile number is not defined");
+    }
+
+    const existingNumber = await User.findOne({ mobile: req.body.mno });
+
+    if (existingNumber) {
+      console.log("ok");
+      req.session.phone = req.body.mno;
+      
+      res.render('changePassword')
+      client.verify.v2
+        .services(TWILIO_SERVICE_SID)
+        .verifications.create({ to: `+91${req.body.mno}`, channel: "sms" })
+        .then((verification) => {
+          console.log(req.body.mno);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("ji");
+      res.render('resetPassword',{msg:"This Number is Not Registered"})
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const verifyReset = async (req, res) => {
+  const { otp, password } = req.body;
+  const phone = req.session.phone;
+  console.log("otp:", otp);
+  console.log("phone:", phone);
+
+  try {
+    const verification_check = await client.verify
+      .v2.services(TWILIO_SERVICE_SID)
+      .verificationChecks.create({ to: `+91${phone}`, code: otp });
+    
+    
+    if (verification_check.status === "approved") {
+      const spassword = await securePassword(req.body.password);
+
+      await User.updateOne({ mobile: phone }, { $set: { password: spassword } });
+      
+      req.session.otpcorrect = true;
+      res.redirect('/login')
+    } else {
+      res.status(400).send("Incorrect OTP. Please try again.");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while verifying OTP.");
+  }
+};
 
 
 
@@ -186,9 +248,6 @@ const userLogout = async (req, res) => {
   }
 };
 
-
-
-
 module.exports = {
   loadRegister,
   insertUser,
@@ -196,6 +255,8 @@ module.exports = {
   verifyLogin,
   loadHome,
   userLogout,
-  otpVerify
-  
+  verifyReset,
+  sendReset,
+  resetPassword,
+  otpVerify,
 };

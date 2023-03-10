@@ -36,6 +36,12 @@ user_route.get("/logout", auth.isLogin, userController.userLogout);
 
 user_route.post("/verifyOtp", userController.otpVerify);
 
+user_route.get("/resetPassword", userController.resetPassword);
+
+user_route.post("/resetPassword", userController.sendReset);
+
+user_route.post("/verifyReset", userController.verifyReset);
+
 
 
 module.exports = user_route;

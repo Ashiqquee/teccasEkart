@@ -5,6 +5,9 @@ const admin_route = express();
 const session = require("express-session");
 const config = require("../config/config");
 
+const multer = require("multer");
+const path = require("path");
+
 
 
 admin_route.set("views", "./views/admin");
@@ -12,6 +15,30 @@ admin_route.set("views", "./views/admin");
 const auth = require("../middleware/adminAuth");
 
 const adminController = require("../controllers/adminController");
+
+admin_route.use(express.static('public'));
+
+const storage = multer.diskStorage({
+  destination:function(req,file,cb){
+    cb(null,path.join(__dirname,'../public/productImages'),function(success,err){
+      if(err){
+        throw err
+      }
+
+    })
+  },
+  filename:function(req,file,cb){
+    const name = Date.now()+'-'+file.originalname;
+    cb(null,name,function(success,err){
+      if(err){
+        throw err
+      }
+    })
+
+  }
+})
+
+const upload = multer({storage:storage})
 
 
 
@@ -36,10 +63,6 @@ admin_route.get("/home", auth.isLogin, adminController.loadDashboard);
 
 
 admin_route.get("/dashboard", auth.isLogin, adminController.adminDashboard);
-
-admin_route.get("/new-user", auth.isLogin, adminController.newUserLoad);
-
-admin_route.post("/new-user", adminController.addUser);
 
 admin_route.get("/edit-user", auth.isLogin, adminController.editUserLoad);
 
@@ -94,9 +117,15 @@ admin_route.post("/new-category", auth.isLogin, adminController.addCategory);
 
 admin_route.get("/product-dashboard", auth.isLogin,adminController.productDashboard);
 
-
 admin_route.get("/addProduct", auth.isLogin, adminController.addProduct);
 
+admin_route.post("/addProduct",upload.array("file"),auth.isLogin,adminController.insertProduct);
+
+admin_route.get("/product-details", auth.isLogin, adminController.productDetails);
+
+admin_route.get("/blockProduct",auth.isLogin,adminController.blockProduct);
+
+admin_route.get("/unBlockProduct",auth.isLogin,adminController.unBlockProduct);
 
 
 

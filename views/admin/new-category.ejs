@@ -1,34 +1,74 @@
 <%- include('../layouts/header.ejs') %>
 
-<div class="row">
-  <div class="d-flex justify-content-center align-items-center mt-5">
-    <h4>ADD NEW CATEGORY</h4>
-  </div>
-  <div class="d-flex justify-content-center align-items-center mt-5">
-    <form method="post" class="mx-1 mx-md-4">
-      <div class="d-flex flex-row align-items-center mb-4">
-        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-        <div class="form-outline flex-fill mb-0">
-          <input
-            type="text"
-            name="name"
-            id="form3Example1c"
-            class="form-control"
-          />
-          <label class="form-label" for="form3Example1c">Category Name</label>
+<section
+  class="vh-100 gradient-form d-flex justify-content-center align-items-center"
+  style="background-color: #1e3932"
+>
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="text-black">
+          <div class="row g-0 d-flex justify-content-center align-items-center">
+            <div class="col-lg-6">
+              <div
+                class="card-body p-md-5 mx-md-4 border border-primary"
+                style="background-color: #d0d0d0; border-radius: 10px"
+              >
+                <div class="text-center">
+                  <h4
+                    class="mt-1 mb-5 pb-1"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    TECCAS EKART
+                  </h4>
+                </div>
+                <div>
+                  <h5
+                    class="mt-1 mb-1 pb-1 ms-5"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    Add New Category
+                  </h5>
+                </div>
+
+                <form method="post" class="mx-1 mx-md-4">
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="text"
+                        name="name"
+                        id="form3Example1c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example1c"
+                        >Category Name</label
+                      >
+                    </div>
+                  </div>
+
+                  <input
+                      type="submit"
+                      value="Add"
+                      class="btn border btn-success ms-3 mt-2"
+                      
+                    />
+                 
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-        <input
-          type="submit"
-          value="Add category"
-          class="btn border"
-          style="background-color: #1c8899"
-        />
-      </div>
-    </form>
+    </div>
   </div>
-</div>
+</section>
 
 <script>
   const form = document.querySelector("form");

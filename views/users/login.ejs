@@ -1,82 +1,102 @@
 <%- include('../layouts/header.ejs') %>
 
-<div class="container h-100 mt-5">
-  <div class="row d-flex justify-content-center align-items-center h-100">
-    <div class="col-xl-10">
-      <div class="card rounded-3 text-black">
-        <div class="row g-0 d-flex justify-content-center align-items-center">
-          <div class="col-lg-6">
-            <div class="card-body p-md-5 mx-md-4">
-              <div class="text-center">
-                <h4 class="mt-1 mb-5 pb-1">TECCAS E-WORLD</h4>
-              </div>
-              <div>
-                <h5 class="mt-1 mb-4 pb-1 ms-5">Login</h5>
-              </div>
+<div class="vh-100 d-flex justify-content-center align-items-center" style="background-color: #1e3932">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="cardtext-black">
+          <div class="row g-0 d-flex justify-content-center align-items-center">
+            <div class="col-lg-6">
+              <div
+                class="card-body p-md-5 mx-md-4 border border-primary mt-5"
+                style="background-color: #d0d0d0; border-radius: 10px"
+              >
+                <div class="text-center">
+                  <h4
+                    class="mt-1 mb-5 pb-1"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    TECCAS EKART
+                  </h4>
+                </div>
+                <div>
+                  <h5
+                    class="mt-1 mb-4 pb-1 ms-5"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    Login
+                  </h5>
+                </div>
 
-              <form action="/login" method="post" class="mx-1 mx-md-4">
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    <input
-                      type="email"
-                      name="email"
-                      id="form3Example3c"
-                      class="form-control"
-                    />
-                    <label class="form-label" for="form3Example3c"
-                      >Your Email</label
-                    >
+                <form action="/login" method="post" class="mx-1 mx-md-4">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="email"
+                        name="email"
+                        id="form3Example3c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example3c"
+                        >Your Email</label
+                      >
+                    </div>
                   </div>
-                </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    <input
-                      type="password"
-                      name="password"
-                      id="form3Example3c"
-                      class="form-control"
-                    />
-                    <label class="form-label" for="form3Example3c"
-                      >Your Password</label
-                    >
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="password"
+                        name="password"
+                        id="form3Example3c"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example3c"
+                        >Your Password</label
+                      >
+                    </div>
                   </div>
-                </div>
 
-                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                  <input
-                    type="submit"
-                    value="Sign Up"
-                    class="btn border"
-                    style="background-color: #1c8899"
-                  />
-                </div>
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <input
+                      type="submit"
+                      value="Login"
+                      class="btn border btn-success"
+                      
+                    />
+                  </div>
 
-                <div class="mt-5">
-                  <p>
-                    Don't have an account?
-                    <a
-                      style="color: #1c8899; text-decoration: none"
-                      href="/signup"
-                      >signup Here</a
-                    >
-                  </p>
-                </div>
+                       <% if(typeof message !== 'undefined' ){ %>
+                  
+                   <p style="font-size: small; color: red;font-family: 'Tilt Warp', cursive;" class="ms-3"> <%= message %></p>
+                  
 
-                <% if(typeof message !== 'undefined' ){ %>
-                <div class="alert alert-success" role="alert">
-                  <%= message %>
-                </div>
+                  <% } %> 
 
-                <% } %> <% if(typeof message1 !== 'undefined' ){ %>
-                <div class="alert alert-danger" role="alert">
-                  <%= message1 %>
-                </div>
+                  <div class="mt-5 ms-3">
+                    <p>
+                      Forget Password? <a href="/resetPassword">Click Me</a>
+                    </p>
+                  </div>
 
-                <% } %>
-              </form>
+                  <div class="mt-5 ms-3">
+                    <p>
+                      Don't have an account?
+                      <a href="/signup">Signup Here</a>
+                    </p>
+                  </div>
+
+             
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -85,49 +105,42 @@
   </div>
 </div>
 
-
 <script>
-  const form = document.querySelector('form'); 
+  const form = document.querySelector("form");
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault(); 
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-  
-  const emailInput = form.elements['email'];
-  const passwordInput = form.elements['password'];
+    const emailInput = form.elements["email"];
+    const passwordInput = form.elements["password"];
 
-  
-  if (!emailInput.value || !emailInput.value.includes('@')) {
-    
-    emailInput.classList.add('is-invalid');
-    const error = document.createElement('div');
-    error.classList.add('invalid-feedback');
-    error.textContent = 'Please enter a valid email address.';
-    emailInput.parentNode.appendChild(error);
-  } else {
-    emailInput.classList.remove('is-invalid');
-    emailInput.classList.add('is-valid');
-  }
+    if (!emailInput.value || !emailInput.value.includes("@")) {
+      emailInput.classList.add("is-invalid");
+      const error = document.createElement("div");
+      error.classList.add("invalid-feedback");
+      error.textContent = "Please enter a valid email address.";
+      emailInput.parentNode.appendChild(error);
+    } else {
+      emailInput.classList.remove("is-invalid");
+      emailInput.classList.add("is-valid");
+    }
 
-  
-  if (!passwordInput.value || passwordInput.value.length < 6) {
-    
-    passwordInput.classList.add('is-invalid');
-    const error = document.createElement('div');
-    error.classList.add('invalid-feedback');
-    error.textContent = 'Please enter a password that is at least 6 characters long.';
-    passwordInput.parentNode.appendChild(error);
-  } else {
-    passwordInput.classList.remove('is-invalid');
-    passwordInput.classList.add('is-valid');
-  }
+    if (!passwordInput.value || passwordInput.value.length < 6) {
+      passwordInput.classList.add("is-invalid");
+      const error = document.createElement("div");
+      error.classList.add("invalid-feedback");
+      error.textContent =
+        "Please enter a password that is at least 6 characters long.";
+      passwordInput.parentNode.appendChild(error);
+    } else {
+      passwordInput.classList.remove("is-invalid");
+      passwordInput.classList.add("is-valid");
+    }
 
-  
-  if (form.checkValidity()) {
-    form.submit(); 
-  }
-});
-
+    if (form.checkValidity()) {
+      form.submit();
+    }
+  });
 </script>
 
 <%- include('../layouts/footer.ejs')%>
