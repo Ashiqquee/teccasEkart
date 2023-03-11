@@ -52,6 +52,20 @@
                       >
                     </div>
                   </div>
+                   <% if(typeof message !== 'undefined' ){ %>
+
+                  <p
+                    style="
+                      font-size: small;
+                      color: red;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                    class="ms-3"
+                  >
+                    <%= message %>
+                  </p>
+
+                  <% } %>
 
                   <input
                       type="submit"

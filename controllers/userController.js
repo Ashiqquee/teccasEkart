@@ -9,11 +9,16 @@ const accountsid = process.env.TWILIO_ACCOUNT_SID;
 const authtoken = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_SERVICE_SID = process.env.TWILIO_SERVICE_SID;
 const client = require("twilio")(accountsid, authtoken);
-
+//error/
+let msg;
+//success
+let message
 
 const loadRegister = async (req, res) => {
   try {
-    res.render("signup");
+    res.render("signup",{msg,message});
+     msg = null;
+     message = null;
   } catch (error) {
     console.log(error.message);
   }
@@ -32,36 +37,31 @@ const insertUser = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
-      return res.render("signup", {
-        msg: "Email already registered",
-      });
+      res.redirect("/signup", )
+        msg ="Email already registered";
     }
 
     const existingNumber = await User.findOne({ mobile: req.body.mno });
     if (existingNumber) {
-      return res.render("signup", {
-        msg: "Mobile number already registered",
-      });
+      res.redirect("/signup", )
+        msg = "Mobile number already registered"
     }
 
     const mobileRegex = /^[0-9]{10}$/;
     if (!req.body.mno || !mobileRegex.test(req.body.mno)) {
-      return res.render("signup", {
-        msg: "Please enter a valid mobile number",
-      });
+       res.redirect("/signup")
+        msg =  "Please enter a valid mobile number";
     }
 
     const emailRegex = /^\S+@\S+\.\S+$/;
     if (!req.body.email || !emailRegex.test(req.body.email)) {
-      return res.render("signup", {
-        msg: "Please enter a valid email address",
-      });
+       res.redirect("/signup");
+       msg = "Please enter a valid email";
     }
 
     if (!req.body.name || req.body.name.trim().length < 3) {
-      return res.render("signup", {
-        msg: "Please enter a valid name",
-      });
+     res.redirect("/signup");
+     msg = "Please enter a valid Name";
     }
 
 
@@ -91,7 +91,8 @@ const insertUser = async (req, res) => {
         });
       res.render("verifySignup");
     } else {
-      res.render("signup", { msg: "Registration failed" });
+      res.rendirect("/signup",) 
+      msg = "Registration failed" ;
     }
   } catch (error) {
     console.log(error.message);
@@ -114,7 +115,10 @@ const otpVerify = async (req, res) => {
 
         await User.updateOne({ mobile: phone }, { $set: { is_verified: 1 } });
         res.redirect("/login");
+        message = "Otp Verified Successfully, Now Login With Your Account"
       } else {
+        res.redirect('/signup')
+        msg = "otp verification failed";
       }
     })
 
@@ -125,7 +129,9 @@ const otpVerify = async (req, res) => {
 
 const loginLoad = async (req, res) => {
   try {
-    res.render("login");
+    res.render("login",{msg,message});
+     msg = null;
+     message = null;
   } catch (error) {
     console.log(error.message);
   }
@@ -138,21 +144,21 @@ const verifyLogin = async (req, res) => {
     const userData = await User.findOne({ email });
 
     if (!userData) {
-      return res.render("login", {
-        message: "Please provide your correct Email and password",
-      });
+       res.redirect("/login")
+        msg = "Please provide your correct Email and password";
     }
 
     const passwordMatch = await bcrypt.compare(password, userData.password);
 
     if (!passwordMatch) {
-      return res.render("login" ,{message:"Email or Password incorrect"});
+      res.redirect("/login");
+      msg = " Email or password is incorrect";
     }
 
     if (userData.is_blocked === 1) {
-      return res.render("login", {
-        message: "Your account is blocked,conatct:teccas@gmail.com",
-      });
+      return res.render("/login")
+        msg =  "Your account is blocked,conatct:teccasekart@gmail.com";
+     
     }
 
     if (userData.is_admin === 0) {
@@ -160,7 +166,8 @@ const verifyLogin = async (req, res) => {
       return res.redirect("/");
     }
 
-    res.render("login", { message: "Email or password is incorrect" });
+     res.redirect("/login");
+     msg = " Email or password is incorrect";
   } catch (error) {
     console.log(error.message);
   }
@@ -184,7 +191,9 @@ const loadHome = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    res.render("resetPassword");
+    res.render("resetPassword",{msg,message});
+     msg = null;
+     message = null;
   } catch (error) {
     console.log(err);
   }
@@ -214,7 +223,8 @@ const sendReset = async (req, res) => {
         });
     } else {
       console.log("ji");
-      res.render('resetPassword',{msg:"This Number is Not Registered"})
+      res.redirect('/resetPassword')
+      msg = "This Number is Not Registered";
     }
   } catch (error) {
     console.log(error);
@@ -240,6 +250,7 @@ const verifyReset = async (req, res) => {
       
       req.session.otpcorrect = true;
       res.redirect('/login')
+      message = "password Changed Successfully"
     } else {
       res.render('changePassword',{msg:"Incorrect Otp"})
     }

@@ -6,11 +6,16 @@ const bcrypt = require("bcrypt");
 const { findById, findByIdAndUpdate } = require("../models/userModel");
 
 
+let message;
+let msg;
+
 ////////////////////Admin Controller/////////////////////////////
 
 const loadLogin = async (req, res) => {
   try {
-    res.render("login");
+    res.render("login",{msg,message});
+    msg=null
+    message=null
   } catch (error) {
     console.log(error.message);
   }
@@ -28,21 +33,22 @@ const verifyLogin = async (req, res) => {
 
       if (passwordMatch) {
         if (userData.is_admin === 0) {
-          res.render("login", {
-            message: "Email and password is incorrect, not an admin",
-          });
+          res.redirect("/admin");
+          message = "Email and password is incorrect, not an admin";
         } else {
           req.session.Auser_id = userData._id;
           res.redirect("/admin/home");
         }
       } else {
-        res.render("login", { message: "Email or password is incorrect" });
+        res.redirect("/admin");
+          message = "Email or password is incorrect";
+        
       }
     } else {
-      res.render("login", {
-        message: "Please provide your Email and password",
-      });
-    }
+       res.redirect("/admin");
+          message = "Email or password is incorrect";
+      };
+    
   } catch (error) {
     console.log(error.message);
   }
@@ -155,7 +161,7 @@ const couponDashboard = async (req, res) => {
 
 const newCoupon = async (req, res) => {
   try {
-    res.render("new-coupon");
+    res.render("new-coupon",{msg,message});
   } catch (error) {
     console.log(error.message);
   }
@@ -181,30 +187,29 @@ const addCoupon = async (req, res) => {
     const currentDate = new Date();
 
     if (!code || code.trim().length < 6) {
-      return res.render("new-coupon", { message: "Please enter a valid code" });
+     res.redirect("/admin/new-coupon");
+     
+       message = "Please enter a valid code";
+     
     }
     if (!code || !code.startsWith("#") || code.trim().length < 6) {
-      return res.render("new-coupon", {
-        message: "Please enter a valid code starting with #",
-      });
+       res.redirect("/admin/new-coupon")
+        message =  "Please enter a valid code starting with #";
     }
     const existingCode = await Coupon.findOne({ code: req.body.couponCode });
     if (existingCode) {
-      return res.render("new-coupon", {
-        message: "Code is Already added",
-      });
+      res.redirect("/admin/new-coupon")
+        message = "Code is Already added";
     }
 
     if (startDate.getTime() <= currentDate.getTime()) {
-      return res.render("new-coupon", {
-        message: "Start date must be after the current date",
-      });
+      res.redirect("/admin/new-coupon")
+        message = "Start date must be after the current date";
     }
 
     if (startDate.getTime() >= endDate.getTime()) {
-      return res.render("new-coupon", {
-        message: "End date must be after the start date",
-      });
+      res.redirect("/admin/new-coupon")
+        message: "End date must be after the start date";
     }
 
     const coupon = new Coupon({
@@ -220,8 +225,10 @@ const addCoupon = async (req, res) => {
 
     if (couponData) {
       res.redirect("/admin/coupon-dashboard");
+     
     } else {
-      res.render("new-coupon", { message: "Something wrong" });
+      res.redirect("/admin/new-coupon")
+      message= "Something wrong";
     }
   } catch (error) {
     console.log(error.message);
@@ -331,17 +338,16 @@ const addCategory = async (req, res) => {
   try {
     const name = req.body.name;
     if (!name || name.trim().length < 3) {
-      return res.render("new-category", {
-        message: "Please enter a valid name",
-      });
+      res.redirect("/admin/new-category")
+        message = "Please enter a valid name";
+      
     }
     const existingCategory = await Category.findOne({
       name: req.body.name,
     });
     if (existingCategory) {
-      return res.render("new-category", {
-        message: "Category is Already added",
-      });
+      res.redirect("/admin/new-category")
+        message = "Category is Already added";
       console.log("scene");
     }
 

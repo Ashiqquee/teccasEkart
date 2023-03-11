@@ -1,7 +1,6 @@
 {
   "name": "signuppage",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js"
@@ -23,5 +22,15 @@
     "nocache": "^3.0.4",
     "nodemon": "^2.0.21",
     "twilio": "^4.8.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashiqquee/signupPage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ashiqquee/signupPage/issues"
+  },
+  "homepage": "https://github.com/Ashiqquee/signupPage#readme",
+  "description": ""
 }
