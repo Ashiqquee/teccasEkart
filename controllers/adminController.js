@@ -6,16 +6,11 @@ const bcrypt = require("bcrypt");
 const { findById, findByIdAndUpdate } = require("../models/userModel");
 
 
-let message;
-let msg;
-
 ////////////////////Admin Controller/////////////////////////////
 
 const loadLogin = async (req, res) => {
   try {
-    res.render("login",{msg,message});
-    msg=null
-    message=null
+    res.render("login");
   } catch (error) {
     console.log(error.message);
   }
@@ -33,22 +28,21 @@ const verifyLogin = async (req, res) => {
 
       if (passwordMatch) {
         if (userData.is_admin === 0) {
-          res.redirect("/admin");
-          message = "Email and password is incorrect, not an admin";
+          res.render("login", {
+            message: "Email and password is incorrect, not an admin",
+          });
         } else {
           req.session.Auser_id = userData._id;
           res.redirect("/admin/home");
         }
       } else {
-        res.redirect("/admin");
-          message = "Email or password is incorrect";
-        
+        res.render("login", { message: "Email or password is incorrect" });
       }
     } else {
-       res.redirect("/admin");
-          message = "Email or password is incorrect";
-      };
-    
+      res.render("login", {
+        message: "Please provide your Email and password",
+      });
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -161,7 +155,7 @@ const couponDashboard = async (req, res) => {
 
 const newCoupon = async (req, res) => {
   try {
-    res.render("new-coupon",{msg,message});
+    res.render("new-coupon");
   } catch (error) {
     console.log(error.message);
   }
@@ -187,29 +181,30 @@ const addCoupon = async (req, res) => {
     const currentDate = new Date();
 
     if (!code || code.trim().length < 6) {
-     res.redirect("/admin/new-coupon");
-     
-       message = "Please enter a valid code";
-     
+      return res.render("new-coupon", { message: "Please enter a valid code" });
     }
     if (!code || !code.startsWith("#") || code.trim().length < 6) {
-       res.redirect("/admin/new-coupon")
-        message =  "Please enter a valid code starting with #";
+      return res.render("new-coupon", {
+        message: "Please enter a valid code starting with #",
+      });
     }
     const existingCode = await Coupon.findOne({ code: req.body.couponCode });
     if (existingCode) {
-      res.redirect("/admin/new-coupon")
-        message = "Code is Already added";
+      return res.render("new-coupon", {
+        message: "Code is Already added",
+      });
     }
 
     if (startDate.getTime() <= currentDate.getTime()) {
-      res.redirect("/admin/new-coupon")
-        message = "Start date must be after the current date";
+      return res.render("new-coupon", {
+        message: "Start date must be after the current date",
+      });
     }
 
     if (startDate.getTime() >= endDate.getTime()) {
-      res.redirect("/admin/new-coupon")
-        message: "End date must be after the start date";
+      return res.render("new-coupon", {
+        message: "End date must be after the start date",
+      });
     }
 
     const coupon = new Coupon({
@@ -225,10 +220,8 @@ const addCoupon = async (req, res) => {
 
     if (couponData) {
       res.redirect("/admin/coupon-dashboard");
-     
     } else {
-      res.redirect("/admin/new-coupon")
-      message= "Something wrong";
+      res.render("new-coupon", { message: "Something wrong" });
     }
   } catch (error) {
     console.log(error.message);
@@ -338,16 +331,17 @@ const addCategory = async (req, res) => {
   try {
     const name = req.body.name;
     if (!name || name.trim().length < 3) {
-      res.redirect("/admin/new-category")
-        message = "Please enter a valid name";
-      
+      return res.render("new-category", {
+        message: "Please enter a valid name",
+      });
     }
     const existingCategory = await Category.findOne({
       name: req.body.name,
     });
     if (existingCategory) {
-      res.redirect("/admin/new-category")
-        message = "Category is Already added";
+      return res.render("new-category", {
+        message: "Category is Already added",
+      });
       console.log("scene");
     }
 
