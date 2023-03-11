@@ -4,9 +4,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/teccas");
 const path = require("path");
 const express = require("express");
 const app = express();
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const nocache = require("nocache");
 const morgan = require('morgan');
+const config = require("./config/config");
 
 
 app.use(bodyParser.json());
@@ -14,6 +16,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan("tiny"));
 
+app.use(
+  session({
+    secret: config.sessionSecret,
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+      maxAge: 1000 * 60 * 24 * 10,
+    },
+  })
+);
 
 
 app.use(nocache());

@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Ashion Template">
-    <meta name="keywords" content="Ashion, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Ashion Template" />
+    <meta name="keywords" content="Ashion, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>teccas</title>
 
-
     <!-- Bootstrap -->
-
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -21,437 +18,373 @@
     />
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cookie&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-</head>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+  </head>
 
-<body>
+  <body>
     <!-- Page Preloder -->
     <div id="preloder">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__close">+</div>
-        <ul class="offcanvas__widget">
-            <li><span class="icon_search search-switch"></span></li>
-            <li><a href=""><span class="icon_heart_alt"></span>
-                <!-- <div class="tip">2</div> -->
-            </a></li>
-            <li><a href=""><span class="icon_bag_alt"></span>
-                <!-- <div class="tip">2</div> -->
-            </a></li>
-        </ul>
-        <div class="offcanvas__logo">
-            <h2>TECCAS</h2>
+      <div class="offcanvas__close">+</div>
+      <ul class="offcanvas__widget">
+        <li><span class="icon_search search-switch"></span></li>
+        <li>
+          <a href=""
+            ><span class="icon_heart_alt"></span>
+            <!-- <div class="tip">2</div> -->
+          </a>
+        </li>
+        <li>
+          <a href=""
+            ><span class="icon_bag_alt"></span>
+            <!-- <div class="tip">2</div> -->
+          </a>
+        </li>
+      </ul>
+      <div class="offcanvas__logo">
+        <h2>TECCAS</h2>
+      </div>
+      <div id="mobile-menu-wrap"></div>
+      <div class="offcanvas__auth">
+        <div class="dropdown">
+          <button
+            class="btn btn-success dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+          >
+            Click
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <% if(session!=null){ %>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            <% }else{%>
+            <li><a class="dropdown-item" href="/login">Login</a></li>
+            <li><a class="dropdown-item" href="/signup">Signup</a></li>
+            <%}%>
+          </ul>
         </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
-            <div class="dropdown">
-              <button
-                class="btn btn-success dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-              >
-                Click
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <% if(session!=null){ %>
-                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                <% }else{%>
-                <li><a class="dropdown-item" href="/login">Login</a></li>
-                <li><a class="dropdown-item" href="/signup">Signup</a></li>
-                <%}%>
-              </ul>
-            </div>
-        </div>
+      </div>
     </div>
     <!-- Offcanvas Menu End -->
 
     <!-- Header Section Begin -->
     <header class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-3 col-lg-2">
-                    <div class="header__logo">
-                       <h1>TECCAS</h1>
-                    </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-3 col-lg-2">
+            <div class="header__logo">
+              <h1>TECCAS</h1>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-7">
+            <nav class="header__menu">
+              <ul>
+                <li class="active"><a href="">Home</a></li>
+                
+                <li><a href="">Shop</a></li>
+               
+
+                <li><a href="">Contact</a></li>
+                <li><a href="">Profile</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-lg-3">
+            <div class="header__right">
+              <div class="header__right__auth">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-success dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                  >
+                    Click
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <% if(session!=null){ %>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    <% }else{%>
+                    <li><a class="dropdown-item" href="/login">Login</a></li>
+                    <li><a class="dropdown-item" href="/signup">Signup</a></li>
+                    <%}%>
+                  </ul>
                 </div>
-                <div class="col-xl-6 col-lg-7">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="">Home</a></li>
-                            <li><a href="">Women’s</a></li>
-                            <li><a href="">Men’s</a></li>
-                            <li><a href="">Shop</a></li>
-                            <li><a href="">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="">Product Details</a></li>
-                                    <li><a href="">Shop Cart</a></li>
-                                    
-                                    
-                                </ul>
-                            </li>
-                            
-                            <li><a href="">Contact</a></li>
-                            <li><a href="">Profile</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__right">
-                        <div class="header__right__auth">
-                            <div class="dropdown">
-              <button
-                class="btn btn-success dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-              >
-                Click
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <% if(session!=null){ %>
-                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                <% }else{%>
-                <li><a class="dropdown-item" href="/login">Login</a></li>
-                <li><a class="dropdown-item" href="/signup">Signup</a></li>
-                <%}%>
+              </div>
+              <ul class="header__right__widget">
+                <li><span class="icon_search search-switch"></span></li>
+                <li>
+                  <a href=""
+                    ><span class="icon_heart_alt"></span>
+                    <!-- <div class="tip">2</div> -->
+                  </a>
+                </li>
+                <li>
+                  <a href=""
+                    ><span class="icon_bag_alt"></span>
+                    <!-- <div class="tip">2</div> -->
+                  </a>
+                </li>
               </ul>
             </div>
-                        </div>
-                        <ul class="header__right__widget">
-                            <li><span class="icon_search search-switch"></span></li>
-                            <li><a href=""><span class="icon_heart_alt"></span>
-                                <!-- <div class="tip">2</div> -->
-                            </a></li>
-                            <li><a href=""><span class="icon_bag_alt"></span>
-                                <!-- <div class="tip">2</div> -->
-                            </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="canvas__open">
-                <i class="fa fa-bars"></i>
-            </div>
+          </div>
         </div>
+        <div class="canvas__open">
+          <i class="fa fa-bars"></i>
+        </div>
+      </div>
     </header>
     <!-- Header Section End -->
 
-<!-- Banner Section Begin -->
-<section class="banner set-bg" data-setbg="">
-    <div class="container">
+    <!-- Banner Section Begin -->
+    <section class="banner set-bg" data-setbg="">
+      <div class="container">
         <div class="row">
-            <div class="col-xl-7 col-lg-8 m-auto">
-                <div class="banner__slider owl-carousel">
-                    <div class="banner__item">
-                        <div class="banner__text">
-                            <span>HolyCollection</span>
-                            <h1>The Project Jacket</h1>
-                            <a href="">Shop now</a>
-                        </div>
-                    </div>
-                    <div class="banner__item">
-                        <div class="banner__text">
-                            <span>Best Collection</span>
-                            <h1>Baggy Pants</h1>
-                            <a href="">Shop now</a>
-                        </div>
-                    </div>
-                    <div class="banner__item">
-                        <div class="banner__text">
-                            <span>Summer Collection</span>
-                            <h1>The Striped Jean</h1>
-                            <a href="">Shop now</a>
-                        </div>
-                    </div>
+          <div class="col-xl-7 col-lg-8 m-auto">
+            <div class="banner__slider owl-carousel">
+              <div class="banner__item">
+                <div class="banner__text">
+                  <span>HolyCollection</span>
+                  <h1>The Project Jacket</h1>
+                  <a href="">Shop now</a>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Banner Section End -->
-
-<!-- Product Section Begin -->
-<section class="product spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-4">
-                <div class="section-title">
-                    <h4>New product</h4>
+              </div>
+              <div class="banner__item">
+                <div class="banner__text">
+                  <span>Best Collection</span>
+                  <h1>Baggy Pants</h1>
+                  <a href="">Shop now</a>
                 </div>
+              </div>
+              <div class="banner__item">
+                <div class="banner__text">
+                  <span>Summer Collection</span>
+                  <h1>The Striped Jean</h1>
+                  <a href="">Shop now</a>
+                </div>
+              </div>
             </div>
-
-
-            <!-- <div class="col-lg-8 col-md-8">
-                <ul class="filter__controls">
-                    <li class="active" data-filter="*">All</li>
-                    <li data-filter=".women">Women’s</li>
-                    <li data-filter=".men">Men’s</li>
-                    
-                </ul>
-            </div> -->
-
-
-        </div>
-        <div class="d-flex ">
-  <div class="row property__gallery">
-  <% for (let i = 0; i < product.length; i++) {
-        if (product[i].status === 0) { %>
-    <div class="col-lg-3 col-md-4 col-sm-6 mix women">
-      <div class="product__item">
-        
-             <a href="" class=" product__item__pic set-bg ">
-       <img src="productImages/<%= product[i].productImages %>" alt="Image" class="img-fluid">
-    </a>
-          <ul class="product__hover mb-5">
-            
-            <li><a href=""><span class="icon_heart_alt"></span></a></li>
-            <li><a href=""><span class="icon_bag_alt"></span></a></li>
-          </ul>
-        </div>
-        <div class="product__item__text ">
-          <h6><a href=""><%= product[i].productName %></a></h6>
-          <div class="product__price">Rs. <%= product[i].price %></div>
+          </div>
         </div>
       </div>
-    </div>
-  <% } } %>
+    </section>
+    <!-- Banner Section End -->
 
-</div>
-</div>
-
-
-
-    
-</section>
-<!-- Product Section End -->
-
-
-
-
-
-<!-- Services Section Begin -->
-<section class="services spad">
-    <div class="container">
+        <!-- Product Section Begin -->
+    <section class="product spad">
+      <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="services__item">
-                    <i class="fa fa-car"></i>
-                    <h6>Free Shipping</h6>
-                    <p>For all oder over Rs.1000</p>
-                </div>
+          <div class="col-lg-4 col-md-4">
+            <div class="section-title">
+              <h4>New product</h4>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="services__item">
-                    <i class="fa fa-money"></i>
-                    <h6>Money Back Guarantee</h6>
-                    <p>If good have Problems</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="services__item">
-                    <i class="fa fa-support"></i>
-                    <h6>Online Support 24/7</h6>
-                    <p>Dedicated support</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="services__item">
-                    <i class="fa fa-headphones"></i>
-                    <h6>Payment Secure</h6>
-                    <p>100% secure payment</p>
-                </div>
+          </div>
+          <div class="col-lg-8 col-md-8">
+                <ul class="filter__controls">
+                   <% for (let i=0;i<category.length;i++){ %> 
+                
+
+                    
+                    <li> <%= category[i].name %></li>
+                    <%}%>
+                </ul>
             </div>
         </div>
-    </div>
-</section>
-<!-- Services Section End -->
 
 
-<!-- Footer Section Begin -->
-<footer class="footer">
-    <div class="container">
+      <div class="row property__gallery">
+    <% for (let i=0; i < product.length; i++) {
+        if (product[i].status !== 1) { %>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix men">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/productImages/<%= product[i].productImages %>">
+                        <ul class="product__hover">
+                            <li>
+                                <a href="/productImages/<%= product[i].productImages %>" class="image-popup">
+                                    <span class="arrow_expand"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon_heart_alt"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon_bag_alt"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><p><%= product[i].productName %> </p></h6>
+                        <div class="product__price">Rs. <%= product[i].price %></div>
+                    </div>
+                </div>
+            </div>
+        <% }
+    } %>
+</div>
+
+      </div>
+    </section>
+    <!-- Product Section End -->
+
+    <!-- Services Section Begin -->
+    <section class="services spad">
+      <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-7">
-                <div class="footer__about">
-                    <div class="footer__logo">
-                        <h1>TECCAS</h1>
-                    </div>
-                    <p>Fashion is constantly evolving, with new trends emerging each season.
-                         From bold prints and bright colors to classic silhouettes and timeless accessories,
-                          there are endless options for women to express their unique style.</p>
-                    <div class="footer__payment">
-                        <a href=""><img src="img/payment/payment-1.png" alt=""></a>
-                        <a href=""><img src="img/payment/payment-2.png" alt=""></a>
-                        <a href=""><img src="img/payment/payment-3.png" alt=""></a>
-                        <a href=""><img src="img/payment/payment-4.png" alt=""></a>
-                        <a href=""><img src="img/payment/payment-5.png" alt=""></a>
-                    </div>
-                </div>
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="services__item">
+              <i class="fa fa-car"></i>
+              <h6>Free Shipping</h6>
+              <p>For all oder over Rs.1000</p>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-5">
-                <div class="footer__widget">
-                    <h6>Quick links</h6>
-                    <ul>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Blogs</a></li>
-                        <li><a href="">Contact</a></li>
-                        
-                    </ul>
-                </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="services__item">
+              <i class="fa fa-money"></i>
+              <h6>Money Back Guarantee</h6>
+              <p>If good have Problems</p>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="footer__widget">
-                    <h6>Account</h6>
-                    <ul>
-                        <li><a href="">My Account</a></li>
-                        <li><a href="">Orders Tracking</a></li>
-                        <li><a href="">Checkout</a></li>
-                        <li><a href="">Wishlist</a></li>
-                    </ul>
-                </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="services__item">
+              <i class="fa fa-support"></i>
+              <h6>Online Support 24/7</h6>
+              <p>Dedicated support</p>
             </div>
-            <div class="col-lg-4 col-md-8 col-sm-8">
-                <div class="footer__newslatter">
-                    <h6>NEWSLETTER</h6>
-                    <form action="">
-                        <input type="text" placeholder="Email">
-                        <button type="submit" class="site-btn">Subscribe</button>
-                    </form>
-                    <div class="footer__social">
-                        <a href=""><i class="fa fa-facebook"></i></a>
-                        <a href=""><i class="fa fa-twitter"></i></a>
-                        <a href=""><i class="fa fa-youtube-play"></i></a>
-                        <a href=""><i class="fa fa-instagram"></i></a>
-                        <a href=""><i class="fa fa-pinterest"></i></a>
-                    </div>
-                </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="services__item">
+              <i class="fa fa-headphones"></i>
+              <h6>Payment Secure</h6>
+              <p>100% secure payment</p>
             </div>
+          </div>
         </div>
-        
-    </div>
-</footer>
-<!-- Footer Section End -->
+      </div>
+    </section>
+    <!-- Services Section End -->
 
-<!-- Search Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-7">
+            <div class="footer__about">
+              <div class="footer__logo">
+                <h1>TECCAS</h1>
+              </div>
+              <p>
+                Fashion is constantly evolving, with new trends emerging each
+                season. From bold prints and bright colors to classic
+                silhouettes and timeless accessories, there are endless options
+                for women to express their unique style.
+              </p>
+              <div class="footer__payment">
+                <a href=""><img src="img/payment/payment-1.png" alt="" /></a>
+                <a href=""><img src="img/payment/payment-2.png" alt="" /></a>
+                <a href=""><img src="img/payment/payment-3.png" alt="" /></a>
+                <a href=""><img src="img/payment/payment-4.png" alt="" /></a>
+                <a href=""><img src="img/payment/payment-5.png" alt="" /></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-5">
+            <div class="footer__widget">
+              <h6>Quick links</h6>
+              <ul>
+                <li><a href="">About</a></li>
+                <li><a href="">Blogs</a></li>
+                <li><a href="">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-4">
+            <div class="footer__widget">
+              <h6>Account</h6>
+              <ul>
+                <li><a href="">My Account</a></li>
+                <li><a href="">Orders Tracking</a></li>
+                <li><a href="">Checkout</a></li>
+                <li><a href="">Wishlist</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-8 col-sm-8">
+            <div class="footer__newslatter">
+              <h6>NEWSLETTER</h6>
+              <form action="">
+                <input type="text" placeholder="Email" />
+                <button type="submit" class="site-btn">Subscribe</button>
+              </form>
+              <div class="footer__social">
+                <a href=""><i class="fa fa-facebook"></i></a>
+                <a href=""><i class="fa fa-twitter"></i></a>
+                <a href=""><i class="fa fa-youtube-play"></i></a>
+                <a href=""><i class="fa fa-instagram"></i></a>
+                <a href=""><i class="fa fa-pinterest"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+      <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="search-close-switch">+</div>
         <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
+          <input type="text" id="search-input" placeholder="Search here....." />
         </form>
+      </div>
     </div>
-</div>
-<!-- Search End -->
+    <!-- Search End -->
 
-<!-- Js Plugins -->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/mixitup.min.js"></script>
-<script src="js/jquery.countdown.min.js"></script>
-<script src="js/jquery.slicknav.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/jquery.nicescroll.min.js"></script>
-<script src="js/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
-
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/main.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -3,6 +3,7 @@ const Coupon = require("../models//couponModel");
 const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const bcrypt = require("bcrypt");
+const { findById, findByIdAndUpdate } = require("../models/userModel");
 
 
 ////////////////////Admin Controller/////////////////////////////
@@ -446,7 +447,61 @@ const unBlockProduct = async (req, res) => {
 };
 
 
+const editProductLoad = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const productData = await Product.findById({ _id: id });
+    const categoryData = await Category.find();
 
+    if (productData) {
+      res.render("edit-product", { product: productData,category:categoryData });
+    } else {
+      res.redirect("/admin/product-dashboard");
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+const updateProduct = async(req,res) => {
+    try {
+      const id = req.query.id;
+      const category = await Category.findOne({ name: req.body.category });
+         console.log(req.files);
+         let arrImages = [];
+         if (req.files) {
+           req.files.forEach((file) => arrImages.push(file.filename));
+         }
+        
+      const productData = await Product.updateOne(
+        { _id: id},
+        {
+          $set: {
+            productName: req.body.productName,
+            price: req.body.price,
+            description: req.body.description,
+            quantity: req.body.quantity,
+            color: req.body.color,
+            category: category._id,
+            brand: req.body.brand,
+            status: 0,
+            productImages: arrImages,
+          },
+        }
+      );
+
+      console.log(productData);
+
+      if(productData) {
+        res.redirect('/admin/product-dashboard')
+      }
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+ }
 
 
 ////////////////////Logout Controller/////////////////////////////
@@ -489,4 +544,6 @@ module.exports = {
   productDetails,
   blockProduct,
   unBlockProduct,
+  editProductLoad,
+  updateProduct,
 };

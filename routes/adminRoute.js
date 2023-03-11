@@ -127,6 +127,10 @@ admin_route.get("/blockProduct",auth.isLogin,adminController.blockProduct);
 
 admin_route.get("/unBlockProduct",auth.isLogin,adminController.unBlockProduct);
 
+admin_route.get("/edit-product", auth.isLogin, adminController.editProductLoad);
+
+admin_route.post("/edit-product",upload.array("file"), auth.isLogin, adminController.updateProduct);
+
 
 
 ///////////////////////Special Route////////////////////

@@ -5,16 +5,6 @@ const session = require("express-session");
 
 const config = require("../config/config");
 
-user_route.use(
-  session({
-    secret: config.sessionSecret,
-    saveUninitialized: true,
-    resave: false,
-    cookie: {
-      maxAge: 500000,
-    },
-  })
-);
 
 const auth = require("../middleware/auth");
 

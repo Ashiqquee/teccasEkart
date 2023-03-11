@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
+const Category = require("../models/categoryModel");
 const bcrypt = require("bcrypt");
 
 require("dotenv").config();
@@ -62,6 +63,8 @@ const insertUser = async (req, res) => {
         msg: "Please enter a valid name",
       });
     }
+
+
     const spassword = await securePassword(req.body.pwd);
 
     const user = new User({
@@ -94,6 +97,9 @@ const insertUser = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+
 
 const otpVerify = async (req, res) => {
   const { otp } = req.body;
@@ -160,11 +166,17 @@ const verifyLogin = async (req, res) => {
   }
 };
 
+
+
+
+
 const loadHome = async (req, res) => {
   try {
     const session = req.session.user_id;
+    const categoryData =  await Category.find();
+    
     const productData = await Product.find();
-    res.render("home", { session,product: productData });
+    res.render("home", { session,product: productData,category:categoryData });
   } catch (error) {
     console.log(error);
   }
@@ -223,13 +235,13 @@ const verifyReset = async (req, res) => {
     
     if (verification_check.status === "approved") {
       const spassword = await securePassword(req.body.password);
-
+      // await  User.updateOne({mobile:phone},{$set:{is_verified:1}})
       await User.updateOne({ mobile: phone }, { $set: { password: spassword } });
       
       req.session.otpcorrect = true;
       res.redirect('/login')
     } else {
-      res.status(400).send("Incorrect OTP. Please try again.");
+      res.render('changePassword',{msg:"Incorrect Otp"})
     }
   } catch (error) {
     console.error(error);

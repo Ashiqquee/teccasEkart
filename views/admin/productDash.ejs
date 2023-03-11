@@ -48,7 +48,7 @@
 
                     </ul>
                     <div class="d-flex me-5" >
-                        <a class="btn btn-danger" href="/logout">Logout</a>
+                        <a class="btn btn-danger" href="/admin/logout">Logout</a>
                         
 
                     </div>
@@ -97,8 +97,8 @@
                                  (product[i].status == 1) { %> Inactive <% } %>
                                 </td>
                                 <td style="font-family: 'EB Garamond', serif;">
-                                    <a href="/admin/product-details?id=<%= product[i]._id %>" style="font-size: small;" class="btn btn-primary mt-1">View</a>
-                                    <a href="/admin/edit-product?id=<%= product[i]._id%>" style="font-size: small;" class="btn btn-success mt-1">Edit</a>
+                                    <a href="/admin/product-details?id=<%=product[i]._id %>" style="font-size: small;" class="btn btn-primary mt-1">View</a>
+                                    <a href="/admin/edit-product?id=<%=product[i]._id%>" style="font-size: small;" class="btn btn-success mt-1">Edit</a>
                                     <% if(product[i].status == 0){ %>
                                         <a href="/admin/blockProduct?id=<%=product[i]._id%>"><button type="button" style="font-size: small;" class="btn btn-danger mt-1">Unlist</button></a>
                                     <% } else { %>
