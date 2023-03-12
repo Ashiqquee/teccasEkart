@@ -124,6 +124,7 @@
                   <div class="custom-file">
                     <input
                       id="image"
+                      onchange="checkImageFileType()"
                       name="file"
                       type="file"
                       class="custom-file-input"
@@ -158,79 +159,93 @@
 
 <script>
 
-const form = document.querySelector('form');
+ const form = document.querySelector('form');
+const productName = document.querySelector('#productName');
+const brand = document.querySelector('#brand');
+const description = document.querySelector('#description');
+const price = document.querySelector('#price');
+const color = document.querySelector('#color');
+const quantity = document.querySelector('#quantity');
+const category = document.querySelector('#category');
 
-
-form.addEventListener('submit', function(event) {
-
+form.addEventListener('submit', (event) => {
   event.preventDefault();
-
-
-  const productName = document.querySelector('#productName');
-  const brand = document.querySelector('#brand');
-  const description = document.querySelector('#description');
-  const price = document.querySelector('#price');
-  const color = document.querySelector('#color');
-  const quantity = document.querySelector('#quantity');
-  const category = document.querySelector('#category');
-  const image = document.querySelector('#image');
-
- 
-  const errors = [];
-
-
+  
+  let isValid = true;
+  
+  
   if (productName.value.trim() === '') {
-    errors.push('product name is required');
+    productName.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    productName.classList.remove('is-invalid');
   }
+  
 
   if (brand.value.trim() === '') {
-    errors.push('brand is required');
+    brand.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    brand.classList.remove('is-invalid');
   }
+  
 
   if (description.value.trim() === '') {
-    errors.push('Description is required');
+    description.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    description.classList.remove('is-invalid');
   }
+  
 
-  if (price.value.trim() === '') {
-    errors.push('Price is required');
-  } else if (isNaN(parseFloat(price.value))) {
-    errors.push('Price must be a number');
-  } else if (parseFloat(price.value) < 0) {
-    errors.push('Price must be a positive number');
+  if (isNaN(parseFloat(price.value)) || parseFloat(price.value) <= 0) {
+    price.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    price.classList.remove('is-invalid');
   }
+  
 
   if (color.value.trim() === '') {
-    errors.push('Color is required');
-  }
-
-  if (quantity.value.trim() === '') {
-    errors.push('Quantity is required');
-  } else if (isNaN(parseInt(quantity.value))) {
-    errors.push('Quantity must be a number');
-  } else if (parseInt(quantity.value) < 0) {
-    errors.push('Quantity must be a positive number');
-  }
-
-  if (category.value.trim() === '') {
-    errors.push('Category is required');
-  }
-
-  if (image.files.length === 0) {
-    errors.push('Image is required');
-  }
-
-  
-  if (errors.length > 0) {
-    const errorDiv = document.createElement('div');
-    errorDiv.classList.add('alert', 'alert-danger');
-    errorDiv.innerHTML = errors.join('<br>');
-    form.insertBefore(errorDiv, form.firstChild);
+    color.classList.add('is-invalid');
+    isValid = false;
   } else {
-
-    form.submit();
+    color.classList.remove('is-invalid');
+  }
+  
+ 
+  if (isNaN(parseInt(quantity.value)) || parseInt(quantity.value) < 0) {
+    quantity.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    quantity.classList.remove('is-invalid');
+  }
+  
+ 
+  if (category.value === '') {
+    category.classList.add('is-invalid');
+    isValid = false;
+  } else {
+    category.classList.remove('is-invalid');
+  }
+  
+  if (isValid) {
+    form.submit(); 
   }
 });
 
+  
+ function checkImageFileType() {
+    const fileInput = document.getElementById("image");
+    const filePath = fileInput.value;
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+    if (!allowedExtensions.exec(filePath)) {
+      alert("Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.");
+      fileInput.value = "";
+      return false;
+    }
+  }
 </script>
 
   </body>

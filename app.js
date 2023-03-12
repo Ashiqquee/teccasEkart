@@ -8,7 +8,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const nocache = require("nocache");
 const morgan = require('morgan');
-const config = require("./config/config");
+
 require("dotenv").config();
 const PORT= process.env.PORT;
 
@@ -19,7 +19,7 @@ app.use(morgan("tiny"));
 
 app.use(
   session({
-    secret: config.sessionSecret,
+    secret: process.env.sessionSecret,
     saveUninitialized: true,
     resave: false,
     cookie: {
