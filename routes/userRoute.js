@@ -3,8 +3,6 @@ const user_route = express();
 
 const session = require("express-session");
 
-const config = require("../config/config");
-
 
 const auth = require("../middleware/auth");
 
