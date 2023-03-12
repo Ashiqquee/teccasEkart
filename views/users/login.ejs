@@ -80,6 +80,12 @@
                   
 
                   <% } %> 
+                  <% if(typeof msg !== 'undefined' ){ %>
+                  
+                   <p style="font-size: small; color: rgb(0, 61, 3);font-family: 'EB Garamond', serif;" class="ms-3"> <%= msg %></p>
+                  
+
+                  <% } %> 
 
                   <div class="mt-5 ms-3">
                     <p>
@@ -106,41 +112,35 @@
 </div>
 
 <script>
-  const form = document.querySelector("form");
+const form = document.querySelector('form');
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
+  const email = document.querySelector('input[name=email]').value;
+  const password = document.querySelector('input[name=password]').value;
 
-    const emailInput = form.elements["email"];
-    const passwordInput = form.elements["password"];
+  if (!email || !password) {
+    alert('Please fill in all fields');
+    return;
+  }
 
-    if (!emailInput.value || !emailInput.value.includes("@")) {
-      emailInput.classList.add("is-invalid");
-      const error = document.createElement("div");
-      error.classList.add("invalid-feedback");
-      error.textContent = "Please enter a valid email address.";
-      emailInput.parentNode.appendChild(error);
-    } else {
-      emailInput.classList.remove("is-invalid");
-      emailInput.classList.add("is-valid");
-    }
 
-    if (!passwordInput.value || passwordInput.value.length < 6) {
-      passwordInput.classList.add("is-invalid");
-      const error = document.createElement("div");
-      error.classList.add("invalid-feedback");
-      error.textContent =
-        "Please enter a password that is at least 6 characters long.";
-      passwordInput.parentNode.appendChild(error);
-    } else {
-      passwordInput.classList.remove("is-invalid");
-      passwordInput.classList.add("is-valid");
-    }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('Please enter a valid email address');
+    return;
+  }
 
-    if (form.checkValidity()) {
-      form.submit();
-    }
-  });
+  
+  if (password.length < 6) {
+    alert('Password should be at least 8 characters long');
+    return;
+  }
+
+  
+  form.submit();
+});
+
 </script>
 
 <%- include('../layouts/footer.ejs')%>

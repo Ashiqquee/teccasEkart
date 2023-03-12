@@ -44,7 +44,13 @@
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0"></div>
                   </div>
-                  <button type="submit" class="btn btn-success btn-block ms-3">
+                   <% if(typeof msg !== 'undefined' ){ %>
+                  
+                   <p style="font-size: small; color: red;font-family: 'EB Garamond', serif;" class="ms-3"> <%= msg %></p>
+                  
+
+                  <% } %> 
+                  <button type="submit" class="btn btn-success btn-block ms-3 mt-5">
                     Verify 
                   </button>
                   <button
@@ -73,7 +79,7 @@
   }
 
   function resendOTP() {
-    const mobileNumber = req.body.mno;
+    const mobileNumber = req.session.phone;
     sendOTP(mobileNumber)
       .then(() => {
         console.log(`New OTP sent to ${mobileNumber}`);

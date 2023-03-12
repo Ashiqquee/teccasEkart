@@ -10,12 +10,15 @@ const authtoken = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_SERVICE_SID = process.env.TWILIO_SERVICE_SID;
 const client = require("twilio")(accountsid, authtoken);
 
+let msg;
+let message;
 
 const loadRegister = async (req, res) => {
   try {
     res.render("signup");
   } catch (error) {
-    console.log(error.message);
+    console.error(error);
+    res.status(500).send("Server error");
   }
 };
 
@@ -24,53 +27,37 @@ const securePassword = async (password) => {
     const passwordHash = await bcrypt.hash(password, 10);
     return passwordHash;
   } catch (error) {
-    console.log(error.message);
+    console.error(error);
+    throw new Error("Failed to hash password");
   }
 };
 
 const insertUser = async (req, res) => {
   try {
-    const existingUser = await User.findOne({ email: req.body.email });
+    const { name, email, mno, pwd } = req.body;
+
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.render("signup", {
         msg: "Email already registered",
       });
     }
 
-    const existingNumber = await User.findOne({ mobile: req.body.mno });
+    const existingNumber = await User.findOne({ mobile: mno });
     if (existingNumber) {
       return res.render("signup", {
         msg: "Mobile number already registered",
       });
     }
 
-    const mobileRegex = /^[0-9]{10}$/;
-    if (!req.body.mno || !mobileRegex.test(req.body.mno)) {
-      return res.render("signup", {
-        msg: "Please enter a valid mobile number",
-      });
-    }
+ 
 
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    if (!req.body.email || !emailRegex.test(req.body.email)) {
-      return res.render("signup", {
-        msg: "Please enter a valid email address",
-      });
-    }
-
-    if (!req.body.name || req.body.name.trim().length < 3) {
-      return res.render("signup", {
-        msg: "Please enter a valid name",
-      });
-    }
-
-
-    const spassword = await securePassword(req.body.pwd);
+    const spassword = await securePassword(pwd);
 
     const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      mobile: req.body.mno,
+      name,
+      email,
+      mobile: mno,
       password: spassword,
       is_admin: 0,
       is_blocked: 0,
@@ -79,22 +66,23 @@ const insertUser = async (req, res) => {
     const userData = await user.save();
 
     if (userData) {
-      req.session.phone = req.body.mno;
-      client.verify.v2
-        .services(TWILIO_SERVICE_SID)
-        .verifications.create({ to: `+91${req.body.mno}`, channel: "sms" })
-        .then((verification) => {
-          console.log(req.body.mno);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      res.render("verifySignup");
+      req.session.phone = mno;
+      try {
+        const verification = await client.verify
+          .services(TWILIO_SERVICE_SID)
+          .verifications.create({ to: `+91${mno}`, channel: "sms" });
+        console.log(mno);
+        res.render("verifySignup");
+      } catch (err) {
+        console.error(err);
+        res.render("signup", { msg: "Failed to send verification code" });
+      }
     } else {
       res.render("signup", { msg: "Registration failed" });
     }
   } catch (error) {
-    console.log(error.message);
+    console.error(error);
+    res.status(500).send("Server error");
   }
 };
 
@@ -115,6 +103,7 @@ const otpVerify = async (req, res) => {
         await User.updateOne({ mobile: phone }, { $set: { is_verified: 1 } });
         res.redirect("/login");
       } else {
+        res.render('verifySignup',{msg:"Otp incorrect"})
       }
     })
 
@@ -125,7 +114,7 @@ const otpVerify = async (req, res) => {
 
 const loginLoad = async (req, res) => {
   try {
-    res.render("login");
+    res.render("login",{msg,message});
   } catch (error) {
     console.log(error.message);
   }
@@ -240,8 +229,10 @@ const verifyReset = async (req, res) => {
       
       req.session.otpcorrect = true;
       res.redirect('/login')
+      msg = "Verfied Succesfully,Login with account"
     } else {
       res.render('changePassword',{msg:"Incorrect Otp"})
+      
     }
   } catch (error) {
     console.error(error);

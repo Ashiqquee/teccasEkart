@@ -64,7 +64,7 @@
         </li>
       </ul>
       <div class="offcanvas__logo">
-        <h2>TECCAS</h2>
+        <h6>TECCAS</h6>
       </div>
       <div id="mobile-menu-wrap"></div>
       <div class="offcanvas__auth">
@@ -197,10 +197,10 @@
     <!-- Banner Section End -->
 
         <!-- Product Section Begin -->
-    <section class="product spad">
+    <section class="product spad " >
       <div class="container">
         <div class="row">
-          <div class="col-lg-4 col-md-4">
+          <div class="col-lg-4 col-md-4" >
             <div class="section-title">
               <h4>New product</h4>
             </div>
@@ -218,11 +218,11 @@
         </div>
 
 
-      <div class="row property__gallery">
-    <% for (let i=0; i < product.length; i++) {
+      <div class="row property__gallery" >
+    <% for (let i=product.length-1; i >product.length-5 ; i--) {
         if (product[i].status !== 1) { %>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix men">
-                <div class="product__item">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix men" >
+                <div class="product__item"  >
                     <div class="product__item__pic set-bg" data-setbg="/productImages/<%= product[i].productImages %>">
                         <ul class="product__hover">
                             <li>
@@ -244,7 +244,7 @@
                     </div>
                     <div class="product__item__text">
                         <h6><p><%= product[i].productName %> </p></h6>
-                        <div class="product__price">Rs. <%= product[i].price %></div>
+                        <div style="color: red;" class="product__price">Rs. <%= product[i].price %></div>
                     </div>
                 </div>
             </div>

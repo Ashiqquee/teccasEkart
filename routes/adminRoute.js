@@ -4,8 +4,10 @@ const admin_route = express();
 
 const session = require("express-session");
 const config = require("../config/config");
+const multerConfig = require('../config/multer');
 
-const multer = require("multer");
+const upload = multerConfig.createMulter();
+
 const path = require("path");
 
 
@@ -17,28 +19,6 @@ const auth = require("../middleware/adminAuth");
 const adminController = require("../controllers/adminController");
 
 admin_route.use(express.static('public'));
-
-const storage = multer.diskStorage({
-  destination:function(req,file,cb){
-    cb(null,path.join(__dirname,'../public/productImages'),function(success,err){
-      if(err){
-        throw err
-      }
-
-    })
-  },
-  filename:function(req,file,cb){
-    const name = Date.now()+'-'+file.originalname;
-    cb(null,name,function(success,err){
-      if(err){
-        throw err
-      }
-    })
-
-  }
-})
-
-const upload = multer({storage:storage})
 
 
 

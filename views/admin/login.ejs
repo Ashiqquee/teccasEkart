@@ -104,41 +104,73 @@
 </div>
 
 <script>
-  const form = document.querySelector("form");
+// Get the form and input elements
+const form = document.querySelector('form');
+const emailInput = document.querySelector('input[name="email"]');
+const passwordInput = document.querySelector('input[name="password"]');
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
 
-    const emailInput = form.elements["email"];
-    const passwordInput = form.elements["password"];
+form.addEventListener('submit', (event) => {
+  
+  event.preventDefault();
 
-    if (!emailInput.value || !emailInput.value.includes("@")) {
-      emailInput.classList.add("is-invalid");
-      const error = document.createElement("div");
-      error.classList.add("invalid-feedback");
-      error.textContent = "Please enter a valid email address.";
-      emailInput.parentNode.appendChild(error);
-    } else {
-      emailInput.classList.remove("is-invalid");
-      emailInput.classList.add("is-valid");
-    }
+  
+  const emailValue = emailInput.value.trim();
+  if (!emailValue || !isValidEmail(emailValue)) {
 
-    if (!passwordInput.value || passwordInput.value.length < 6) {
-      passwordInput.classList.add("is-invalid");
-      const error = document.createElement("div");
-      error.classList.add("invalid-feedback");
-      error.textContent =
-        "Please enter a password that is at least 6 characters long.";
-      passwordInput.parentNode.appendChild(error);
-    } else {
-      passwordInput.classList.remove("is-invalid");
-      passwordInput.classList.add("is-valid");
-    }
+    const emailErrorMessage = document.createElement('span');
+    emailErrorMessage.textContent = 'Please enter a valid email address.';
+    emailErrorMessage.classList.add('error-message');
+    emailInput.insertAdjacentElement('afterend', emailErrorMessage);
 
-    if (form.checkValidity()) {
-      form.submit();
-    }
-  });
+    emailInput.classList.add('invalid');
+
+    return;
+  }
+
+
+  const passwordValue = passwordInput.value.trim();
+  if (!passwordValue) {
+
+    const passwordErrorMessage = document.createElement('span');
+    passwordErrorMessage.textContent = 'Please enter your password.';
+    passwordErrorMessage.classList.add('error-message');
+    passwordInput.insertAdjacentElement('afterend', passwordErrorMessage);
+
+
+    passwordInput.classList.add('invalid');
+
+    return;
+  }
+
+ 
+  form.submit();
+});
+
+
+function isValidEmail(email) {
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
+
+
+emailInput.addEventListener('focus', () => {
+  emailInput.classList.remove('invalid');
+  const emailErrorMessage = emailInput.nextElementSibling;
+  if (emailErrorMessage && emailErrorMessage.classList.contains('error-message')) {
+    emailErrorMessage.remove();
+  }
+});
+
+passwordInput.addEventListener('focus', () => {
+  passwordInput.classList.remove('invalid');
+  const passwordErrorMessage = passwordInput.nextElementSibling;
+  if (passwordErrorMessage && passwordErrorMessage.classList.contains('error-message')) {
+    passwordErrorMessage.remove();
+  }
+});
+
 </script>
 
 <%- include('../layouts/footer.ejs')%>

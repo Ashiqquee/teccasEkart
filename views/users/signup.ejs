@@ -134,48 +134,65 @@
 </section>
 
 <script>
-  const form = document.querySelector("form");
+const form = document.querySelector('form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  
   const nameInput = document.querySelector('input[name="name"]');
   const emailInput = document.querySelector('input[name="email"]');
   const mobileInput = document.querySelector('input[name="mno"]');
   const passwordInput = document.querySelector('input[name="pwd"]');
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    if (
-      !nameInput.value ||
-      !emailInput.value ||
-      !mobileInput.value ||
-      !passwordInput.value
-    ) {
-      alert("Please fill in all required fields.");
-      return;
-    }
-
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(emailInput.value)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
-
-    const mobileRegex = /^[0-9]{10}$/;
-    if (!mobileRegex.test(mobileInput.value)) {
-      alert("Please enter a valid 10-digit mobile number.");
-      return;
-    }
-
-    const passwordRegex =
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
-    if (!passwordRegex.test(passwordInput.value)) {
-      alert(
-        "Please enter a password that is at least 8 characters long and includes at least one uppercase letter, one lowercase letter, one number, and one special character."
-      );
-      return;
-    }
-
+  
+  let errors = [];
+  
+  if (nameInput.value.trim() === '') {
+    errors.push('Name is required');
+  }
+  
+  if (emailInput.value.trim() === '') {
+    errors.push('Email is required');
+  } else if (!isValidEmail(emailInput.value)) {
+    errors.push('Email is not valid');
+  }
+  
+  if (mobileInput.value.trim() === '') {
+    errors.push('Mobile number is required');
+  } else if (!isValidMobile(mobileInput.value)) {
+    errors.push('Mobile number is not valid');
+  }
+  
+  if (passwordInput.value.trim() === '') {
+    errors.push('Password is required');
+  }
+  
+  if (errors.length > 0) {
+    
+    const errorContainer = document.querySelector('#error-container');
+    errorContainer.innerHTML = '';
+    errors.forEach(error => {
+      const p = document.createElement('p');
+      p.innerText = error;
+      errorContainer.appendChild(p);
+    });
+  } else {
+   
     form.submit();
-  });
+  }
+});
+
+function isValidEmail(email) {
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isValidMobile(mobile) {
+ 
+  const mobileRegex = /^[0-9]{10}$/;
+  return mobileRegex.test(mobile);
+}
+
 </script>
 
 <%- include('../layouts/footer.ejs')%>

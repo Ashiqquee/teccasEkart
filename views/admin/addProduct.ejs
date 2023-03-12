@@ -21,63 +21,9 @@
   </head>
 
   <body>
-    <!-- navbar -->
-    <section>
-      <nav class="navbar navbar-expand-lg bg-black">
-        <div class="container-fluid">
-          <a class="navbar-brand text-white ms-5 specialCase" href="">TECCAS</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon bg-light"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a
-                  class="nav-link active text-white ms-3 specialCase"
-                  href="/admin/home"
-                  >Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link text-white ms-2 specialCase"
-                  href="/admin/dashboard"
-                  >User Data</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link text-white ms-2 specialCase"
-                  href="/admin/category-dashboard"
-                  >Category</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link text-white ms-2 specialCase text-decoration-underline"
-                  aria-current="page"
-                  href=""
-                  >Coupon</a
-                >
-              </li>
-            </ul>
-            <div class="d-flex me-5">
-              <a class="btn btn-danger" href="/admin/logout">Logout</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </section>
 
-    <!-- End of Navbar  -->
+
+
 
     <div class="container mt-5">
       <div class="row justify-content-center">
@@ -172,6 +118,7 @@
                   <label for="image">Image</label>
                   <div class="custom-file">
                     <input
+                     accept="image/png, image/gif, image/jpeg"
                       id="image"
                       name="file"
                       type="file"
@@ -206,14 +153,10 @@
 
 
 <script>
+const form = document.querySelector('#productForm');
 
-const form = document.querySelector('form');
-
-
-form.addEventListener('submit', function(event) {
-
+form.addEventListener('submit', (event) => {
   event.preventDefault();
-
 
   const productName = document.querySelector('#productName');
   const brand = document.querySelector('#brand');
@@ -224,16 +167,14 @@ form.addEventListener('submit', function(event) {
   const category = document.querySelector('#category');
   const image = document.querySelector('#image');
 
- 
   const errors = [];
 
-
   if (productName.value.trim() === '') {
-    errors.push('product name is required');
+    errors.push('Product name is required');
   }
 
   if (brand.value.trim() === '') {
-    errors.push('brand is required');
+    errors.push('Brand is required');
   }
 
   if (description.value.trim() === '') {
@@ -266,16 +207,24 @@ form.addEventListener('submit', function(event) {
 
   if (image.files.length === 0) {
     errors.push('Image is required');
+  } else {
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+const imageValue = image.value;
+
+if (!allowedExtensions.exec(imageValue)) {
+  errors.push('Please upload an image in JPG or PNG format.');
+}
+    if (!allowedExtensions.test(image.value)) {
+      errors.push('Please upload an image in JPG or PNG format.');
+    }
   }
 
-  
   if (errors.length > 0) {
     const errorDiv = document.createElement('div');
     errorDiv.classList.add('alert', 'alert-danger');
     errorDiv.innerHTML = errors.join('<br>');
     form.insertBefore(errorDiv, form.firstChild);
   } else {
-
     form.submit();
   }
 });

@@ -5,7 +5,6 @@ const Product = require("../models/productModel");
 const bcrypt = require("bcrypt");
 const { findById, findByIdAndUpdate } = require("../models/userModel");
 
-
 ////////////////////Admin Controller/////////////////////////////
 
 const loadLogin = async (req, res) => {
@@ -76,10 +75,6 @@ const securePassword = async (password) => {
     console.log(error.message);
   }
 };
-
-
-
-
 
 const blockUser = async (req, res) => {
   try {
@@ -228,7 +223,6 @@ const addCoupon = async (req, res) => {
   }
 };
 
-
 const deleteCoupon = async (req, res) => {
   try {
     const id = req.query.id;
@@ -276,7 +270,6 @@ const editCouponLoad = async (req, res) => {
 
 const updateCoupon = async (req, res) => {
   try {
-
     const couponData = await Coupon.findByIdAndUpdate(
       { _id: req.body.id },
       {
@@ -297,13 +290,12 @@ const updateCoupon = async (req, res) => {
 };
 
 ////////////////////category Controller/////////////////////////////
-
-
-
+let message
 const categoryDashboard = async (req, res) => {
   try {
     const categoryData = await Category.find();
-    res.render("categoryDash", { category: categoryData });
+    res.render("categoryDash", { category: categoryData ,message});
+    message=null
   } catch (error) {
     console.log(error.message);
   }
@@ -312,12 +304,26 @@ const categoryDashboard = async (req, res) => {
 const deleteCatogery = async (req, res) => {
   try {
     const id = req.query.id;
-    await Category.deleteOne({ _id: new Object(id) });
-    res.redirect("/admin/category-dashboard");
+
+    const cat = await Category.findOne({ _id: id }, { _id: 1 });
+
+    const productData = await Product.findOne({
+      category: new Object(id),
+    }).populate("category");
+
+    if (
+      productData ) {
+      res.redirect("/admin/category-dashboard");
+      message = "category on use";
+    } else {
+      await Category.deleteOne({ _id: new Object(id) });
+      res.redirect("/admin/category-dashboard");
+    }
   } catch (error) {
     console.log(error);
   }
 };
+
 
 const newCategory = async (req, res) => {
   try {
@@ -380,7 +386,6 @@ const addProduct = async (req, res) => {
   }
 };
 
-
 const insertProduct = async (req, res) => {
   try {
     const category = await Category.findOne({ name: req.body.category });
@@ -402,27 +407,22 @@ const insertProduct = async (req, res) => {
     });
 
     const productData = await product.save();
-    if(productData){
-      res.redirect('/admin/product-dashboard')
+    if (productData) {
+      res.redirect("/admin/product-dashboard");
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-
-
-
-
 const productDetails = async (req, res) => {
   try {
-    const productData = await Product.find().populate("category").lean()
+    const productData = await Product.find().populate("category").lean();
     res.render("productDetails", { product: productData });
   } catch (error) {
     console.log(error);
   }
 };
-
 
 const blockProduct = async (req, res) => {
   try {
@@ -434,8 +434,6 @@ const blockProduct = async (req, res) => {
   }
 };
 
-
-
 const unBlockProduct = async (req, res) => {
   try {
     const id = req.query.id;
@@ -446,7 +444,6 @@ const unBlockProduct = async (req, res) => {
   }
 };
 
-
 const editProductLoad = async (req, res) => {
   try {
     const id = req.query.id;
@@ -454,7 +451,10 @@ const editProductLoad = async (req, res) => {
     const categoryData = await Category.find();
 
     if (productData) {
-      res.render("edit-product", { product: productData,category:categoryData });
+      res.render("edit-product", {
+        product: productData,
+        category: categoryData,
+      });
     } else {
       res.redirect("/admin/product-dashboard");
     }
@@ -463,46 +463,42 @@ const editProductLoad = async (req, res) => {
   }
 };
 
-
-const updateProduct = async(req,res) => {
-    try {
-      const id = req.query.id;
-      const category = await Category.findOne({ name: req.body.category });
-         console.log(req.files);
-         let arrImages = [];
-         if (req.files) {
-           req.files.forEach((file) => arrImages.push(file.filename));
-         }
-        
-      const productData = await Product.updateOne(
-        { _id: id},
-        {
-          $set: {
-            productName: req.body.productName,
-            price: req.body.price,
-            description: req.body.description,
-            quantity: req.body.quantity,
-            color: req.body.color,
-            category: category._id,
-            brand: req.body.brand,
-            status: 0,
-            productImages: arrImages,
-          },
-        }
-      );
-
-      console.log(productData);
-
-      if(productData) {
-        res.redirect('/admin/product-dashboard')
-      }
-      
-    } catch (error) {
-      console.log(error);
-      
+const updateProduct = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const category = await Category.findOne({ name: req.body.category });
+    console.log(req.files);
+    let arrImages = [];
+    if (req.files) {
+      req.files.forEach((file) => arrImages.push(file.filename));
     }
- }
 
+    const productData = await Product.updateOne(
+      { _id: id },
+      {
+        $set: {
+          productName: req.body.productName,
+          price: req.body.price,
+          description: req.body.description,
+          quantity: req.body.quantity,
+          color: req.body.color,
+          category: category._id,
+          brand: req.body.brand,
+          status: 0,
+          productImages: arrImages,
+        },
+      }
+    );
+
+    console.log(productData);
+
+    if (productData) {
+      res.redirect("/admin/product-dashboard");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 ////////////////////Logout Controller/////////////////////////////
 
