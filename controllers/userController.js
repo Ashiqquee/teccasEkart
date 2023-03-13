@@ -15,12 +15,15 @@ let message;
 
 const loadRegister = async (req, res) => {
   try {
+   
     res.render("signup");
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
   }
 };
+
+
 
 const securePassword = async (password) => {
   try {
@@ -31,6 +34,10 @@ const securePassword = async (password) => {
     throw new Error("Failed to hash password");
   }
 };
+
+
+
+////////////////////////signup Manangement///////////////////////
 
 const insertUser = async (req, res) => {
   try {
@@ -112,13 +119,22 @@ const otpVerify = async (req, res) => {
     });
 };
 
+
+
+
 const loginLoad = async (req, res) => {
   try {
-    res.render("login",{msg,message});
+    res.render("login", { msg, message });
+    msg=null;
+    message= null;
   } catch (error) {
     console.log(error.message);
   }
 };
+
+
+
+
 
 const verifyLogin = async (req, res) => {
   try {
@@ -170,6 +186,11 @@ const loadHome = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+
+///////////////////////////////Reset password Managment/////////////////////////
 
 const resetPassword = async (req, res) => {
   try {
@@ -242,6 +263,34 @@ const verifyReset = async (req, res) => {
 
 
 
+///////////////////////////////Profile Managment//////////////////////////////////
+
+
+
+const profileLoad = async(req,res) => {
+  try {
+
+   if(req.session.user_id){
+     const id = req.session.user_id;
+     const userData = await User.findOne({ _id: id });
+     res.render("profile",{userData:userData});
+   }
+   res.redirect('/login');
+   message="Login with your account to access this page"
+    
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+
+
+
+
+
+/////////////////////////////////Logout///////////////////////////////////////////
+
 const userLogout = async (req, res) => {
   try {
     req.session.user_id = null;
@@ -250,6 +299,10 @@ const userLogout = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+
+
 
 module.exports = {
   loadRegister,
@@ -262,4 +315,5 @@ module.exports = {
   sendReset,
   resetPassword,
   otpVerify,
+  profileLoad,
 };

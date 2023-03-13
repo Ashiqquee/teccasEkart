@@ -30,6 +30,8 @@ user_route.post("/resetPassword", userController.sendReset);
 
 user_route.post("/verifyReset", userController.verifyReset);
 
+user_route.get("/profile", userController.profileLoad);
+
 
 
 module.exports = user_route;

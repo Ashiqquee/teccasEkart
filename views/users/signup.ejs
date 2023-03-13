@@ -139,59 +139,31 @@ const form = document.querySelector('form');
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   
-  const nameInput = document.querySelector('input[name="name"]');
-  const emailInput = document.querySelector('input[name="email"]');
-  const mobileInput = document.querySelector('input[name="mno"]');
-  const passwordInput = document.querySelector('input[name="pwd"]');
+  const nameInput = document.querySelector('#form3Example1c');
+  const emailInput = document.querySelector('#form3Example3c');
+  const mnoInput = document.querySelector('#phone');
+  const pwdInput = document.querySelector('#form3Example3c');
   
-  let errors = [];
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const mno = mnoInput.value.trim();
+  const pwd = pwdInput.value.trim();
   
-  if (nameInput.value.trim() === '') {
-    errors.push('Name is required');
+  if (!name) {
+    alert('Please enter your name');
+    return;
   }
   
-  if (emailInput.value.trim() === '') {
-    errors.push('Email is required');
-  } else if (!isValidEmail(emailInput.value)) {
-    errors.push('Email is not valid');
+  if (!email) {
+    alert('Please enter your email');
+    return;
   }
   
-  if (mobileInput.value.trim() === '') {
-    errors.push('Mobile number is required');
-  } else if (!isValidMobile(mobileInput.value)) {
-    errors.push('Mobile number is not valid');
-  }
+  // You can add more validation here for the other inputs
   
-  if (passwordInput.value.trim() === '') {
-    errors.push('Password is required');
-  }
-  
-  if (errors.length > 0) {
-    
-    const errorContainer = document.querySelector('#error-container');
-    errorContainer.innerHTML = '';
-    errors.forEach(error => {
-      const p = document.createElement('p');
-      p.innerText = error;
-      errorContainer.appendChild(p);
-    });
-  } else {
-   
-    form.submit();
-  }
+  form.submit();
 });
 
-function isValidEmail(email) {
-  
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-function isValidMobile(mobile) {
- 
-  const mobileRegex = /^[0-9]{10}$/;
-  return mobileRegex.test(mobile);
-}
 
 </script>
 
