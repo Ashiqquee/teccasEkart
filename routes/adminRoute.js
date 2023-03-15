@@ -46,11 +46,11 @@ admin_route.get("/dashboard", auth.isLogin, adminController.adminDashboard);
 
 admin_route.get("/edit-user", auth.isLogin, adminController.editUserLoad);
 
-admin_route.post("/edit-user", adminController.updateUser);
+admin_route.post("/edit-user", auth.isLogin, adminController.updateUser);
 
-admin_route.get("/blockUser", adminController.blockUser);
+admin_route.get("/blockUser", auth.isLogin, adminController.blockUser);
 
-admin_route.get("/unBlockUser", adminController.unBlockUser);
+admin_route.get("/unBlockUser", auth.isLogin, adminController.unBlockUser);
 
 
 ///////////////////////Coupon Controll  Route////////////////////
@@ -65,11 +65,11 @@ admin_route.get("/new-coupon",auth.isLogin, adminController.newCoupon);
 
 admin_route.post("/new-coupon", auth.isLogin, adminController.addCoupon);
 
-admin_route.get('/delete-coupon',adminController.deleteCoupon);
+admin_route.get("/delete-coupon", auth.isLogin, adminController.deleteCoupon);
 
-admin_route.get("/blockCoupon", adminController.blockCoupon);
+admin_route.get("/blockCoupon", auth.isLogin, adminController.blockCoupon);
 
-admin_route.get("/unBlockCoupon", adminController.unBlockCoupon);
+admin_route.get("/unBlockCoupon", auth.isLogin, adminController.unBlockCoupon);
 
 admin_route.get("/edit-coupon", auth.isLogin, adminController.editCouponLoad);
 
@@ -83,7 +83,7 @@ admin_route.post("/edit-coupon", auth.isLogin, adminController.updateCoupon);
 
 admin_route.get("/category-dashboard", auth.isLogin,adminController.categoryDashboard);
 
-admin_route.get("/deleteCategory", adminController.deleteCatogery);
+admin_route.get("/deleteCategory",auth.isLogin, adminController.deleteCatogery);
 
 admin_route.get("/new-category",auth.isLogin, adminController.newCategory);
 
@@ -99,7 +99,7 @@ admin_route.get("/product-dashboard", auth.isLogin,adminController.productDashbo
 
 admin_route.get("/addProduct", auth.isLogin, adminController.addProduct);
 
-admin_route.post("/addProduct",upload.array("file"),auth.isLogin,adminController.insertProduct);
+admin_route.post("/addProduct",upload.array("file",5),auth.isLogin,adminController.insertProduct);
 
 admin_route.get("/product-details", auth.isLogin, adminController.productDetails);
 
@@ -109,7 +109,23 @@ admin_route.get("/unBlockProduct",auth.isLogin,adminController.unBlockProduct);
 
 admin_route.get("/edit-product", auth.isLogin, adminController.editProductLoad);
 
-admin_route.post("/edit-product",upload.array("file"), auth.isLogin, adminController.updateProduct);
+admin_route.post("/edit-product",upload.array("file",5), auth.isLogin, adminController.updateProduct);
+
+
+
+
+///////////////////////Category Controll  Route////////////////////
+
+
+admin_route.get("/brand-dashboard",auth.isLogin,adminController.brandDashboard);
+
+admin_route.get("/new-brand", auth.isLogin, adminController.newBrand);
+
+admin_route.post("/new-brand", auth.isLogin, adminController.addBrand);
+
+admin_route.get("/edit-brand", auth.isLogin, adminController.editBrandLoad);
+
+admin_route.post("/edit-brand", auth.isLogin, adminController.updateBrand);
 
 
 

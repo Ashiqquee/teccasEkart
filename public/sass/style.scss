@@ -1,19 +1,49 @@
-@import "variable";
-@import "mixins";
+// variable scss
+@import "variables";
 
-@import "base";
-@import "header";
-@import "home-page";
-@import "footer";
-@import "breadcrumb";
-@import "categories";
-@import "product";
-@import "shop";
-@import "product-details";
-@import "shop-cart";
-@import "checkout";
+// mixin scss
+@import "mixins";
+@import "extends";
+// default scss
+@import "common";
+
+// button scss
+@import "button";
+
 @import "blog";
-@import "blog-sidebar";
-@import "blog-details";
+@import "single_blog";
+// body scss
+@import "menu";
+@import "banner";
+@import "feature_part";
+@import "product_list";
+@import "our_offer";
+@import "best_seller";
+@import "subscribe_area";
+@import "client_logo";
+@import "product";
+@import "confirmation_part";
+
+@import "elements";
+@import "blog_part";
 @import "contact";
-@import "responsive";
+
+// breadcrumb scss
+@import "breadcrumb";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@import "footer";
+
+

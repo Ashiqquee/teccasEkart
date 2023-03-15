@@ -47,4 +47,4 @@ app.use("/admin", adminRoute);
 ////////////PORT/////////////////////////
 app.listen(PORT, () => {
   console.log("Server running...");
-});
+});    

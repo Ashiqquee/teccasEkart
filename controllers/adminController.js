@@ -2,8 +2,9 @@ const User = require("../models/userModel");
 const Coupon = require("../models//couponModel");
 const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
+const Brand = require("../models/brandModel");
 const bcrypt = require("bcrypt");
-const { findById, findByIdAndUpdate } = require("../models/userModel");
+let message;
 
 ////////////////////Admin Controller/////////////////////////////
 
@@ -81,12 +82,7 @@ const securePassword = async (password) => {
 const blockUser = async (req, res) => {
   try {
     const id = req.query.id;
-    const user = await User.findOne({ _id: new Object(id) });
-
-    if (req.session.user_id === user._id.toString()) {
-      req.session.user_id = null;
-    }
-
+    
     await User.updateOne({ _id: new Object(id) }, { $set: { is_blocked: 1 } });
 
     res.redirect("/admin/dashboard");
@@ -292,7 +288,9 @@ const updateCoupon = async (req, res) => {
 };
 
 ////////////////////category Controller/////////////////////////////
-let message
+
+
+
 const categoryDashboard = async (req, res) => {
   try {
     const categoryData = await Category.find();
@@ -382,7 +380,8 @@ const productDashboard = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const categoryData = await Category.find();
-    res.render("addProduct", { category: categoryData });
+    const brandData =  await Brand.find();
+    res.render("addProduct", { category: categoryData ,brand:brandData});
   } catch (error) {
     console.log(error);
   }
@@ -391,6 +390,7 @@ const addProduct = async (req, res) => {
 const insertProduct = async (req, res) => {
   try {
     const category = await Category.findOne({ name: req.body.category });
+    const brand = await Brand.findOne({ brandName: req.body.brand });
     console.log(req.files);
     let arrImages = [];
     if (req.files) {
@@ -403,7 +403,7 @@ const insertProduct = async (req, res) => {
       quantity: req.body.quantity,
       color: req.body.color,
       category: category._id,
-      brand: req.body.brand,
+      brand: brand._id,
       status: 0,
       productImages: arrImages,
     });
@@ -419,7 +419,8 @@ const insertProduct = async (req, res) => {
 
 const productDetails = async (req, res) => {
   try {
-    const productData = await Product.find().populate("category").lean();
+    const id = req.query.id;
+    const productData = await Product.find({_id:id}).populate("category").populate('brand');
     res.render("productDetails", { product: productData });
   } catch (error) {
     console.log(error);
@@ -451,11 +452,13 @@ const editProductLoad = async (req, res) => {
     const id = req.query.id;
     const productData = await Product.findById({ _id: id });
     const categoryData = await Category.find();
+    const brandData = await Brand.find();
 
     if (productData) {
       res.render("edit-product", {
         product: productData,
         category: categoryData,
+        brand:brandData
       });
     } else {
       res.redirect("/admin/product-dashboard");
@@ -469,6 +472,7 @@ const updateProduct = async (req, res) => {
   try {
     const id = req.query.id;
     const category = await Category.findOne({ name: req.body.category });
+    const brand = await Brand.findOne({ brandName: req.body.brand });
     console.log(req.files);
     let arrImages = [];
     if (req.files) {
@@ -485,7 +489,7 @@ const updateProduct = async (req, res) => {
           quantity: req.body.quantity,
           color: req.body.color,
           category: category._id,
-          brand: req.body.brand,
+          brand: brand._id,
           status: 0,
           productImages: arrImages,
         },
@@ -501,6 +505,91 @@ const updateProduct = async (req, res) => {
     console.log(error);
   }
 };
+
+
+////////////////////Brand Controller/////////////////////////////
+
+
+
+const brandDashboard = async (req, res) => {
+  try {
+    const brandData = await Brand.find();
+    res.render("brandDash", { brand: brandData, message });
+    message = null;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const newBrand = async (req, res) => {
+  try {
+    res.render("new-brand");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+
+const addBrand = async (req, res) => {
+  try {
+    const brandName = req.body.brandName;
+    if (!brandName || brandName.trim().length < 2) {
+       res.redirect("/admin/new-brand");
+       message = "Enter a valid Brand Name";
+    }
+    const existingBrand = await Brand.findOne({
+      brandName: req.body.brandName,
+    });
+    if (existingBrand) {
+       res.redirect("/admin/new-brand" )
+        message = "Brand is Already added";
+     
+      console.log("scene");
+    }
+
+    const brand = new Brand({
+      brandName: brandName,
+    });
+
+    const brandData = await brand.save();
+
+    if (brandData) {
+      console.log("ok");
+      res.redirect("/admin/brand-dashboard");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editBrandLoad = async(req,res) => {
+  try {
+    const id = req.query.id;
+    const brandData = await Brand.findById({ _id: id });
+    if (brandData) {
+      res.render("edit-brand", { brand: brandData });
+    } else {
+      res.redirect("/admin/coupon-dashboard");
+    }
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+const updateBrand  =  async(req,res) => {
+  const id = req.query.id;
+  
+  const brandData = await Brand.findByIdAndUpdate(
+    { _id: id },
+    {$set:{brandName:req.body.brandName}}
+    );
+    res.redirect('/admin/brand-dashboard')
+}
+
 
 ////////////////////Logout Controller/////////////////////////////
 
@@ -544,4 +633,10 @@ module.exports = {
   unBlockProduct,
   editProductLoad,
   updateProduct,
+  brandDashboard,
+  newBrand,
+  addBrand,
+  editBrandLoad,
+  updateBrand,
+
 };

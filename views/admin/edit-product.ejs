@@ -45,17 +45,7 @@
                     required
                   />
                 </div>
-                <div class="form-group mb-3">
-                  <label for="brand">Brand</label>
-                  <input
-                  value="<%= product.brand %>"
-                    id="brand"
-                    name="brand"
-                    type="text"
-                    class="form-control"
-                    required
-                  />
-                </div>
+               
                 <div class="form-group mb-3">
                   <label  for="description">Description</label>
                   
@@ -119,6 +109,23 @@
                     <% } %>
                   </select>
                 </div>
+                  <div class="form-group mb-3">
+                  <label for="category">Brand</label>
+                  <select
+                  value="<%= product.brand%>"
+                    id="brand"
+                    name="brand"
+                    class="form-control"
+                    required
+                  >
+                    <option value="<%= product.quantity%>" disabled selected></option>
+                    <% for (let i = 0; i < brand.length; i++) { %>
+                    <option value="<%= brand[i].brandName %>">
+                      <%= brand[i].brandName %>
+                    </option>
+                    <% } %>
+                  </select>
+                </div>
                 <div class="form-group mb-3">
                   <label for="image">Image</label>
                   <div class="custom-file">
@@ -129,6 +136,7 @@
                       type="file"
                       class="custom-file-input"
                       required
+                      multiple
                     />
                     
                   </div>

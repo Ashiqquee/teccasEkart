@@ -1,0 +1,90 @@
+<%- include('../layouts/header.ejs') %>
+
+<section
+  class="vh-100 gradient-form d-flex justify-content-center align-items-center"
+  style="background-color: #1e3932"
+>
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="text-black">
+          <div class="row g-0 d-flex justify-content-center align-items-center">
+            <div class="col-lg-6">
+              <div
+                class="card-body p-md-5 mx-md-4 border border-primary"
+                style="background-color: #d0d0d0; border-radius: 10px"
+              >
+                <div class="text-center">
+                  <h4
+                    class="mt-1 mb-5 pb-1"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    TECCAS EKART
+                  </h4>
+                </div>
+                <div>
+                  <h5
+                    class="mt-1 mb-1 pb-1 ms-5"
+                    style="
+                      font-family: 'EB Garamond', serif;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                  >
+                    Edit Brand Details
+                  </h5>
+                </div>
+
+                <form method="post" action="" class="mx-1 mx-md-4">
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="text"
+                        name="brandName"
+                        id="form3Example1c"
+                        class="form-control"
+                        value="<%= brand.brandName %>"
+                      />
+                      <label class="form-label" for="form3Example1c"
+                        >brand Name</label
+                      >
+                    </div>
+                  </div>
+                   <% if(typeof message !== 'undefined' ){ %>
+
+                  <p
+                    style="
+                      font-size: small;
+                      color: red;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                    class="ms-3"
+                  >
+                    <%= message %>
+                  </p>
+
+                  <% } %>
+
+                  <input
+                      type="submit"
+                      value="Add"
+                      class="btn border btn-success ms-3 mt-2"
+                      
+                    />
+                 
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<%- include('../layouts/footer.ejs')%>

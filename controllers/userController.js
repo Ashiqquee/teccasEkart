@@ -1,6 +1,8 @@
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
 const Category = require("../models/categoryModel");
+const Brand = require('../models/brandModel');
+const Cart = require('../models/cartModel');
 const bcrypt = require("bcrypt");
 
 require("dotenv").config();
@@ -38,6 +40,9 @@ const securePassword = async (password) => {
 
 
 ////////////////////////signup Manangement///////////////////////
+
+
+
 
 const insertUser = async (req, res) => {
   try {
@@ -180,7 +185,11 @@ const loadHome = async (req, res) => {
     const session = req.session.user_id;
     const categoryData =  await Category.find();
     
-    const productData = await Product.find();
+    const productData = await Product.find({ status: { $ne: 1 } })
+      .sort({ _id: -1 })
+      .limit(4);
+      console.log(productData);
+  
     res.render("home", { session,product: productData,category:categoryData });
   } catch (error) {
     console.log(error);
@@ -271,7 +280,9 @@ const profileLoad = async(req,res) => {
   try {
 
    if(req.session.user_id){
+    
      const id = req.session.user_id;
+     
      const userData = await User.findOne({ _id: id });
      res.render("profile",{userData:userData});
    }
@@ -283,6 +294,124 @@ const profileLoad = async(req,res) => {
     
   }
 }
+
+
+
+/////////////////////////////////Shop///////////////////////////////////////////
+
+
+
+
+const loadShop = async(req,res) => {
+    try {
+      const session = req.session.user_id;
+      const productData = await Product.find();
+      const categoryData = await Category.find();
+      const brandData = await Brand.find();
+      res.render('shop',{session,product:productData,category:categoryData,brand:brandData});
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+}
+
+
+
+
+const productShop = async(req,res) =>{
+  try {
+    const session = req.session.user_id;
+    const id = req.query.id;
+    const productData = await Product.findOne({ _id: new Object(id) })
+      .populate("category")
+      .populate("brand");
+    
+    res.render("productShop", { product: productData, session });
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+
+/////////////////////////////////Cart///////////////////////////////////////////
+
+
+
+
+const loadCart = async(req,res) => {
+  try {
+      session = req.session.user_id;
+           const cart = await Cart.findOne({ userId: session }).populate('item.product');
+    if (!cart) {
+      return res.render('cart', { items: [] ,session});
+    }
+    const items = cart.item;
+    res.render('cart', { items ,session});
+  } catch (err) {
+    console.error(err);
+    res.render('error', { message: 'Something went wrong' });
+  }
+    
+  } 
+
+
+
+const addToCart = async (req, res) => {
+  try {
+    const productId = req.query.id;
+    const userId = req.session.user_id;
+
+    const product = await Product.findOne({ _id: productId });
+    const userCart = await Cart.findOne({ userId: userId });
+
+    if (userCart) {
+      const itemIndex = userCart.item.findIndex(
+        (item) => item.product._id.toString() === productId
+      );
+
+      if (itemIndex >= 0) {
+        const inc = await Cart.updateOne(
+          { userId: userId, "item.product": productId },
+          { $inc: { "item.$.quantity": 1 } }
+        );
+        console.log(inc);
+      } else {
+        const create = await Cart.updateOne(
+          { userId: userId },
+          {
+            $push: {
+              item: {
+                product: productId,
+                price: product.price,
+                quantity: 1,
+              },
+            },
+          }
+        );
+        console.log(create);
+      }
+    } else {
+      const createNew = await Cart.create({
+        userId: userId,
+        item: [
+          {
+            product: productId,
+            price: product.price,
+            quantity: 1,
+          },
+        ],
+      });
+      console.log(createNew);
+    }
+
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 
@@ -316,4 +445,8 @@ module.exports = {
   resetPassword,
   otpVerify,
   profileLoad,
+  loadShop,
+  productShop,
+  loadCart,
+  addToCart,
 };

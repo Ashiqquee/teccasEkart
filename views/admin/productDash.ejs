@@ -91,7 +91,7 @@
                                 
                                 <td><%= product[i].productName %></td>
                                 <td><%= product[i].price %></td>
-                                <td ><img style="width:80px;height:60px;" class="img-fluid" src="/productImages/<%=product[i].productImages %>"></td>
+                                <td ><img style="width:80px;height:60px;" class="img-fluid" src="/productImages/<%=product[i].productImages[0] %>"></td>
                                 <td>
                                  <% if (product[i].status == 0) { %> Active <% } else if
                                  (product[i].status == 1) { %> Inactive <% } %>
