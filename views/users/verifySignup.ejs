@@ -39,7 +39,12 @@
                         required
                       />
                     </div>
+                    
                   </div>
+                  <div class="col-md-12 form-group p_star ms-4">
+                                    <input type="password" class="form-control" id="password" name="password" value=""
+                                        placeholder="Password">
+                                </div>
                   <div class="d-flex flex-row align-items-center mb-1">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0"></div>
@@ -57,7 +62,7 @@
                     type="button"
                     id="resend-otp"
                     class="btn btn-link btn-block"
-                    disabled
+                    
                   >
                     Resend OTP
                   </button>
@@ -71,31 +76,41 @@
   </div>
 </section>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  function sendOTP(mobileNumber) {
-    return client.verify.v2
-      .services(TWILIO_SERVICE_SID)
-      .verifications.create({ to: `+91${mobileNumber}`, channel: "sms" });
-  }
+  $(document).ready(() => {
+    const resendOtpButton = $('#resend-otp');
+    let countdown = 10;
 
-  function resendOTP() {
-    const mobileNumber = req.session.phone;
-    sendOTP(mobileNumber)
-      .then(() => {
-        console.log(`New OTP sent to ${mobileNumber}`);
-        alert("New OTP sent!");
-        document.getElementById("resend-otp").disabled = true;
-        setTimeout(() => {
-          document.getElementById("resend-otp").disabled = false;
-        }, 10000);
-      })
-      .catch((err) => {
-        console.log(`Failed to send OTP to ${mobileNumber}: ${err}`);
-        alert("Failed to send OTP. Please try again later.");
+    resendOtpButton.on('click', () => {
+      resendOtpButton.prop('disabled', true);
+
+      $.ajax({
+        type: 'POST',
+        url: '/resendOtp',
+        success: () => {
+          startCountdown();
+        },
+        error: (xhr, status, error) => {
+          console.error(error);
+        },
       });
-  }
+    });
 
-  document.getElementById("resend-otp").addEventListener("click", resendOTP);
+    function startCountdown() {
+      const countdownInterval = setInterval(() => {
+        if (countdown > 0) {
+          countdown--;
+          resendOtpButton.html(`Resend OTP (${countdown})`);
+        } else {
+          clearInterval(countdownInterval);
+          resendOtpButton.html('Resend OTP');
+          resendOtpButton.prop('disabled', false);
+          countdown = 10;
+        }
+      }, 1000);
+    }
+  });
 </script>
 
 <%- include('../layouts/footer.ejs')%>

@@ -49,8 +49,8 @@
                                 Please Sign in now</h3>
                             <form class="row contact_form" action="" method="post" novalidate="novalidate">
                                 <div class="col-md-12 form-group p_star">
-                                    <input type="text" class="form-control" id="name" name="email" value=""
-                                        placeholder="Email">
+                                    <input  class="form-control" id="name" name="mobile" value=""
+                                        placeholder="mobile">
                                 </div>
                                 <div class="col-md-12 form-group p_star">
                                     <input type="password" class="form-control" id="password" name="password" value=""
@@ -62,19 +62,17 @@
                   
                    <p style="font-size: small; color: red;font-family: 'Tilt Warp', cursive;" class="ms-3"> <%= message %></p>
                   
-
                   <% } %> 
                   <% if(typeof msg !== 'undefined' ){ %>
                   
                    <p style="font-size: small; color: rgb(0, 61, 3);font-family: 'EB Garamond', serif;" class="ms-3"> <%= msg %></p>
                   
-
                   <% } %> 
 
                                     <button type="submit" value="submit" class="btn_3">
                                         log in
                                     </button>
-                                    <a class="lost_pass mt-5" href="/signup">Don't have an account?</a>
+                                    
                                     <a class="lost_pass " href="/resetPassword">forget password?</a>
                                     
                                 </div>
@@ -119,45 +117,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-<script>
-const form = document.querySelector('form');
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-
-  const email = document.querySelector('input[name=email]').value;
-  const password = document.querySelector('input[name=password]').value;
-
-  if (!email || !password) {
-    alert('Please fill in all fields');
-    return;
-  }
-
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    alert('Please enter a valid email address');
-    return;
-  }
-
-  
-  if (password.length < 6) {
-    alert('Password should be at least 6 characters long');
-    return;
-  }
-
-  
-  form.submit();
-});
-
-</script>
-
-<%- include('../layouts/footer.ejs')%>

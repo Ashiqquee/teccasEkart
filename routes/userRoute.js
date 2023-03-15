@@ -25,6 +25,8 @@ user_route.get("/logout",auth.isLogin,userController.userLogout);
 
 user_route.post("/verifyOtp", userController.otpVerify);
 
+user_route.post("/resendOTp", userController.resendOTP);
+
 user_route.get("/resetPassword", userController.resetPassword);
 
 user_route.post("/resetPassword", userController.sendReset);

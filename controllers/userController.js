@@ -18,7 +18,9 @@ let message;
 const loadRegister = async (req, res) => {
   try {
    
-    res.render("signup");
+    res.render("signup",{msg,message});
+    msg= null;
+    message = null;
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
@@ -46,38 +48,16 @@ const securePassword = async (password) => {
 
 const insertUser = async (req, res) => {
   try {
-    const { name, email, mno, pwd } = req.body;
+    const {  mno } = req.body;
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.render("signup", {
-        msg: "Email already registered",
-      });
-    }
+  
 
     const existingNumber = await User.findOne({ mobile: mno });
     if (existingNumber) {
-      return res.render("signup", {
-        msg: "Mobile number already registered",
-      });
+         redirect("/signup");
+         msg = "Mobile already registered";
     }
-
- 
-
-    const spassword = await securePassword(pwd);
-
-    const user = new User({
-      name,
-      email,
-      mobile: mno,
-      password: spassword,
-      is_admin: 0,
-      is_blocked: 0,
-    });
-
-    const userData = await user.save();
-
-    if (userData) {
+  
       req.session.phone = mno;
       try {
         const verification = await client.verify
@@ -87,22 +67,37 @@ const insertUser = async (req, res) => {
         res.render("verifySignup");
       } catch (err) {
         console.error(err);
-        res.render("signup", { msg: "Failed to send verification code" });
+        redirect("/signup");
+        msg = "Failed to send Otp ";
       }
-    } else {
-      res.render("signup", { msg: "Registration failed" });
-    }
+  
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server error");
+    res.redirect('/signup');
+    message= "Error"
   }
 };
 
 
 
+const resendOTP = async (req, res) => {
+  const { phone } = req.session;
+  try {
+    const verification = await client.verify
+      .services(TWILIO_SERVICE_SID)
+      .verifications.create({ to: `+91${phone}`, channel: "sms" });
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
+
 
 const otpVerify = async (req, res) => {
   const { otp } = req.body;
+  password = req.body.password
   let { phone } = req.session;
   console.log(otp, phone);
   client.verify.v2
@@ -111,9 +106,16 @@ const otpVerify = async (req, res) => {
     .then(async (verification_check) => {
       if (verification_check.status == "approved") {
         req.session.otpcorrect = true;
-
-        await User.updateOne({ mobile: phone }, { $set: { is_verified: 1 } });
+         const spassword = await securePassword(password);
+         const user = new User({
+          mobile:phone,
+          password:spassword,
+         });
+         const userData = user.save();
+         if(userData){
         res.redirect("/login");
+        msg="verification success,now login with your account";
+         }
       } else {
         res.render('verifySignup',{msg:"Otp incorrect"})
       }
@@ -143,9 +145,10 @@ const loginLoad = async (req, res) => {
 
 const verifyLogin = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { mobile, password } = req.body;
+    console.log(mobile,password);
 
-    const userData = await User.findOne({ email });
+    const userData = await User.findOne({ mobile:mobile });
 
     if (!userData) {
       return res.render("login", {
@@ -438,6 +441,7 @@ module.exports = {
   insertUser,
   loginLoad,
   verifyLogin,
+  resendOTP,
   loadHome,
   userLogout,
   verifyReset,
