@@ -352,19 +352,6 @@ const filterPrice = async (req, res) => {
     
     const query = {};
 
-    if (category) {
-      const categoryObject = await Category.findOne({ name: category });
-      console.log(categoryObject);
-      query.category = categoryObject.name;
-      console.log(query.category);
-    }
-
-    if (brand) {
-      const brandObject = await Brand.findOne({ brandName: brand });
-      console.log(brandObject);
-      query.brand = brandObject.brandName;
-      console.log(query.brand);
-    }
 
     if (price) {
       const [min, max] = price.split('-');
