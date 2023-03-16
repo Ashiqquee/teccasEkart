@@ -2,7 +2,7 @@
 
 <section
   class="vh-100 gradient-form d-flex justify-content-center align-items-center"
-  style="background-color: #1e3932"
+  
 >
   <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -26,7 +26,7 @@
                   </h4>
                 </div>
                 <form action="/verifyOtp" method="post">
-                  <div class="d-flex flex-row align-items-center mb-1">
+                  <div class="d-flex flex-row align-items-center mb-1 ">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label for="otp" class="form-label">Enter OTP</label>
@@ -40,8 +40,10 @@
                       />
                     </div>
                     
-                  </div>
-                  <div class="col-md-12 form-group p_star ms-4">
+                  </div >
+                  
+                  <div class="col-md-12 form-group p_star ms-3 mt-4">
+                    <label for="password" class="form-label">Enter Password</label>
                                     <input type="password" class="form-control" id="password" name="password" value=""
                                         placeholder="Password">
                                 </div>
@@ -55,16 +57,16 @@
                   
 
                   <% } %> 
-                  <button type="submit" class="btn btn-success btn-block ms-3 mt-5">
+                  <button type="submit" class="btn btn-success btn-block ms-3 mt-3">
                     Verify 
                   </button>
                   <button
                     type="button"
                     id="resend-otp"
-                    class="btn btn-link btn-block"
+                    class="btn btn-link btn-block mt-4"
                     
                   >
-                    Resend OTP
+                   Resend OTP
                   </button>
                 </form>
               </div>

@@ -202,6 +202,9 @@ const loadHome = async (req, res) => {
 
 
 
+
+
+
 ///////////////////////////////Reset password Managment/////////////////////////
 
 const resetPassword = async (req, res) => {
@@ -338,6 +341,48 @@ const productShop = async(req,res) =>{
 }
 
 
+
+
+const filterPrice = async (req, res) => {
+  try {
+    const category = req.body.category;
+    const brand = req.body.brand;
+    const price = req.body.price;
+ console.log(category,brand,price);
+    
+    const query = {};
+
+    if (category) {
+      const categoryObject = await Category.findOne({ name: category });
+      console.log(categoryObject);
+      query.category = categoryObject.name;
+      console.log(query.category);
+    }
+
+    if (brand) {
+      const brandObject = await Brand.findOne({ brandName: brand });
+      console.log(brandObject);
+      query.brand = brandObject.brandName;
+      console.log(query.brand);
+    }
+
+    if (price) {
+      const [min, max] = price.split('-');
+      query.price = { $gte: min, $lte: max };
+    }
+
+    
+    const categoryData = await Category.find();
+    const brandData = await Brand.find();
+    const product = await Product.find(query);
+    let session  = req.body.user_id;
+    res.render('shop', { product,session,category:categoryData,brand:brandData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 /////////////////////////////////Cart///////////////////////////////////////////
 
 
@@ -363,6 +408,8 @@ const loadCart = async(req,res) => {
 
 const addToCart = async (req, res) => {
   try {
+
+    if(req.session.user_id){
     const productId = req.query.id;
     const userId = req.session.user_id;
 
@@ -410,6 +457,10 @@ const addToCart = async (req, res) => {
     }
 
     res.redirect("/");
+  }else{
+    res.redirect('/login');
+    message = "Login with your account to access this page";
+  }
   } catch (error) {
     console.log(error);
   }
@@ -453,4 +504,5 @@ module.exports = {
   productShop,
   loadCart,
   addToCart,
+  filterPrice,
 };

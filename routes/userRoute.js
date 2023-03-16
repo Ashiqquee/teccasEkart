@@ -43,6 +43,9 @@ user_route.get("/cart", blocked.isBlocked, userController.loadCart);
 
 user_route.get('/addToCart',blocked.isBlocked,userController.addToCart );
 
+user_route.post('/shop',userController.filterPrice);
+
+
 
 
 module.exports = user_route;
