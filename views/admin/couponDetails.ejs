@@ -45,6 +45,7 @@
            <th scope="col">start Date</th>
            <th scope="col">End Date</th>
            <th scope="col">Max Discount</th>
+           <th scope="col">Minimum Spend</th>
            <th scope="col">Quantity</th>
            <th scope="col">Status</th>
       
@@ -60,6 +61,7 @@
                                 <td><%= coupon[i].startDate.toDateString() %></td>
                                 <td><%= coupon[i].endDate.toDateString() %></td>
                                 <td><%= coupon[i].maxDiscount %></td>
+                                <td><%= coupon[i].minAmount %></td>
                                 <td><%= coupon[i].quantity %></td>
                                 <td><%= coupon[i].status === 0 ?  "Active" : "Inactive" %></td>
                             </tr>

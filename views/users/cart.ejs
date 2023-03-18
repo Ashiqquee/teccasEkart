@@ -5,8 +5,8 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>aranaz</title>
-  <link rel="icon" href="img/favicon.png">
+  <title>teccas</title>
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- animate CSS -->
@@ -139,7 +139,8 @@
         <td>
           <div class="media">
             <div class="d-flex">
-              <img style="height: 100px;width: 100px;" src="/productImages/<%= item.product.productImages[0] %>" alt="<%= item.product.ProductName %>" />
+              <img style="height: 100px;width: 100px;" src="/productImages/<%= item.product.productImages[0] %>" alt="<%= item.product.productName %>" />
+
             </div>
             <div class="media-body">
               <p><%= item.product.name %></p>
@@ -165,20 +166,20 @@
       <td></td>
       <td></td>
       <td>
-        <h5>Subtotal</h5>
+        
       </td>
       <td>
-        
+        <h5>Subtotal: <%= totalPrice %></h5>
       </td>
     </tr>
     <tr>
       <td></td>
       <td></td>
       <td>
-        <h5>Total</h5>
+        
       </td>
       <td>
-        
+        <h5>Total Amount  =  <%= totalPrice %></h5>
       </td>
     </tr>
               <!-- <tr class="shipping_area">

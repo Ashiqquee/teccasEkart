@@ -4,7 +4,7 @@ const Category = require("../models/categoryModel");
 const Brand = require('../models/brandModel');
 const Cart = require('../models/cartModel');
 const bcrypt = require("bcrypt");
-
+const {ObjectId}=require("mongodb")
 require("dotenv").config();
 
 const accountsid = process.env.TWILIO_ACCOUNT_SID;
@@ -190,10 +190,12 @@ const loadHome = async (req, res) => {
     
     const productData = await Product.find({ status: { $ne: 1 } })
       .sort({ _id: -1 })
-      .limit(4);
-      console.log(productData);
-  
-    res.render("home", { session,product: productData,category:categoryData });
+      .limit(8);
+      
+ 
+    res.render("home", { session,product: productData,category:categoryData,message,msg });
+     message = null;
+  msg = null;
   } catch (error) {
     console.log(error);
   }
@@ -311,11 +313,11 @@ const profileLoad = async(req,res) => {
 const loadShop = async(req,res) => {
     try {
       const session = req.session.user_id;
-      const productData = await Product.find();
+      const productData = await Product.find().sort({_id:-1});
       const categoryData = await Category.find();
       const brandData = await Brand.find();
-      res.render('shop',{session,product:productData,category:categoryData,brand:brandData});
-      
+      res.render('shop',{session,product:productData,category:categoryData,brand:brandData,message});
+      message=null;
     } catch (error) {
       console.log(error);
       
@@ -332,8 +334,11 @@ const productShop = async(req,res) =>{
     const productData = await Product.findOne({ _id: new Object(id) })
       .populate("category")
       .populate("brand");
-    
-    res.render("productShop", { product: productData, session });
+
+
+    const featured = await Product.find({ category: productData.category}).sort({id:-1}).limit(4);
+    res.render("productShop", { product: productData, session,message,featured });
+    message= null;
   } catch (error) {
     console.log(error);
     
@@ -341,55 +346,85 @@ const productShop = async(req,res) =>{
 }
 
 
-
-
 const filterPrice = async (req, res) => {
   try {
     const category = req.body.category;
     const brand = req.body.brand;
     const price = req.body.price;
- console.log(category,brand,price);
-    
-    const query = {};
+    const sort = req.body.sort;
 
 
-    if (price) {
-      const [min, max] = price.split('-');
-      query.price = { $gte: min, $lte: max };
-    }
+    console.log(sort,price,brand,category);
 
-    
+
+    const productList = await Product.find()
+      .populate("category")
+      .populate("brand");
+    let product = productList.filter(
+      (ok) =>
+        (ok.category._id == category || ok.category == category || !category) &&
+        (ok.brand._id == brand || ok.brand == brand || !brand) &&
+        (price === "1-1000"
+          ? ok.price >= 1 && ok.price <= 1000
+          : price === "1000-1500"
+          ? ok.price >= 1000 && ok.price <= 1500
+          : price === "1500-2000"
+          ? ok.price >= 1500 && ok.price <= 2000
+          : price === "2000-3000"
+          ? ok.price >= 2000 && ok.price <= 3000
+          : price === "3000-1000000"
+          ? ok.price >= 3000
+          : true)
+    );
+
+    if (sort === "low-to-high") {
+      product.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-to-low") {
+      product.sort((a, b) => b.price - a.price);
+    } 
+
     const categoryData = await Category.find();
     const brandData = await Brand.find();
-    const product = await Product.find(query);
-    let session  = req.body.user_id;
-    res.render('shop', { product,session,category:categoryData,brand:brandData });
+
+    let session = req.body.user_id;
+    res.render("shop", {
+      product,
+      session,
+      category: categoryData,
+      brand: brandData,
+      message,
+    });
+
+    message = null;
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
 
 /////////////////////////////////Cart///////////////////////////////////////////
 
 
 
 
-const loadCart = async(req,res) => {
+const loadCart = async (req, res) => {
   try {
-      session = req.session.user_id;
-           const cart = await Cart.findOne({ userId: session }).populate('item.product');
+    session = req.session.user_id;
+    const cart = await Cart.findOne({ userId: session }).populate(
+      "item.product"
+    );
     if (!cart) {
-      return res.render('cart', { items: [] ,session});
+      return res.render("cart", { items: [], session });
     }
     const items = cart.item;
-    res.render('cart', { items ,session});
+    res.render("cart", { items, session });
   } catch (err) {
     console.error(err);
-    res.render('error', { message: 'Something went wrong' });
+    res.render("error", { message: "Something went wrong" });
   }
-    
-  } 
+}; 
 
 
 
@@ -406,6 +441,7 @@ const addToCart = async (req, res) => {
     if (userCart) {
       const itemIndex = userCart.item.findIndex(
         (item) => item.product._id.toString() === productId
+        
       );
 
       if (itemIndex >= 0) {
@@ -442,8 +478,9 @@ const addToCart = async (req, res) => {
       });
       console.log(createNew);
     }
-
-    res.redirect("/");
+    message = "Item Added Successfully"
+     const referer = req.headers.referer || "/";
+     res.redirect(referer);
   }else{
     res.redirect('/login');
     message = "Login with your account to access this page";

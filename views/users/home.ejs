@@ -5,8 +5,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>aranoz</title>
-    <link rel="icon" href="img/favicon.png">
+    <title>teccas</title>
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- animate CSS -->
@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -98,15 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
+      
     </header>
     <!-- Header part end-->
 
@@ -196,7 +190,7 @@
                     <div class="product_list_slider owl-carousel">
                         <div class="single_product_list_slider">
                           <div class="row align-items-center justify-content-between">
-    <!-- Iterate over the products using forEach -->
+    
     <% product.forEach(function(item) { %>
         <div class="col-lg-3 col-sm-6">
             <div class="single_product_item">
@@ -252,6 +246,18 @@
     <script src="js/mail-script.js"></script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
+      <script src="js/custom.js"></script>
+    <%if(message){%>
+    <script>
+        new Swal({
+          title: "Success",
+          text: "<%=message%>",
+          icon: "success",
+          showConfirmButton:false,
+          timer:2000
+        });
+    </script>
+<%}%>
 </body>
 
 </html>

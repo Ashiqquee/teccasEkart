@@ -170,6 +170,7 @@ const addCoupon = async (req, res) => {
     const startDate = new Date(req.body.startDate);
     const endDate = new Date(req.body.endDate);
     const quantity = req.body.quantity;
+    const minAmount= req.body.minAmount;
     const maxDiscount = req.body.maxDiscount;
     const currentDate = new Date();
 
@@ -206,6 +207,7 @@ const addCoupon = async (req, res) => {
       startDate: startDate,
       endDate: endDate,
       maxDiscount: maxDiscount,
+      minAmount:minAmount,
       quantity: quantity,
     });
 
@@ -276,6 +278,7 @@ const updateCoupon = async (req, res) => {
           startDate: req.body.startDate,
           endDate: req.body.endDate,
           maxDiscount: req.body.maxDiscount,
+          minAmount: req.body.minAmount,
           quantity: req.body.quantity,
         },
       }
@@ -450,7 +453,7 @@ const unBlockProduct = async (req, res) => {
 const editProductLoad = async (req, res) => {
   try {
     const id = req.query.id;
-    const productData = await Product.findById({ _id: id });
+    const productData = await Product.findById({ _id: id }).populate('brand').populate('category');
     const categoryData = await Category.find();
     const brandData = await Brand.find();
 

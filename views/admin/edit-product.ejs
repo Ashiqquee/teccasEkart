@@ -49,12 +49,13 @@
                 <div class="form-group mb-3">
                   <label  for="description">Description</label>
                   
-                  <textarea
+                  <input
+                  value="<%= product.description%>"
                     id="description"
                     name="description"
                     class="form-control"
                     required
-                  ></textarea>
+                  ></input>
                 </div>
                 <div class="form-group mb-3">
                   <label for="price">Price</label>
@@ -101,7 +102,7 @@
                     class="form-control"
                     required
                   >
-                    <option value="" disabled selected>Select category</option>
+                    <option value="" disabled selected><%= product.category.name%></option>
                     <% for (let i = 0; i < category.length; i++) { %>
                     <option value="<%= category[i].name %>">
                       <%= category[i].name %>
@@ -118,7 +119,7 @@
                     class="form-control"
                     required
                   >
-                    <option value="<%= product.quantity%>" disabled selected></option>
+                    <option value="" disabled selected><%= product.brand.brandName%></option>
                     <% for (let i = 0; i < brand.length; i++) { %>
                     <option value="<%= brand[i].brandName %>">
                       <%= brand[i].brandName %>

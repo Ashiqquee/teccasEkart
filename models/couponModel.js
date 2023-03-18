@@ -30,6 +30,10 @@ const couponSchema = new mongoose.Schema({
   quantity: {
     type: Number,
   },
+  minAmount:{
+    type:Number,
+    required:true
+  }
 });
 
 module.exports = mongoose.model("Coupon", couponSchema);
