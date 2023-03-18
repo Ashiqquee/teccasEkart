@@ -43,6 +43,13 @@ user_route.get("/cart", blocked.isBlocked, userController.loadCart);
 
 user_route.get('/addToCart',blocked.isBlocked,userController.addToCart );
 
+user_route.post('/incrementCart',blocked.isBlocked,userController.incrementCart);
+
+user_route.post("/decrementCart",blocked.isBlocked, userController.decrementCart);
+
+user_route.post("/removeCart", blocked.isBlocked, userController.removeCart);
+
+
 user_route.post('/shop',userController.filterPrice);
 
 

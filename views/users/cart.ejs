@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/themify-icons.css">
   <!-- font awesome CSS -->
   <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
   <!-- swiper CSS -->
   <link rel="stylesheet" href="css/slick.css">
   <link rel="stylesheet" href="css/price_rangs.css">
@@ -64,23 +65,23 @@
                                 </li>
                                   <li>
                                      <div class="dropdown mt-4 ms-5">
-          <button
-            class="btn  dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-          >
-            Click
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <% if(session!=null){ %>
-            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-            <% }else{%>
-            <li><a class="dropdown-item" href="/login">Login</a></li>
-            <li><a class="dropdown-item" href="/signup">Signup</a></li>
-            <%}%>
-          </ul>
-        </div>
+                         <button
+                          class="btn  dropdown-toggle"
+                          type="button"
+                           id="dropdownMenuButton1"
+                           data-bs-toggle="dropdown"
+                          >
+                          Click
+                        </button>
+                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                          <% if(session!=null){ %>
+                           <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                          <% }else{%>
+                           <li><a class="dropdown-item" href="/login">Login</a></li>
+                           <li><a class="dropdown-item" href="/signup">Signup</a></li>
+                         <%}%>
+                          </ul>
+                        </div>
                                 </li>
                             </ul>
                         </div>
@@ -148,13 +149,16 @@
           </div>
         </td>
         <td>
-          <h5><%= item.price.toFixed(2) %></h5>
+          <h5 id="total-price-<%= item._id %>"><%= (item.price * item.quantity).toFixed(2) %></h5>
+
         </td>
         <td>
           <div class="product_count">
-            <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
-            <input class="input-number" type="text" value="<%= item.quantity %>" min="0" max="10">
-            <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
+            <button class="quantity__minus" min="1"  data-id="<%=item._id%>" data-index="" onclick="decrementCart(event)">-</button>
+            <input min="1" max="10" class="input-number" type="text" value="<%= item.quantity %>">
+            <button class="quantity__plus" data-id="<%=item._id%>" data-index="" onclick="incrementCart(event)"> +</button>
+
+            <button style="background-color: white;" class="remove-item-btn" data-item-id="<%=item._id%>"><i class="fa-solid fa-trash"></i></button>
           </div>
         </td>
         <td>
@@ -355,6 +359,98 @@
   <script src="js/price_rangs.js"></script>
   <!-- custom js -->
   <script src="js/custom.js"></script>
+
+
+
+  <script>
+function incrementCart(event) {
+  event.preventDefault(); 
+
+  const itemId = event.target.dataset.id;
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/incrementCart');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      
+      console.log(xhr.responseText);
+    } else {
+   
+      console.log(xhr.statusText);
+    }
+  };
+  xhr.onerror = function() {
+    console.log(xhr.statusText);
+  };
+  xhr.send(JSON.stringify({ itemId }));
+}
+
+
+
+function decrementCart(event) {
+  event.preventDefault(); 
+
+  const itemId = event.target.dataset.id;
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/decrementCart');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      
+      console.log(xhr.responseText);
+    } else {
+   
+      console.log(xhr.statusText);
+    }
+  };
+  xhr.onerror = function() {
+    console.log(xhr.statusText);
+  };
+  xhr.send(JSON.stringify({ itemId }));
+}
+
+
+const priceElement = document.querySelector(`#price-${itemId}`);
+const quantityInput = event.target.parentNode.querySelector('.input-number');
+const newQuantity = parseInt(quantityInput.value);
+priceElement.innerText = (item.price * newQuantity).toFixed(2);
+
+
+
+
+
+
+
+</script>
+
+<script>
+  const removeItemBtns = document.querySelectorAll(".remove-item-btn");
+removeItemBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const itemId = btn.dataset.itemId;
+    removeCartItem(itemId);
+  });
+});
+
+async function removeCartItem(itemId) {
+  try {
+    const response = await fetch("/removeCart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: itemId }),
+    });
+    if (response.ok) {
+      window.location.href = "/cart";
+    } else {
+      console.error("Failed to remove item from cart.");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+</script>
+
 </body>
 
 </html>

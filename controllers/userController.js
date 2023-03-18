@@ -191,7 +191,7 @@ const loadHome = async (req, res) => {
     const productData = await Product.find({ status: { $ne: 1 } })
       .sort({ _id: -1 })
       .limit(8);
-      
+      console.log(productData);
  
     res.render("home", { session,product: productData,category:categoryData,message,msg });
      message = null;
@@ -409,22 +409,29 @@ const filterPrice = async (req, res) => {
 
 
 
-const loadCart = async (req, res) => {
+const loadCart = async(req,res) => {
   try {
-    session = req.session.user_id;
-    const cart = await Cart.findOne({ userId: session }).populate(
-      "item.product"
-    );
+     let totalPrice = 0;
+      session = req.session.user_id;
+           const cart = await Cart.findOne({ userId: session }).populate('item.product');
     if (!cart) {
-      return res.render("cart", { items: [], session });
+      return res.render("cart", { items: [], totalPrice, session });
+    }
+   
+    if(cart && cart.item!=null){
+      cart.item.forEach(value => {
+        totalPrice += value.price * value.quantity;
+      })
     }
     const items = cart.item;
-    res.render("cart", { items, session });
+    console.log(items);
+    res.render('cart', { items ,session,totalPrice,msg});
   } catch (err) {
     console.error(err);
-    res.render("error", { message: "Something went wrong" });
+   
   }
-}; 
+    
+  } 
 
 
 
@@ -490,9 +497,78 @@ const addToCart = async (req, res) => {
   }
 };
 
+const incrementCart = async (req, res) => {
+  try {
+    const userId = req.session.user_id;
+    const itemId = req.body.itemId;
+    const cartCount = await Cart.findOne({ "item._id": itemId });
+    const item = cartCount.item.find((item) => item._id.toString() === itemId);
+    const product = await Product.findOne({ _id: item.product });
+    if (item) {
+      if (item.quantity >= product.quantity) {
+        res.status(400).json({ error: "item out of stock" });
+      } else {
+        await Cart.updateOne(
+          { userId: userId, "item._id": itemId },
+          { $inc: { "item.$.quantity": 1 } }
+        );
+        const updatedCartCount = await Cart.findOne({ "item._id": itemId });
+        const updatedItem = updatedCartCount.item.find((item) => item._id.toString() === itemId);
+        const updatedPrice = (updatedItem.price * updatedItem.quantity).toFixed(2);
+        res.json({ success: true, updatedPrice });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 
 
+
+const decrementCart = async (req, res) => {
+  console.log("Ajax ok ok");
+
+  try {
+    const userId = req.session.user_id;
+    const itemid = req.body.itemId;
+    const cartCount = await Cart.findOne({ "item._id": itemid });
+    console.log(cartCount);
+    const item = cartCount.item.find((item) => item._id.toString() === itemid);
+    console.log(item);
+    const product = await Product.findOne({ _id: item.product });
+    if (item) {
+      if (item.quantity <= 1) {
+        res.status(400).json({ error: "Can't make below 1" });
+      } else {
+        await Cart.updateOne(
+          { userId: userId, "item._id": itemid },
+          { $inc: { "item.$.quantity": -1 } }
+        );
+        res.json({ success: true });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
+
+
+const removeCart = async (req, res) => {
+  const id = req.body.id;
+  const userId = req.session.user_id;
+  const del = await Cart.updateOne(
+    { userId: new Object(userId) },
+    { $pull: { item: { _id: id } } }
+  );
+  console.log(del);
+  res.json({ success: true });
+};
 
 
 
@@ -529,4 +605,7 @@ module.exports = {
   loadCart,
   addToCart,
   filterPrice,
+  incrementCart,
+  decrementCart,
+  removeCart,
 };

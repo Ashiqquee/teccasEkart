@@ -2,7 +2,6 @@
 
 <section
   class="vh-100 gradient-form d-flex justify-content-center align-items-center"
-  style="background-color: #1e3932"
 >
   <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -37,7 +36,11 @@
                   </h5>
                 </div>
 
-                <form method="post" action="/admin/new-brand" class="mx-1 mx-md-4">
+                <form
+                  method="post"
+                  action="/admin/new-brand"
+                  class="mx-1 mx-md-4"
+                >
                   <div class="d-flex flex-row align-items-center mb-1">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
@@ -52,7 +55,7 @@
                       >
                     </div>
                   </div>
-                   <% if(typeof message !== 'undefined' ){ %>
+                  <% if(typeof message !== 'undefined' ){ %>
 
                   <p
                     style="
@@ -68,12 +71,10 @@
                   <% } %>
 
                   <input
-                      type="submit"
-                      value="Add"
-                      class="btn border btn-success ms-3 mt-2"
-                      
-                    />
-                 
+                    type="submit"
+                    value="Add"
+                    class="btn border btn-success ms-3 mt-2"
+                  />
                 </form>
               </div>
             </div>
@@ -83,7 +84,5 @@
     </div>
   </div>
 </section>
-
-
 
 <%- include('../layouts/footer.ejs')%>

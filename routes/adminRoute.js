@@ -28,7 +28,7 @@ admin_route.use(express.static('public'));
 
 admin_route.get("/", auth.isLogout, adminController.loadLogin);
 
-admin_route.post("/", adminController.verifyLogin);
+admin_route.post("/", auth.isLogout, adminController.verifyLogin);
 
 
 
@@ -44,9 +44,7 @@ admin_route.get("/home", auth.isLogin, adminController.loadDashboard);
 
 admin_route.get("/dashboard", auth.isLogin, adminController.adminDashboard);
 
-admin_route.get("/edit-user", auth.isLogin, adminController.editUserLoad);
 
-admin_route.post("/edit-user", auth.isLogin, adminController.updateUser);
 
 admin_route.get("/blockUser", auth.isLogin, adminController.blockUser);
 
