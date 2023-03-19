@@ -81,7 +81,11 @@ admin_route.post("/edit-coupon", auth.isLogin, adminController.updateCoupon);
 
 admin_route.get("/category-dashboard", auth.isLogin,adminController.categoryDashboard);
 
-admin_route.get("/deleteCategory",auth.isLogin, adminController.deleteCatogery);
+// admin_route.get("/deleteCategory",auth.isLogin, adminController.deleteCatogery);
+
+admin_route.get("/edit-category",auth.isLogin,adminController.editCategoryLoad);
+
+admin_route.post("/edit-category",auth.isLogin,adminController.updateCategory);
 
 admin_route.get("/new-category",auth.isLogin, adminController.newCategory);
 
@@ -112,7 +116,7 @@ admin_route.post("/edit-product",upload.array("file",5), auth.isLogin, adminCont
 
 
 
-///////////////////////Category Controll  Route////////////////////
+///////////////////////Brand Controll  Route////////////////////
 
 
 admin_route.get("/brand-dashboard",auth.isLogin,adminController.brandDashboard);

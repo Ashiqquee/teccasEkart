@@ -138,10 +138,10 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1>Category Tables</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+          
           <li class="breadcrumb-item">Category</li>
           <li class="breadcrumb-item active">Data</li>
         </ol>
@@ -173,7 +173,8 @@
             <% for(let i=0; i<category.length; i++){ %>
                 <tr>
                     <td><%= category[i].name %></td>
-                    <td><a class="btn btn-danger" href="/admin/deleteCategory?id=<%= category[i]._id%>" style="font-size: small;">Delete Category</a></td>
+                    
+                    <td><a class="btn btn-success " href="/admin/edit-category?id=<%= category[i]._id %>" style="font-size: small;">Edit</a></td>
                 </tr>
             <% } %>
         <% } else { %>

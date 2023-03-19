@@ -1,274 +1,350 @@
-<%- include('../layouts/header.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-<section
-  class="vh-100 gradient-form d-flex justify-content-center align-items-center "
-  style="background-color: #1e3932"
->
-  <div class="container">
-    <div class="row d-flex justify-content-center align-items-center h-100 ">
-      <div class="col-xl-10">
-        <div class="text-black">
-          <div class="row g-0 d-flex justify-content-center align-items-center">
-            <div class="col-lg-6 mt-5">
-              <div
-                class="card-body p-md-5 mx-md-4 border border-primary"
-                style="background-color: #d0d0d0; border-radius: 10px"
-              >
-                <div class="text-center">
-                  <h4
-                    class="mt-1 mb-5 pb-1"
-                    style="
-                      font-family: 'EB Garamond', serif;
-                      font-family: 'Tilt Warp', cursive;
-                    "
-                  >
-                    TECCAS EKART
-                  </h4>
-                </div>
-                <div>
-                  <h5
-                    class="mt-1 mb-1 pb-1 ms-5"
-                    style="
-                      font-family: 'EB Garamond', serif;
-                      font-family: 'Tilt Warp', cursive;
-                    "
-                  >
-                    Edit Coupon
-                  </h5>
-                </div>
+    <title>teccas</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
 
-                <form action="" method="post" class="mx-1 mx-md-4">
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <a class="logo d-flex align-items-center">
+          <span class="d-none d-lg-block">Teccas</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div>
+      <!-- End Logo -->
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+          <li class="nav-item dropdown pe-3">
+            <a
+              class="nav-link nav-profile d-flex align-items-center pe-0"
+              href="#"
+              data-bs-toggle="dropdown"
+            >
+              <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
+            </a>
+
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+            >
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="/admin/logout"
+                >
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
+            </ul>
+            <!-- End Profile Dropdown Items -->
+          </li>
+          <!-- End Profile Nav -->
+        </ul>
+      </nav>
+      <!-- End Icons Navigation -->
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/admin">
+            <i class="bi bi-grid"></i>
+            <span> Dashboard</span>
+          </a>
+        </li>
+        <!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#components-nav"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bi bi-menu-button-wide"></i><span>Data</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="components-nav"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="/admin/dashboard">
+                <i class="bi bi-circle"></i><span>User Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/product-dashboard">
+                <i class="bi bi-circle"></i><span>Product Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/coupon-dashboard">
+                <i class="bi bi-circle"></i><span>Coupon Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/brand-dashboard">
+                <i class="bi bi-circle"></i><span>Brand Data</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/category-dashboard">
+                <i class="bi bi-circle"></i><span>Category Data</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- End Components Nav -->
+      </ul>
+    </aside>
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Add Coupon</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a>Data</a></li>
+            <li class="breadcrumb-item">Coupon</li>
+            <li class="breadcrumb-item active">add-Coupon</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-6"></div>
+
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Coupon</h5>
+
+                <!-- Floating Labels Form -->
+                <form class="row g-3" action="/admin/edit-coupon?id=<%=coupon._id%>" method="post">
+                  <div class="col-md-6">
+                    <div class="form-floating">
                       <input
                         type="text"
+                        class="form-control"
+                        id="floatingName"
                         name="couponName"
                         value="<%= coupon.couponName %>"
-                        id="form3Example1c"
-                        class="form-control"
+                        placeholder="Coupon Name"
                         required
                       />
-                      <label class="form-label" for="form3Example1c"
-                        >Enter Copon Name</label
-                      >
+                      <label for="productName">Coupon Name</label>
                     </div>
                   </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
+                  <div class="col-md-6">
+                    <div class="form-floating">
                       <input
                         type="text"
                         name="couponCode"
+                        class="form-control"
+                        id="floatingPassword"
                         value="<%= coupon.couponCode %>"
+                        placeholder="Password"
+                      />
+                      <label for="price">Enter Code</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input
+                          id="floatingPassword"
+                          type="date"
+                          name="startDate"
+                          class="form-control"
+                          id="floatingCity"
+                          placeholder="Start Date"
+                        />
+                        <label for="Quantity">Start Date</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input
+                        id="floatingPassword"
+                        type="date"
+                        name="endDate"
+                        id="form3Example3c"
+                        class="form-control"
+                        required
+                      />
+                      <label class="form-label" for="form3Example3c"
+                        >End Date</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        name="minAmount"
+                        id="floatingPassword"
                         id="form3Example1c"
                         class="form-control"
                         required
+                        placeholder="Minimum Amount"
+                        value="<%= coupon.minAmount %>"
                       />
                       <label class="form-label" for="form3Example1c"
-                        >Enter Code</label
-                      >
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input
-                        type="date"
-                        name="startDate"
-                        value="<%= coupon.startDate%>"
-                        id="form3Example3c"
-                        class="form-control"
-                        required
-                      />
-                      <label class="form-label" for="form3Example3c"
-                        >start date</label
-                      >
-                    </div>
-                  </div>
-                   <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input
-                        type="date"
-                        name="startDate"
-                        value="<%= coupon.minAmount%>"
-                        id="form3Example3c"
-                        class="form-control"
-                        required
-                      />
-                      <label class="form-label" for="form3Example3c"
                         >Minimum Amount</label
                       >
                     </div>
                   </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
+                  <div class="col-md-6">
+                    <div class="form-floating">
                       <input
-                        type="number"
-                        name="minAmount"
-                        value="<%= coupon.endDate %>"
-                        id="form3Example3c"
+                        type="text"
                         class="form-control"
+                        id="floatingName"
+                        name="quantity"
+                        placeholder="Quantity"
+                        value="<%= coupon.quantity %>"
                         required
                       />
-                      <label class="form-label" for="form3Example3c"
-                        >end date</label
-                      >
+                      <label for="productName">Quantity</label>
                     </div>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
+                  <div class="col-md-12">
+                    <div class="form-floating mb-3">
                       <input
-                        type="number"
+                        type="text"
                         name="maxDiscount"
-                        value="<%= coupon.maxDiscount %>"
-                        id="form3Example3c"
+                        id="form3Example4c"
                         class="form-control"
+                        id="floatingPassword"
+                        placeholder="Max Discount"
+                        value="<%= coupon.maxDiscount %>"
                         required
                       />
-                      <label class="form-label" for="form3Example3c"
+                      <label class="form-label" for="form3Example4c"
                         >Max Discount</label
                       >
                     </div>
                   </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input
-                        type="number"
-                        name="quantity"
-                        value="<%= coupon.quantity %>"
-                        id="form3Example3c"
-                        class="form-control"
-                        required
-                      />
-                      <label class="form-label" for="form3Example3c"
-                        >Quantity</label
-                      >
-                    </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                      Submit
+                    </button>
+                    <button type="cancel" class="btn btn-secondary">
+                      Cancel
+                    </button>
                   </div>
-
-                  <input type="hidden" name="id" value="<%= coupon._id %>" />
-
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <input
-                      type="submit"
-                      value="Update Coupon"
-                      class="btn btn-success btn-lg"
-                      style="font-size: small;"
-                    />
-                  </div>
-
-                  
-                  
-
                   <% if(typeof message !== 'undefined' ){ %>
-                  <div class="alert alert-danger" role="alert">
+
+                  <p
+                    style="
+                      font-size: small;
+                      color: red;
+                      font-family: 'Tilt Warp', cursive;
+                    "
+                    class="ms-3"
+                  >
                     <%= message %>
-                  </div>
+                  </p>
 
                   <% } %>
                 </form>
+                <!-- End floating Labels Form -->
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
+    </main>
+    <!-- End #main -->
 
-<script>
+    <!-- ======= Footer ======= -->
 
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="assets/vendor/echarts/echarts.min.js"></script>
+    <script src="assets/vendor/quill/quill.min.js"></script>
+    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
 
-const form = document.querySelector("form");
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+    <script>
+ const form = document.querySelector('form');
+const couponName = document.querySelector('input[name="couponName"]');
+const couponCode = document.querySelector('input[name="couponCode"]');
+const startDate = document.querySelector('input[name="startDate"]');
+const endDate = document.querySelector('input[name="endDate"]');
+const minAmount = document.querySelector('input[name="minAmount"]');
+const quantity = document.querySelector('input[name="quantity"]');
+const maxDiscount = document.querySelector('input[name="maxDiscount"]');
 
-form.addEventListener("submit", function (event) {
-  const couponName = form.elements["couponName"];
-  const couponCode = form.elements["couponCode"];
-  const startDate = form.elements["startDate"];
-  const endDate = form.elements["endDate"];
-  const maxDiscount = form.elements["maxDiscount"];
-  const quantity = form.elements["quantity"];
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-  let isValid = true;
+  const now = new Date();
+  const start = new Date(startDate.value);
+  const end = new Date(endDate.value);
 
-  if (couponName.value.trim() === "") {
-    couponName.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    couponName.classList.remove("is-invalid");
+  if (!couponName.value || !couponCode.value || !startDate.value || !endDate.value || !minAmount.value || !quantity.value || !maxDiscount.value) {
+    return alert('Please fill in all fields.');
   }
 
-  if (couponCode.value.trim() === "") {
-    couponCode.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    couponCode.classList.remove("is-invalid");
+  if (isNaN(minAmount.value) || isNaN(quantity.value) || isNaN(maxDiscount.value)) {
+    return alert('Minimum amount, quantity, and max discount must be numbers.');
   }
 
-  if (startDate.value.trim() === "") {
-    startDate.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    startDate.classList.remove("is-invalid");
+  if (start <= now) {
+    return alert('Start date must be greater than current date/time.');
   }
 
-  if (endDate.value.trim() === "") {
-    endDate.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    endDate.classList.remove("is-invalid");
+  if (end <= start) {
+    return alert('End date must be after start date.');
   }
 
-  if (maxDiscount.value.trim() === "" || isNaN(maxDiscount.value)) {
-    maxDiscount.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    maxDiscount.classList.remove("is-invalid");
-  }
-
-  if (quantity.value.trim() === "" || isNaN(quantity.value)) {
-    quantity.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    quantity.classList.remove("is-invalid");
-  }
-
-  const currentDate = new Date();
-  const startDateTime = new Date(startDate.value);
-  const endDateTime = new Date(endDate.value);
-
-  if (startDateTime < currentDate) {
-    startDate.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    startDate.classList.remove("is-invalid");
-  }
-
-  if (endDateTime < startDateTime) {
-    endDate.classList.add("is-invalid");
-    isValid = false;
-  } else {
-    endDate.classList.remove("is-invalid");
-  }
-
-  if (!isValid) {
-    event.preventDefault();
-  }
+  // Submit the form if all validations pass
+  form.submit();
 });
 
-
-
-
-</script>
-
-<%- include('../layouts/footer.ejs') %>
+    </script>
+  </body>
+</html>

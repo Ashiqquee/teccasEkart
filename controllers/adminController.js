@@ -123,7 +123,8 @@ const newCoupon = async (req, res) => {
 
 const couponDetails = async (req, res) => {
   try {
-    const couponData = await Coupon.find();
+    
+    const couponData = await Coupon.findOne({_id:req.query.id});
     res.render("couponDetails", { coupon: couponData });
   } catch (error) {
     console.log(error);
@@ -174,7 +175,7 @@ const addCoupon = async (req, res) => {
       startDate: startDate,
       endDate: endDate,
       maxDiscount: maxDiscount,
-      minAmount:minAmount,
+      minAmount: minAmount,
       quantity: quantity,
     });
 
@@ -224,6 +225,7 @@ const editCouponLoad = async (req, res) => {
   try {
     const id = req.query.id;
     const couponData = await Coupon.findById({ _id: id });
+    
 
     if (couponData) {
       res.render("edit-coupon", { coupon: couponData });
@@ -235,21 +237,37 @@ const editCouponLoad = async (req, res) => {
   }
 };
 
+
+
 const updateCoupon = async (req, res) => {
   try {
-    const couponData = await Coupon.findByIdAndUpdate(
-      { _id: req.body.id },
-      {
-        $set: {
-          code: req.body.code,
-          startDate: req.body.startDate,
-          endDate: req.body.endDate,
-          maxDiscount: req.body.maxDiscount,
-          minAmount: req.body.minAmount,
-          quantity: req.body.quantity,
-        },
-      }
-    );
+    console.log("hjdaskhdaskdkhaskhaskjasdh");
+    console.log(req.query.id);
+
+   const { id,couponName, couponCode, startDate, endDate, maxDiscount, minAmount, quantity } =
+     req.body;
+    console.log(id,couponName,couponCode,startDate,endDate,maxDiscount,minAmount,quantity);
+
+
+   const updatedCoupon = await Coupon.updateOne(
+     { _id: req.query.id },
+     {
+       $set: {
+         couponName,
+         couponCode,
+         startDate,
+         endDate,
+         maxDiscount,
+         minAmount,
+         quantity,
+       },
+     }
+   );
+
+   res.redirect("/admin/coupon-dashboard");
+
+   res.redirect("/admin/coupon-dashboard");
+    
 
     res.redirect("/admin/coupon-dashboard");
   } catch (error) {
@@ -271,28 +289,29 @@ const categoryDashboard = async (req, res) => {
   }
 };
 
-const deleteCatogery = async (req, res) => {
-  try {
-    const id = req.query.id;
 
-    const cat = await Category.findOne({ _id: id }, { _id: 1 });
+// const deleteCatogery = async (req, res) => {
+//   try {
+//     const id = req.query.id;
 
-    const productData = await Product.findOne({
-      category: new Object(id),
-    }).populate("category");
+//     const cat = await Category.findOne({ _id: id }, { _id: 1 });
 
-    if (
-      productData ) {
-      res.redirect("/admin/category-dashboard");
-      message = "category on use";
-    } else {
-      await Category.deleteOne({ _id: new Object(id) });
-      res.redirect("/admin/category-dashboard");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     const productData = await Product.findOne({
+//       category: new Object(id),
+//     }).populate("category");
+
+//     if (
+//       productData ) {
+//       res.redirect("/admin/category-dashboard");
+//       message = "category on use";
+//     } else {
+//       await Category.deleteOne({ _id: new Object(id) });
+//       res.redirect("/admin/category-dashboard");
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 
 const newCategory = async (req, res) => {
@@ -335,6 +354,36 @@ const addCategory = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+const editCategoryLoad = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const categoryData = await Category.findById({ _id: id });
+    if (categoryData) {
+      res.render("edit-category", { category: categoryData });
+    } else {
+      res.redirect("/admin/category-dashboard");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+const updateCategory = async (req, res) => {
+  console.log(req.query);
+   
+  const id = req.query.id;
+  console.log(id);
+
+  const CategoryData = await Category.findByIdAndUpdate({_id:id}, {
+    $set: { name: req.body.name },
+  });
+  res.redirect("/admin/category-dashboard");
+};
+
 
 ////////////////////Product Controller/////////////////////////////
 
@@ -389,7 +438,7 @@ const insertProduct = async (req, res) => {
 const productDetails = async (req, res) => {
   try {
     const id = req.query.id;
-    const productData = await Product.find({_id:id}).populate("category").populate('brand');
+    const productData = await Product.findOne({_id:id}).populate("category").populate('brand');
     res.render("productDetails", { product: productData });
   } catch (error) {
     console.log(error);
@@ -588,7 +637,8 @@ module.exports = {
   editCouponLoad,
   updateCoupon,
   categoryDashboard,
-  deleteCatogery,
+  editCategoryLoad,
+  updateCategory,
   newCategory,
   addCategory,
   productDashboard,
