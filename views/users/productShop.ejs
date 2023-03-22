@@ -7,8 +7,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>aranoz</title>
-    <link rel="icon" href="img/favicon.png" />
+    <title>teccas</title>
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <!-- animate CSS -->
@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="css/magnific-popup.css" />
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css" />
+
+    
   </head>
 
   <body>
@@ -106,7 +108,7 @@
                 <a id="search_1" href="javascript:void(0)"
                   ><i class="ti-search"></i
                 ></a>
-                <a href=""><i class="ti-heart"></i></a>
+                <a href="/wishlist"><i class="ti-heart"></i></a>
                 <div class="dropdown cart">
                   <a
                     class="dropdown-toggle"
@@ -144,6 +146,7 @@
               <div id="vertical">
                 <div
                   data-thumb="/productImages/<%= product.productImages[0] %>"
+                  
                 >
                   <img src="/productImages/<%= product.productImages[0] %>" />
                 </div>
@@ -182,7 +185,7 @@
                 <a href="/addToCart?id=<%= product._id %>" class="btn_3"
                   >add to cart</a
                 >
-                <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+                <a href="/addToWishlist?id=<%= product._id %>" class="like_us"> <i class="ti-heart"></i> </a>
               </div>
             </div>
           </div>
@@ -257,5 +260,6 @@
     <!-- custom js -->
     <script src="js/theme.js"></script>
     <script src="js/custom.js"></script>
+
   </body>
 </html>

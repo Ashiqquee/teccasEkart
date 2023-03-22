@@ -49,9 +49,27 @@ user_route.post("/decrementCart",blocked.isBlocked, userController.decrementCart
 
 user_route.post("/removeCart", blocked.isBlocked, userController.removeCart);
 
+user_route.get("/wishlist", blocked.isBlocked, userController.loadWishlist);
 
-user_route.post('/shop',userController.filterPrice);
+user_route.get("/addToWishlist", blocked.isBlocked, userController.addToWishlist);
 
+user_route.get('/checkout',blocked.isBlocked,userController.loadCheckOut);
+
+user_route.get("/addAddress", blocked.isBlocked, userController.addressPage);
+
+user_route.post("/addAddress", blocked.isBlocked, userController.addAddress);
+
+user_route.get("/editAddress", blocked.isBlocked, userController.editAddressLoad);
+
+user_route.post("/editAddress", blocked.isBlocked, userController.editAddress);
+
+user_route.post('/shop',blocked.isBlocked,userController.filterPrice);
+
+user_route.post("/paymentPage", blocked.isBlocked, userController.loadPaymentPage);
+
+user_route.get("/orderDetails",blocked.isBlocked,userController.orderDetails);
+
+user_route.post("/orderConfirm",blocked.isBlocked,userController.orderConfirm);
 
 
 

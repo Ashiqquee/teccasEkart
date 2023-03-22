@@ -85,7 +85,7 @@
                         </div>
                         <div class="hearer_icon d-flex">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href=""><i class="ti-heart"></i></a>
+                            <a href="/wishlist"><i class="ti-heart"></i></a>
                             <div class="dropdown cart">
                                 <a href="/cart"><i class="fas fa-cart-plus"></i></a>
                                 <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -199,7 +199,8 @@
                     <h4><%= item.productName %></h4>
                     <h3>$<%= item.price %></h3>
                     <a href="/productShop?id=<%= item._id %>" >View Details</a>
-                    <a href="/addToCart?id=<%= item._id %>" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                    
+                    <a href="/addToCart?id=<%= item._id %>" class="add_cart">+ add to cart</a><a  href="/addToWishlist?id=<%= item._id %>" class="like_us"> <i class="ti-heart"></i> </a>
                      
                 </div>
             </div>

@@ -89,7 +89,7 @@
                         </div>
                         <div class="hearer_icon d-flex">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href=""><i class="ti-heart"></i></a>
+                            <a href="/wishlist"><i class="ti-heart"></i></a>
                             <div class="dropdown cart">
                                 <a class="dropdown-toggle" id="navbarDropdown3" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -135,8 +135,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="left_sidebar_area">
-                        <input type="text" id="searchInput" placeholder="Search products...">
-<div id="productList"></div>
+                        
 
 
              <form action="/shop" method="post">
@@ -145,8 +144,7 @@
                     <select name="sort" id="sort" class="form-control">
                      <option value="low-to-high"   >Price: Low to High</option>
                      <option value="high-to-low">Price: High to Low</option>
-                     <option value="name-ascending">Product Name: A to Z</option>
-                     <option value="name-descending">Product Name: Z to A</option>
+                    
                     </select>
                 </div>
 
@@ -250,7 +248,7 @@
                                     <h4><%= item.productName %></h4>
                                     <h3>$<%= item.price %></h3>
                                     <a href="/productShop?id=<%= item._id %>" >View Details</a>
-                                    <a href="/addToCart?id=<%= item._id %>" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    <a href="/addToCart?id=<%= item._id %>" class="add_cart">+ add to cart</a><a  href="/addToWishlist?id=<%= item._id %>" class="like_us"> <i class="ti-heart"></i> </a>
                      
                                  </div>
                               </div>

@@ -88,71 +88,64 @@
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-      <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="/admin">
-            <i class="bi bi-grid"></i>
-            <span> Dashboard</span>
-          </a>
+       <aside id="sidebar" class="sidebar">
+     
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/home">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/dashboard">
+          <i class="bi bi-menu-button-wide"></i><span>User</span><i class="bi  ms-auto"></i>
+        </a>
         </li>
-        <!-- End Dashboard Nav -->
+       
+
+          <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav"  >
+          <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi  ms-auto"></i>
+        </a>
+        </li>
+
+
+         <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/coupon-dashboard">
+          <i class="bi bi-menu-button-wide"></i><span>Coupon</span><i class="bi  ms-auto"></i>
+        </a>
+        </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            data-bs-target="#components-nav"
-            data-bs-toggle="collapse"
-            href="#"
-          >
-            <i class="bi bi-menu-button-wide"></i><span>Data</span
-            ><i class="bi bi-chevron-down ms-auto"></i>
-          </a>
-          <ul
-            id="components-nav"
-            class="nav-content collapse"
-            data-bs-parent="#sidebar-nav"
-          >
-            <li>
-              <a href="/admin/dashboard">
-                <i class="bi bi-circle"></i><span>User Data</span>
-              </a>
-            </li>
-            <li>
-              <a href="/admin/product-dashboard">
-                <i class="bi bi-circle"></i><span>Product Data</span>
-              </a>
-            </li>
-            <li>
-              <a href="/admin/coupon-dashboard">
-                <i class="bi bi-circle"></i><span>Coupon Data</span>
-              </a>
-            </li>
-            <li>
-              <a href="/admin/brand-dashboard">
-                <i class="bi bi-circle"></i><span>Brand Data</span>
-              </a>
-            </li>
-            <li>
-              <a href="/admin/category-dashboard">
-                <i class="bi bi-circle"></i><span>Category Data</span>
-              </a>
-            </li>
-          </ul>
+        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/brand-dashboard">
+          <i class="bi bi-menu-button-wide"></i><span>Brand </span><i class="bi  ms-auto"></i>
+        </a>
         </li>
-        <!-- End Components Nav -->
-      </ul>
+
+        <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/category-dashboard">
+          <i class="bi bi-menu-button-wide"></i><span>Category</span><i class="bi  ms-auto"></i>
+        </a>
+        </li>
+
+
+        </ul>
+         </ul>
+      
+
     </aside>
-  
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Add Products</h1>
+      <h1>Edit Products</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a >Data</a></li>
+          <li class="breadcrumb-item"><a>Data</a></li>
           <li class="breadcrumb-item">product</li>
-          <li class="breadcrumb-item active">add-product</li>
+          <li class="breadcrumb-item active">Add-product</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -174,25 +167,25 @@
               <h5 class="card-title">Products</h5>
 
               <!-- Floating Labels Form -->
-              <form class="row g-3" action="/admin/addProduct"
+              <form class="row g-3"action="/admin/addProduct"
                 method="post"
                 enctype="multipart/form-data">
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingName"name="productName" placeholder="Product Name" required>
+                    <input type="text" class="form-control" id="floatingName"name="productName" placeholder="Product Name"  required>
                     <label for="productName">Product Name</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" name="price" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input type="text"  name="price" class="form-control" id="floatingPassword" placeholder="Password">
                     <label for="price">Price</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                     <div class="col-md-12">
                       <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingCity" placeholder="Quantity" name="quantity">
+                        <input  type="text" class="form-control" id="floatingCity" placeholder="Quantity" name="quantity">
                         <label for="Quantity">Quantity</label>
                       </div>
                     </div>
@@ -205,7 +198,7 @@
                     class="form-control"
                     required
                   >
-                    <option value="" disabled selected>Select category</option>
+                    <option  disabled selected>Select Category</option>
                     <% for (let i = 0; i < category.length; i++) { %>
                     <option value="<%= category[i].name %>">
                       <%= category[i].name %>
@@ -218,7 +211,7 @@
                 <div class="col-md-6 ">
                    <div class="form-floating mb-3">
                     <select id="brand" name="brand" class="form-control" required>
-                    <option value="" disabled selected>Select Brand</option>
+                    <option  disabled selected>Select Brand</option>
                     <% for (let i = 0; i < brand.length; i++) { %>
                     <option value="<%= brand[i].brandName %>">
                       <%= brand[i].brandName %>
@@ -233,6 +226,7 @@
                    </div>
                     <div class="col-lg-12">
                       <input class="form-control" name="file"
+                       id="image"
                       type="file"
                       class="custom-file-input"
                       onchange="checkImageFileType()"
@@ -243,7 +237,7 @@
                   </div>
                 <div class="col-12">
                     <div class="form-floating">
-                      <textarea class="form-control" name="description" placeholder="Description" id="floatingTextarea" style="height: 100px;"></textarea>
+                      <textarea class="form-control" name="description" placeholder="Description"  id="floatingTextarea" style="height: 100px;"></textarea>
                       <label for="floatingTextarea" name="description">Description</label>
                     </div>
                   </div>
@@ -251,7 +245,7 @@
                   <button type="submit" class="btn btn-primary">Submit</button>
                   <button type="cancel" class="btn btn-secondary">Cancel</button>
                 </div>
-              </form><!-- End floating Labels Form -->
+              </form>
 
             </div>
           </div>
@@ -301,7 +295,7 @@
       }
     </script>
 
-        <script>
+    <script>
 
 const form = document.querySelector('form');
 const productNameInput = document.getElementById('floatingName');
@@ -372,3 +366,9 @@ form.addEventListener('submit', (event) => {
     </script>
   </body>
 </html>
+
+
+
+
+
+

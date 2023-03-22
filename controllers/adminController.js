@@ -4,6 +4,7 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Brand = require("../models/brandModel");
 const bcrypt = require("bcrypt");
+const mime = require('mime-types')
 let message;
 
 ////////////////////Admin Controller/////////////////////////////
@@ -412,9 +413,18 @@ const insertProduct = async (req, res) => {
     const brand = await Brand.findOne({ brandName: req.body.brand });
     console.log(req.files);
     let arrImages = [];
-    if (req.files) {
-      req.files.forEach((file) => arrImages.push(file.filename));
-    }
+     if (req.files) {
+       req.files.forEach((file) => {
+         const mimeType = mime.lookup(file.originalname);
+         if (mimeType && mimeType.includes("image/")) {
+           arrImages.push(file.filename);
+         } else {
+          
+          res.render('addProduct')
+          // message="Add Valid Image"
+         }
+       });
+     }
     const product = new Product({
       productName: req.body.productName,
       price: req.body.price,
@@ -494,7 +504,15 @@ const updateProduct = async (req, res) => {
     console.log(req.files);
     let arrImages = [];
     if (req.files) {
-      req.files.forEach((file) => arrImages.push(file.filename));
+      req.files.forEach((file) => {
+        const mimeType = mime.lookup(file.originalname);
+        if (mimeType && mimeType.includes("image/")) {
+          arrImages.push(file.filename);
+        } else {
+          res.render("addProduct");
+          // message="Add Valid Image"
+        }
+      });
     }
 
     const productData = await Product.updateOne(
