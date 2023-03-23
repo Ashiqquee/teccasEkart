@@ -67,13 +67,27 @@ user_route.post('/shop',blocked.isBlocked,userController.filterPrice);
 
 user_route.post("/paymentPage", blocked.isBlocked, userController.loadPaymentPage);
 
-user_route.get("/orderDetails",blocked.isBlocked,userController.orderDetails);
+user_route.get("/orders",blocked.isBlocked,userController.orderDetails);
 
 user_route.post("/orderConfirm",blocked.isBlocked,userController.orderConfirm);
 
+user_route.get("/cancelOrder",blocked.isBlocked,userController.cancelOrder);
 
+user_route.get("/orderDetails", blocked.isBlocked, userController.fullOrder);
 
+user_route.post("/createOrder", (req, res) => {
+  // STEP 1:
+  const { amount, currency, receipt, notes } = req.body;
 
-
+  // STEP 2:
+  razorpayInstance.orders.create(
+    { amount, currency, receipt, notes },
+    (err, order) => {
+      //STEP 3 & 4:
+      if (!err) res.json(order);
+      else res.send(err);
+    }
+  );
+});
 
 module.exports = user_route;

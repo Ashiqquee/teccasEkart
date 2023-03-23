@@ -7,11 +7,17 @@ const Orders  = require('../models/orderModel');
 const bcrypt = require("bcrypt");
 const {ObjectId}=require("mongodb")
 require("dotenv").config();
+const Razorpay = require("razorpay");
 
 const accountsid = process.env.TWILIO_ACCOUNT_SID;
 const authtoken = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_SERVICE_SID = process.env.TWILIO_SERVICE_SID;
 const client = require("twilio")(accountsid, authtoken);
+
+let instance = new Razorpay({
+  key_id: process.env.key_id,
+  key_secret: process.env.key_secret,
+});
 
 let msg;
 let message;
@@ -648,6 +654,11 @@ const addToWishlist  =  async(req,res) => {
 
 const loadCheckOut = async(req,res) => {
   if(req.session.user_id){
+
+  const cart = await Cart.findOne({ userId: req.session.user_id });
+  if(!cart){
+    res.redirect('/cart')
+  }
   try {
     let totalPrice = 0;
     let session = req.session.user_id;
@@ -794,7 +805,7 @@ const orderConfirm = async(req,res) => {
 
       res.redirect("/orderDetails");
     } else if (payment.flexRadioDefault == "online") {
-      res.send("online");
+     
     } else {
       res.send("error");
     }
@@ -819,7 +830,7 @@ const orderDetails = async (req, res) => {
     const userData = await User.findOne({ _id: session });
 
     if (orderStatus === 1) {
-      console.log('===============');
+      console.log('hadhashd');
       const cart = await Cart.findOne({ userId: session }).populate(
         "item.product"
       );
@@ -876,11 +887,43 @@ console.log("prrrr");
       ],
     }).populate("item.product");
     console.log("fdkfdskfkj");
-    res.render("orderDetails", { userData, session, message, orders });
+    res.render("orderPage", { userData, session, message, orders });
   } catch (error) {
     console.log(error);
   }
 };
+
+
+
+const cancelOrder =  async(req,res) => {
+  try {
+    const id = req.query.orderId;
+    console.log(id);
+    const orderDetails = await Orders.updateOne({_id:id},{$set:{user_cancelled:true}});
+    res.redirect('/orderDetails')
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+const fullOrder = async (req,res) => {
+  try {
+    const id = req.query.orderId;
+    const session = req.session.user_id;
+    const orderData = await Orders.findOne({_id:id}).populate('item.product');
+    if(id){
+    res.render('orderDetails',{orders:orderData,session})
+    }else{
+      res.redirect('/orders')
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 
 
 /////////////////////////////////Logout///////////////////////////////////////////
@@ -929,4 +972,6 @@ module.exports = {
   loadPaymentPage,
   orderDetails,
   orderConfirm,
+  cancelOrder,
+  fullOrder,
 };

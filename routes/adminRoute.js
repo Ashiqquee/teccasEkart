@@ -129,12 +129,19 @@ admin_route.get("/edit-brand", auth.isLogin, adminController.editBrandLoad);
 
 admin_route.post("/edit-brand", auth.isLogin, adminController.updateBrand);
 
-
+admin_route.get("/order-dashboard", auth.isLogin, adminController.orderLoad);
 
 ///////////////////////Special Route////////////////////
 
 
+admin_route.get("/cancelOrder",auth.isLogin,adminController.cancelOrder);
+
+admin_route.get("/orderStatus",auth.isLogin,adminController.orderDelivered);
+
+
 admin_route.get("/logout", auth.isLogin, adminController.logout);
+
+
 
 
 admin_route.get("*", function (req, res) {

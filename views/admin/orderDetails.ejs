@@ -130,6 +130,94 @@
     </aside>
     <!-- End Sidebar-->
 
+
+    <main id="main" class="main">
+
+       <div class="pagetitle">
+        <h1>OrderTables</h1>
+        <nav>
+          <ol class="breadcrumb">
+            
+            <li class="breadcrumb-item">Order</li>
+            <li class="breadcrumb-item active">Details</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- Table with stripped rows -->
+                <table class="table datatable">
+                  <thead>
+                    <tr style="font-family: 'EB Garamond', serif">
+                      <th scope="col">Order Count </th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Location</th>
+                                 <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                   <tbody>
+                          <%for(let i=0;i<orders.length;i++){%>
+                          <%if(orders[i].user_cancelled==true||orders[i].admin_cancelled==true){%>
+                            <tr>
+                                <th scope="row"><b><%=orders[i].orderCount%></b></th>
+                                <td>
+                                    <div class="tm-status-circle cancelled">
+                                    </div>Cancelled
+                                </td>
+                                <td><b><%=orders[i].address[0].name%></b></td>
+                                <td><b><%=orders[i].address[0].city%></b></td>
+                                <td><%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                                  <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>" class="btn btn-danger btn-sm rounded-pill">Cancel</a>
+                                  <a class="btn btn-warning btn-sm rounded-pill" href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+                                <%}%></td>
+                            </tr>
+                          <%}else if(orders[i].is_delivered==true){%>
+                            <tr>
+                                <th scope="row"><b><%=orders[i].orderCount%></b></th>
+                                <td>
+                                    <div class="tm-status-circle moving">
+                                    </div>Delivered
+                                </td>
+                                <td><b><%=orders[i].address[0].name%></b></td>
+                                <td><b><%=orders[i].address[0].city%></b></td>
+                                <td><%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                                  <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>" class="btn btn-danger btn-sm rounded-pill">Cancel</a>
+                                  <a class="btn btn-warning btn-sm rounded-pill" href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+                                <%}%></td>
+                            </tr>
+                          <%}else{%>
+                            <tr>
+                                <th scope="row"><b><%=orders[i].orderCount%></b></th>
+                                <td>
+                                    <div class="tm-status-circle pending">
+                                    </div>Pending
+                                </td>
+                                <td><b><%=orders[i].address[0].name%></b></td>
+                                <td><b><%=orders[i].address[0].city%></b></td>
+                                <td><%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                                  <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>" class="btn btn-danger btn-sm rounded-pill">Cancel</a>
+                                  <a class="btn btn-warning btn-sm rounded-pill" href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+                                <%}%></td>
+                            </tr>
+                            <%}%>
+                            <%}%>
+                        </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
     <a
       href="#"
       class="back-to-top d-flex align-items-center justify-content-center"

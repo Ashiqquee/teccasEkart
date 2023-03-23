@@ -4,6 +4,7 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Brand = require("../models/brandModel");
 const bcrypt = require("bcrypt");
+const Orders  = require('../models/orderModel')
 const mime = require('mime-types')
 let message;
 
@@ -626,6 +627,48 @@ const updateBrand  =  async(req,res) => {
 }
 
 
+
+
+
+
+
+const orderLoad = async(req,res) => {
+  try {
+    
+    const orderData = await Orders.find();
+    res.render('orderDetails',{orders:orderData});
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+const cancelOrder = async(req,res) => {
+  try {
+    id= req.query.orderId;
+    const orderData = await Orders.updateOne(
+      { _id: id },
+      { $set: { admin_cancelled :true} }
+    );
+     const orderDetails = await Orders.find();
+     res.render("orderDetails", { orders: orderDetails });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+const orderDelivered = async (req, res) => {
+  try {
+    id = req.query.orderId;
+    const orderData = await Orders.updateOne({_id:id},{$set: {is_delivered:true}});
+    const orderDetails = await Orders.find();
+    res.render("orderDetails",{orders:orderDetails});
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 ////////////////////Logout Controller/////////////////////////////
 
 const logout = async (req, res) => {
@@ -672,5 +715,8 @@ module.exports = {
   addBrand,
   editBrandLoad,
   updateBrand,
+  orderLoad,
+  cancelOrder,
+  orderDelivered,
 
 };
