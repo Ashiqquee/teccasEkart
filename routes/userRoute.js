@@ -75,19 +75,13 @@ user_route.get("/cancelOrder",blocked.isBlocked,userController.cancelOrder);
 
 user_route.get("/orderDetails", blocked.isBlocked, userController.fullOrder);
 
-user_route.post("/createOrder", (req, res) => {
-  // STEP 1:
-  const { amount, currency, receipt, notes } = req.body;
+user_route.get('/returnOrder',blocked.isBlocked,userController.returnOrder);
 
-  // STEP 2:
-  razorpayInstance.orders.create(
-    { amount, currency, receipt, notes },
-    (err, order) => {
-      //STEP 3 & 4:
-      if (!err) res.json(order);
-      else res.send(err);
-    }
-  );
-});
+user_route.get("/success",blocked.isBlocked,userController.confirmPayment);
+
+user_route.get("/removeFromWishlist",blocked.isBlocked,userController.removeFromWishlist);
+
+user_route.post("/checkCoupon", userController.applyCoupon);
+
 
 module.exports = user_route;

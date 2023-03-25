@@ -153,7 +153,7 @@
           <h5 style="font-weight: bolder;"><%= item.product.productName %></h5>
         </td>
         <td>
-          <h5 style="font-weight: bolder;" id="total-price-<%= item._id %>">$.<%= (item.price ) %></h5>
+          <h5 style="font-weight: bolder;" id="total-price-<%= item._id %>">$<%= (item.price ) %></h5>
 
         </td>
         <td>
@@ -371,7 +371,12 @@
 
 
 
-  <script>
+  
+
+
+
+<script>
+
 function incrementCart(event) {
   event.preventDefault(); 
 
@@ -421,21 +426,18 @@ function decrementCart(event) {
   xhr.send(JSON.stringify({ itemId }));
 }
 
-
-
-
-const priceElement = document.querySelector(`#price-${itemId}`);
-const quantityInput = event.target.parentNode.querySelector('.input-number');
-const newQuantity = parseInt(quantityInput.value);
-priceElement.innerText = (item.price * newQuantity).toFixed(2);
-
-
-
-
-
-
-
 </script>
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
   const removeItemBtns = document.querySelectorAll(".remove-item-btn");

@@ -9,7 +9,6 @@ const orderSchema = mongoose.Schema({
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
-        
       },
       price: {
         type: Number,
@@ -23,7 +22,7 @@ const orderSchema = mongoose.Schema({
     },
   ],
   start_date: {
-    type: String,
+    type: Date,
   },
   delivered_date: {
     type: String,
@@ -47,8 +46,15 @@ const orderSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  is_returned: {
+    type: Number,
+    default: 0,
+  },
   address: {
     type: Array,
+  },
+  paymentType: {
+    type: String,
   },
 });
 

@@ -651,7 +651,20 @@ const cancelOrder = async(req,res) => {
       { $set: { admin_cancelled :true} }
     );
      const orderDetails = await Orders.find();
-     res.render("orderDetails", { orders: orderDetails });
+        const productInc = await Orders.findOne({ userId: session })
+          .sort({ _id: -1 })
+          .populate("item.product");
+        console.log("ssss");
+        orderData.item.forEach(async (item) => {
+          const productid = item.product._id;
+          const increaseQuantity = item.quantity;
+          console.log("kkkkk");
+          await Product.updateOne(
+            { _id: productid },
+            { $inc: { quantity: increaseQuantity } }
+          );
+        });
+     res.redirect("/admin/order-dashboard");
   } catch (error) {
     console.log(error);
   }
@@ -663,7 +676,7 @@ const orderDelivered = async (req, res) => {
     id = req.query.orderId;
     const orderData = await Orders.updateOne({_id:id},{$set: {is_delivered:true}});
     const orderDetails = await Orders.find();
-    res.render("orderDetails",{orders:orderDetails});
+    res.redirect("/admin/order-dashboard");
   } catch (error) {
     console.log(error);
   }

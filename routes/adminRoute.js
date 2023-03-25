@@ -139,6 +139,8 @@ admin_route.get("/cancelOrder",auth.isLogin,adminController.cancelOrder);
 admin_route.get("/orderStatus",auth.isLogin,adminController.orderDelivered);
 
 
+
+
 admin_route.get("/logout", auth.isLogin, adminController.logout);
 
 

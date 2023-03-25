@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
       ref: "Product",
     },
   ],
+  wallet:{
+    type:Number,
+    default:0,
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);
