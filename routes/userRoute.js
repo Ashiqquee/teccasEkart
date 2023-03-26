@@ -83,5 +83,7 @@ user_route.get("/removeFromWishlist",blocked.isBlocked,userController.removeFrom
 
 user_route.post("/checkCoupon", userController.applyCoupon);
 
+user_route.get('/404',userController.loadSearch)
 
+user_route.get("/search",userController.ok)
 module.exports = user_route;

@@ -6,7 +6,8 @@ const Cart = require('../models/cartModel');
 const Orders  = require('../models/orderModel');
 const Coupon =  require('../models/couponModel')
 const bcrypt = require("bcrypt");
-const {ObjectId}=require("mongodb")
+const {ObjectId}=require("mongodb");
+const mongoose = require("mongoose");
 require("dotenv").config();
 
 const { update } = require("../models/userModel");
@@ -347,6 +348,17 @@ const loadShop = async(req,res) => {
       console.log(error);
       
     }
+}
+
+
+const loadSearch = async(Req,res) => {
+  try {
+    const categoryData = await Category.find();
+    const brandData = await Brand.find();
+    res.render("404", { category: categoryData, brand: brandData });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
@@ -817,8 +829,11 @@ loadPaymentPage = async (req, res) => {
     console.log(index);
     let session = req.session.user_id;
     const Total = req.body.totalPrice;
+     const user = await User.findOne({ _id: session });
+
+     wallet = user.wallet;
     console.log(Total);
-    res.render("paymentPage",{Total,session,msg});
+    res.render("paymentPage",{Total,session,msg,wallet});
   } catch (error) {
     console.log(error);
   }
@@ -1147,7 +1162,7 @@ const applyCoupon = async (req,res) => {
             console.log(discountPrice);
             cart.totalPrice = cart.totalPrice - discountPrice;
             amount = cart.totalPrice;
-            req.session.amount = cart.totalPrice; 
+            
             ///////////////////////////////////////////
             //////////////////////////////////////////////////////////
             await userId.save();
@@ -1187,17 +1202,99 @@ const userLogout = async (req, res) => {
   }
 };
 
+const ok = async (req, res) => {
+  let {
+    page = 1,
+    search,
+    category,
+    brand,
+    sort,
+    minPrice,
+    maxPrice,
+  } = req.query;
+  
+  console.log(req.query);
+  const limit = 4;
+
+  const searchCondition = search
+    ? {
+        productName: {
+          $regex: search,
+          $options: "i",
+        },
+      }
+    : {};
+  const filterCondition = {
+    ...searchCondition,
+    ...(category
+      ? {
+          category: mongoose.Types.ObjectId(category),
+        }
+      : {}),
+    ...(brand
+      ? {
+          brand: mongoose.Types.ObjectId(brand),
+        }
+      : {}),
+    ...(minPrice && maxPrice
+      ? {
+          price: {
+            $gte: minPrice,
+            $lte: maxPrice,
+          },
+        }
+      : minPrice
+      ? {
+          price: {
+            $gte: minPrice,
+          },
+        }
+      : maxPrice
+      ? {
+          price: {
+            $lte: maxPrice,
+          },
+        }
+      : {}),
+  };  const sortCondition =
+    sort === "low-to-high"
+      ? { price: 1 }
+      : sort === "high-to-low"
+      ? { price: -1 }
+      : {};
+
+  try {
+    const products = await Product.find(filterCondition)
+      .sort(sortCondition)
+      .skip((page - 1) * limit)
+      .limit(limit * 1);
+    const count = await Product.find(filterCondition).countDocuments();
+    const totalPage = Math.ceil(count / limit);
+
+    res.send({
+      products,
+      count,
+      totalPage,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+};
+
 
 
 
 
 module.exports = {
+  ok,
   loadRegister,
   insertUser,
   loginLoad,
   verifyLogin,
   resendOTP,
   loadHome,
+  loadSearch,
   userLogout,
   verifyReset,
   sendReset,

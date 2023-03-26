@@ -113,6 +113,8 @@ admin_route.get("/edit-product", auth.isLogin, adminController.editProductLoad);
 
 admin_route.post("/edit-product",upload.array("file",5), auth.isLogin, adminController.updateProduct);
 
+admin_route.get("/deletImage",auth.isLogin,adminController.deleteImage);
+
 
 
 

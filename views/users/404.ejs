@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product Search</title>
+  </head>
+ <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- nice select CSS -->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/all.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="css/price_rangs.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <body>
+    <h1>Product Search</h1>
+    <form id="search-form">
+        
+      <label for="search-input">Search:</label>
+      <input type="text" id="search-input" name="search">
+      <br>
+     
+      <label for="brand-select">Brand:</label>
+      <select id="brand-select" name="brand">
+        <option value="">All</option>
+        <% brand.forEach((brand) => { %>
+        <option value="<%= brand._id %>"><%= brand.brandName %></option>
+       <% }); %>
+      </select>
+      <br>
+      <label for="brand-select">Category:</label>
+      <select id="category-select" name="category">
+        
+        <option value="">All</option>
+        <% category.forEach((category) => { %>
+        <option  value="<%= category._id %>"><%= category.name %></option>
+       <% }); %>
+        
+      </select>
+      <br>
+      <label for="min-price-input">Min Price:</label>
+      <input type="number" id="min-price-input" name="minPrice">
+      <br>
+      <label for="max-price-input">Max Price:</label>
+      <input type="number" id="max-price-input" name="maxPrice">
+      <br>
+      <label for="sort">Sort by:</label>
+<select name="sort" id="sort">
+    <option >relevant</option>
+  <option value="low-to-high">Price: Low to High</option>
+  <option value="high-to-low">Price: High to Low</option>
+</select>
+ <br>
+      <button type="submit">Search</button>
+    </form>
+    <div id="results-container"></div>
+
+
+    
+    <script>
+      const searchForm = document.getElementById('search-form');
+      const resultsContainer = document.getElementById('results-container');
+
+      searchForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(searchForm);
+        const searchParams = new URLSearchParams(formData);
+
+        const response = await fetch(`/search?${searchParams}`);
+        const { products, count, totalPage } = await response.json();
+resultsContainer.innerHTML = `
+  <p>Showing ${products.length} of ${count} results</p>
+  <section class="cat_product_area section_padding">
+        <div class="container">
+            <div class="row">
+  <div class="row">
+    ${products.map(product => `
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+          <img src="/productImages/${product.productImages[0]}" alt="" class="card-img-top">
+          <div class="card-body">
+            <h4 class="card-title">${product.productName}</h4>
+            <h3>$${product.price}</h3>
+            <a href="/productShop?id=${product._id}" class="">View Details</a>
+            <br>
+            <a href="/addToCart?id=${product._id}" class="add_cart">+ Add to Cart</a>
+            <br>
+            <a href="/addToWishlist?id=${product._id}" class="ti-heart"></a>
+          </div>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+   </div>
+        </div>
+    </section>
+  <p>Page ${searchParams.get('page')} of ${totalPage}</p>
+`;
+
+      });
+    </script>
+
+        <!-- jquery plugins here-->
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- easing js -->
+    <script src="js/jquery.magnific-popup.js"></script>
+    <!-- swiper js -->
+    <script src="js/swiper.min.js"></script>
+    <!-- swiper js -->
+    <script src="js/masonry.pkgd.js"></script>
+    <!-- particles js -->
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <!-- slick js -->
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="js/price_rangs.js"></script>
+  </body>
+</html>

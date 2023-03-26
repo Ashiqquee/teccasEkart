@@ -5,7 +5,8 @@ const Product = require("../models/productModel");
 const Brand = require("../models/brandModel");
 const bcrypt = require("bcrypt");
 const Orders  = require('../models/orderModel')
-const mime = require('mime-types')
+const mime = require('mime-types');
+const { db } = require("../models/userModel");
 let message;
 
 ////////////////////Admin Controller/////////////////////////////
@@ -327,7 +328,7 @@ const newCategory = async (req, res) => {
 const addCategory = async (req, res) => {
   try {
     const name = req.body.name;
-    if (!name || name.trim().length < 3) {
+    if (!name || name.trim().length < 2) {
       return res.render("new-category", {
         message: "Please enter a valid name",
       });
@@ -379,6 +380,14 @@ const updateCategory = async (req, res) => {
    
   const id = req.query.id;
   console.log(id);
+
+  const existingCategory = await Category.findOne({
+      name: req.body.name,
+    });
+    if (existingCategory) {
+      return res.render("edit-category", {
+        message: "Category is Already added",
+      })};
 
   const CategoryData = await Category.findByIdAndUpdate({_id:id}, {
     $set: { name: req.body.name },
@@ -479,6 +488,7 @@ const unBlockProduct = async (req, res) => {
 const editProductLoad = async (req, res) => {
   try {
     const id = req.query.id;
+    req.session.id = id;
     const productData = await Product.findById({ _id: id }).populate('brand').populate('category');
     const categoryData = await Category.find();
     const brandData = await Brand.find();
@@ -499,25 +509,25 @@ const editProductLoad = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const id = req.query.id;
+   
     const category = await Category.findOne({ name: req.body.category });
     const brand = await Brand.findOne({ brandName: req.body.brand });
     console.log(req.files);
-    let arrImages = [];
+    
     if (req.files) {
-      req.files.forEach((file) => {
-        const mimeType = mime.lookup(file.originalname);
-        if (mimeType && mimeType.includes("image/")) {
-          arrImages.push(file.filename);
-        } else {
-          res.render("addProduct");
-          // message="Add Valid Image"
-        }
-      });
+      for( let i =0;i<req.files.length; i++){
+        const image = req.files[i].filename;
+        console.log(image);
+        const addImage = await Product.updateOne(
+          { _id: req.query.id },
+          { $push: { productImages: image } }
+        );
+        console.log(addImage);
+      }
     }
 
     const productData = await Product.updateOne(
-      { _id: id },
+      { _id: req.query.id },
       {
         $set: {
           productName: req.body.productName,
@@ -527,7 +537,7 @@ const updateProduct = async (req, res) => {
           category: category._id,
           brand: brand._id,
           status: 0,
-          productImages: arrImages,
+          
         },
       }
     );
@@ -541,6 +551,26 @@ const updateProduct = async (req, res) => {
     console.log(error);
   }
 };
+
+const deleteImage = async (req,res) => {
+  try {
+    const productId= req.query.productId;
+    const index = req.query.index;
+    const deletedImage = await Product.updateOne(
+      { _id: productId },
+      { $unset: { [`productImages.${index}`]: "" } }
+    );
+    const deletedImages = await Product.updateOne(
+     { _id: productId },
+      { $pull: { productImages: null } }
+      );
+
+   console.log(deletedImage, deletedImage);
+    res.redirect("/admin/edit-product?id=" + productId);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 ////////////////////Brand Controller/////////////////////////////
@@ -731,5 +761,6 @@ module.exports = {
   orderLoad,
   cancelOrder,
   orderDelivered,
+  deleteImage,
 
 };
