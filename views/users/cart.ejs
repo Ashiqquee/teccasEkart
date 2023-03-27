@@ -192,7 +192,8 @@
         </td>
       </td>
       <td>
-        <h5 style="font-weight: bolder;">Total Amount  =  <%= totalPrice %></h5>
+        <h5 style="font-weight: bolder;">Total Amount  =  $<span id="total-price"><%= totalPrice.toFixed(2) %></span></h5>
+
       </td>
     </tr>
               <!-- <tr class="shipping_area">
@@ -401,9 +402,8 @@ function incrementCart(event) {
 }
 
 
-
 function decrementCart(event) {
-  event.preventDefault(); 
+  event.preventDefault();
 
   const itemId = event.target.dataset.id;
   const xhr = new XMLHttpRequest();
@@ -412,10 +412,18 @@ function decrementCart(event) {
   xhr.onload = function() {
     if (xhr.status === 200) {
       const response = JSON.parse(xhr.responseText);
-      console.log(response); 
-      const updatedPrice = response.updatedPrice;
-      const priceElement = document.querySelector(`#price-${itemId}`);
-      priceElement.textContent = updatedPrice;
+      console.log(response);
+      if (response.success) {
+        const updatedPrice = response.updatedPrice;
+        const priceElement = document.querySelector(`#price-${itemId}`);
+        if (priceElement) {
+        priceElement.textContent = updatedPrice;
+        }
+        const totalElement = document.querySelector('#total-price');
+        totalElement.textContent = response.totalPrice.toFixed(2);
+      } else {
+        console.log(response.error);
+      }
     } else {
       console.log(xhr.statusText);
     }
@@ -425,6 +433,7 @@ function decrementCart(event) {
   };
   xhr.send(JSON.stringify({ itemId }));
 }
+
 
 </script>
 

@@ -45,7 +45,7 @@
 
                     <td>
                       <%let total=0 %>
-                        <%=total=orders[i].item[j].price*orders[i].item[j].quantity%>
+                        <%=total=orders[i].totalPrice%>
                     </td>
                                  <% if (orders[i].is_delivered === false && orders[i].is_returned===0) { %>
   <td>

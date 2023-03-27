@@ -172,9 +172,12 @@
                                 </td>
                                 <td><b><%=orders[i].address[0].name%></b></td>
                                 <td><b><%=orders[i].address[0].city%></b></td>
-                                <td><%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                                <td>
+                                  <a href="/admin/viewOrder?orderId=<%=orders[i]._id%>" class="btn btn-primary btn-sm rounded-pill">view</a>
+                                  <%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
                                   <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>" class="btn btn-danger btn-sm rounded-pill">Cancel</a>
                                   <a class="btn btn-warning btn-sm rounded-pill" href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+                                  
                                 <%}%></td>
                             </tr>
                           <%}else if(orders[i].is_delivered==true){%>
@@ -186,9 +189,12 @@
                                 </td>
                                 <td><b><%=orders[i].address[0].name%></b></td>
                                 <td><b><%=orders[i].address[0].city%></b></td>
-                                <td><%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                                <td>
+                                  <a href="/admin/viewOrder?orderId=<%=orders[i]._id%>" class="btn btn-primary btn-sm rounded-pill">view</a>
+                                  <%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
                                   <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>" class="btn btn-danger btn-sm rounded-pill">Cancel</a>
                                   <a class="btn btn-warning btn-sm rounded-pill" href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+                                  
                                 <%}%></td>
                             </tr>
                           <%}else{%>
@@ -200,10 +206,14 @@
                                 </td>
                                 <td><b><%=orders[i].address[0].name%></b></td>
                                 <td><b><%=orders[i].address[0].city%></b></td>
-                                <td><%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                                <td>
+                                   <a href="/admin/viewOrder?orderId=<%=orders[i]._id%>" class="btn btn-primary btn-sm rounded-pill">view</a>
+                                  <%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
                                   <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>" class="btn btn-danger btn-sm rounded-pill">Cancel</a>
                                   <a class="btn btn-warning btn-sm rounded-pill" href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+                                 
                                 <%}%></td>
+                                
                             </tr>
                             <%}%>
                             <%}%>

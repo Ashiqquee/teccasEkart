@@ -15,9 +15,9 @@ const paypal = require('paypal-rest-sdk');
 paypal.configure({
   mode: "sandbox",
   client_id:
-    "ASFB_e0NpyeiyAi5WX4mUgxvEB3YK-o6ThKyTQV6pv9vbt8_0fKK-Dyy0kXwayAUYnGM2QW-5T484rPX",
+    "AZbDYg0caVl2QCIFQJasVvdpyH9KGeSXDNxTBGrR-tUIRtTLZY6BbanuzLZbVkiilHTQsXm9FpVn1TGQ",
   client_secret:
-    "EONYzhNHWjTVHEoDhOncyUEpTT79EqlBDxkBaStG7ZnZWE5Wa6dokO9qNPktlnH--WMXGlpWbOgUixD7",
+    "EDCS5oFBCV_A-8nA3Ts-yPHFEvFxtmnPg0RN0H2raHt73hwg1kwmk6tuoAKI6beXOUnULNu2yfYGsrU1",
 });
  
 
@@ -565,7 +565,6 @@ const incrementCart = async (req, res) => {
 
 
 
-
 const decrementCart = async (req, res) => {
   console.log("Ajax ok ok");
 
@@ -573,9 +572,9 @@ const decrementCart = async (req, res) => {
     const userId = req.session.user_id;
     const itemid = req.body.itemId;
     const cartCount = await Cart.findOne({ "item._id": itemid });
-    
+
     const item = cartCount.item.find((item) => item._id.toString() === itemid);
-   
+
     const product = await Product.findOne({ _id: item.product });
     if (item) {
       if (item.quantity <= 1) {
@@ -585,7 +584,15 @@ const decrementCart = async (req, res) => {
           { userId: userId, "item._id": itemid },
           { $inc: { "item.$.quantity": -1 } }
         );
-        res.json({ success: true });
+        const updatedCart = await Cart.findOne({ userId: userId });
+        const totalPrice = updatedCart.totalPrice.toFixed(2);
+        const updatedItem = updatedCart.item.find(
+          (item) => item._id.toString() === itemid
+        );
+        const updatedPrice = (updatedItem.price * updatedItem.quantity).toFixed(
+          2
+        );
+        res.json({ success: true, totalPrice, updatedPrice });
       }
     }
   } catch (error) {
@@ -593,6 +600,7 @@ const decrementCart = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 
 
@@ -693,6 +701,10 @@ const addToWishlist  =  async(req,res) => {
       console.log(error);
     }
   };
+
+
+
+
 /////////////////////////////////Checkout/////////////////////////////////////
 
 const loadCheckOut = async(req,res) => {
@@ -729,6 +741,9 @@ message="Login With your account to access this page"
 }
 }
 
+
+
+///////////////////Address Management./////////////////////
 
 
 
@@ -823,12 +838,19 @@ const editAddress = async (req,res) => {
 }
 
 
+
+
+////////////////Order Managemnet///////////////////////
+
+
+
 loadPaymentPage = async (req, res) => {
   try {
    index = req.body.address;
     console.log(index);
     let session = req.session.user_id;
     const Total = req.body.totalPrice;
+    req.session.total= Total;
      const user = await User.findOne({ _id: session });
 
      wallet = user.wallet;
@@ -841,9 +863,11 @@ loadPaymentPage = async (req, res) => {
 
 
 
+
+
 const orderConfirm = async(req,res) => {
   try {
-    const session = req.body.user_id;
+   
     const payment = req.body;
     console.log(payment);
     paymentType = payment.flexRadioDefault;
@@ -924,6 +948,9 @@ const orderConfirm = async(req,res) => {
 }
 
 
+
+
+
 const confirmPayment = async (req, res) => {
  const payerId = req.query.PayerID;
  const paymentId = req.query.paymentId;
@@ -956,6 +983,10 @@ const confirmPayment = async (req, res) => {
    }
  );
 };
+
+
+
+
 
  
 
@@ -997,8 +1028,7 @@ const orderDetails = async (req, res) => {
         userId: session,
         item: orderItems,
         address,
-        start_date: Date.now(),
-        totalPrice: cart.totalPrice,
+        totalPrice: req.session.total,
         orderCount: latestOrder ? latestOrder.orderCount + 1 : 1,
         order_date: new Date().toLocaleDateString("en-GB"),
         paymentType: paymentType,
@@ -1118,16 +1148,19 @@ const returnOrder = async (req,res) => {
 }
 
 
+
+
+////////////////Apply Coupon /////////////////////////////
+
+
+
 const applyCoupon = async (req,res) => {
   try { 
      let code = req.body.coupon;
     
-     console.log(req.body);
-    console.log("helloooo");
-    console.log(code);
-    console.log("helloooo");
+    
     req.session.coupon=code
-    console.log(req.session.coupon);
+   
     if (req.session.user_id) {
       let session = req.session.user_id;
       const userId = await User.findOne({ _id: session }, {});
@@ -1136,19 +1169,23 @@ const applyCoupon = async (req,res) => {
         couponCode: code,
         status: 0,
       }).lean();
-      console.log(coupons);
+      
       if (coupons != null) {
         let today = new Date();
-        console.log(today, coupons.endDate);
+        
         if (coupons.endDate > today) {
           let userfind = await Coupon.findOne(
             { couponId: code, user: userId._id },
             {}
           ).lean();
-          console.log(session);
-            const cart = await Cart.findOne({userId:session},{totalPrice:1});
-            console.log(cart);
-            
+          console.log("okok");
+          
+            const cart = await Cart.findOne(
+              { userId: req.session.user_id },
+              { totalPrice: 1 }
+            );
+            console.log(cart.totalPrice);
+            console.log("poy");
           let userID = userId._id;
           console.log(userID);
           if (userfind == null) {
@@ -1163,8 +1200,7 @@ const applyCoupon = async (req,res) => {
             cart.totalPrice = cart.totalPrice - discountPrice;
             amount = cart.totalPrice;
             
-            ///////////////////////////////////////////
-            //////////////////////////////////////////////////////////
+          
             await userId.save();
             await Coupon.findOneAndUpdate(
               { couponId: code },
@@ -1186,13 +1222,12 @@ const applyCoupon = async (req,res) => {
       res.redirect("/login");
     }
   } catch (error) {
-   res.redirect('/SomeThingWentWrong')
+   console.log(error);
   }
 }
 
 
-/////////////////////////////////Logout///////////////////////////////////////////
-
+////////////////////////Logout/////////////////////////////////
 const userLogout = async (req, res) => {
   try {
     req.session.user_id = null;
@@ -1201,6 +1236,9 @@ const userLogout = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+//////////////////////////Filter//////////////////////////////////
 
 const ok = async (req, res) => {
   let {
@@ -1214,7 +1252,7 @@ const ok = async (req, res) => {
   } = req.query;
   
   console.log(req.query);
-  const limit = 4;
+  const limit = 15;
 
   const searchCondition = search
     ? {

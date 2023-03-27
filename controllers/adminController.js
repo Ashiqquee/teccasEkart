@@ -659,7 +659,7 @@ const updateBrand  =  async(req,res) => {
 
 
 
-
+///////////////////////Order Managment////////////////////////
 
 
 const orderLoad = async(req,res) => {
@@ -680,20 +680,34 @@ const cancelOrder = async(req,res) => {
       { _id: id },
       { $set: { admin_cancelled :true} }
     );
-     const orderDetails = await Orders.find();
-        const productInc = await Orders.findOne({ userId: session })
-          .sort({ _id: -1 })
-          .populate("item.product");
-        console.log("ssss");
-        orderData.item.forEach(async (item) => {
-          const productid = item.product._id;
-          const increaseQuantity = item.quantity;
-          console.log("kkkkk");
-          await Product.updateOne(
-            { _id: productid },
-            { $inc: { quantity: increaseQuantity } }
+     const orderDetails = await Orders.findOne({_id:id});
+        if (
+          orderDetails.paymentType === "online" ||
+          orderDetails.paymentType === "wallet"
+        ) {
+          increaseAmount = orderDetails.totalPrice;
+          console.log(increaseAmount);
+       const ans=   await User.updateOne(
+            { _id: orderDetails.userId },
+            { $inc: { wallet: increaseAmount } }
           );
-        });
+          console.log(ans);
+        }
+        
+        // const productInc = await Orders.findOne({ userId:orderDetails.userId })
+        //   .sort({ _id: -1 })
+        //   .populate("item.product");
+        // console.log("ssss");
+        // orderData.item.forEach(async (item) => {
+        //   const productid = item.product._id;
+        //   const increaseQuantity = item.quantity;
+        //   console.log("kkkkk");
+        //   await Product.updateOne(
+        //     { _id: productid },
+        //     { $inc: { quantity: increaseQuantity } }
+        //   );
+        // });
+      
      res.redirect("/admin/order-dashboard");
   } catch (error) {
     console.log(error);
@@ -711,6 +725,24 @@ const orderDelivered = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+const DetailedOrderView = async(req,res) => {
+  try {
+    const id = req.query.orderId;
+    const orderData = await Orders.findOne({ _id: id }).populate(
+      "item.product"
+    );
+    if (id) {
+      res.render("orderPage", { orders: orderData});
+    } else {
+      res.redirect("/admin/orders-dashboard");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 ////////////////////Logout Controller/////////////////////////////
 
@@ -761,6 +793,7 @@ module.exports = {
   orderLoad,
   cancelOrder,
   orderDelivered,
+  DetailedOrderView,
   deleteImage,
 
 };

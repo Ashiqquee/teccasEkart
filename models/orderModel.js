@@ -23,9 +23,10 @@ const orderSchema = mongoose.Schema({
   ],
   start_date: {
     type: Date,
+    default:Date.now()
   },
   delivered_date: {
-    type: String,
+    type: Date,
   },
   totalPrice: {
     type: String,
