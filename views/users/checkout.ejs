@@ -154,6 +154,8 @@
          
 
         </div>
+
+
       <form action="/paymentPage" method="post" id="addressForm">
       <div class="billing_details">
         <div class="row">
@@ -175,7 +177,7 @@
                     <% } %>
                     <h4> <a href="/addAddress">Add New Address +</a> </h4>
                     
-<% for (var i = 0; i < userAddress.length; i++) { %>
+<% for (let i = 0; i < userAddress.length; i++) { %>
   <div class="mt-4 border" style="border-radius: 10px;">
     <label>
       <input type="radio" name="address" value="<%= i %>">
@@ -237,7 +239,7 @@
                   
                 </li>
                 <li>
-                  <a href="#" id="dicount"  style="text-decoration: none; pointer-events: none;">Coupon Discount
+                  <a id="dicount"  style="text-decoration: none; pointer-events: none;">Coupon Discount
                                     
                                     <span id="disc" name="disc" class="text-success">0</span>
                 </li>
@@ -425,6 +427,9 @@
                 } else if (response.noMatch) {
                     document.getElementById('codestate').style.color = "red"
                     document.getElementById('codestate').innerText = 'Oops invalid coupon code!'
+                }else if (response.lowPrice) {
+                    document.getElementById('codestate').style.color = "red"
+                    document.getElementById('codestate').innerText = 'Can"t apply for this purchase!'
                 }
             }
         })

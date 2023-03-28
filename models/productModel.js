@@ -35,6 +35,12 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  review: [
+    {
+      userName: { type: String },
+      message: { type: String },
+    },
+  ],
 });
 
 

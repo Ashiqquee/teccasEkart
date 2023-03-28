@@ -35,9 +35,15 @@ user_route.post("/verifyReset", userController.verifyReset);
 
 user_route.get("/profile", blocked.isBlocked, userController.profileLoad);
 
+user_route.get("/editProfile", blocked.isBlocked, userController.profileEditLoad);
+
+user_route.post("/editProfile",blocked.isBlocked,userController.updateProfile);
+
 user_route.get("/shop", blocked.isBlocked, userController.loadShop);
 
 user_route.get("/productShop", blocked.isBlocked, userController.productShop);
+
+user_route.post("/productShop", blocked.isBlocked, userController.addReview);
 
 user_route.get("/cart", blocked.isBlocked, userController.loadCart);
 

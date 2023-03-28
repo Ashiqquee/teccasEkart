@@ -718,7 +718,15 @@ const cancelOrder = async(req,res) => {
 const orderDelivered = async (req, res) => {
   try {
     id = req.query.orderId;
-    const orderData = await Orders.updateOne({_id:id},{$set: {is_delivered:true}});
+    const orderData = await Orders.updateOne(
+      { _id: id },
+      {
+        $set: {
+          is_delivered: true,
+          delivered_date: Date.now(),
+        },
+      }
+    );
     const orderDetails = await Orders.find();
     res.redirect("/admin/order-dashboard");
   } catch (error) {

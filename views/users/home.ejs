@@ -202,8 +202,16 @@
                     <h4><%= item.productName %></h4>
                     <h3>$<%= item.price %></h3>
                     <a href="/productShop?id=<%= item._id %>" >View Details</a>
-                    
-                    <a href="/addToCart?id=<%= item._id %>" class="add_cart">+ add to cart</a><a  href="/addToWishlist?id=<%= item._id %>" class="like_us"> <i class="ti-heart"></i> </a>
+                    <% if (user && user.wishlist.includes(item._id)) { %>
+                                            <a href="/removeFromWishlist?id=<%= item._id %>" class="already_wishlist">
+                                            <i class="fa-solid fa-heart"></i> 
+                                            </a>
+                                        <% } else { %>
+                                            <a href="/addToWishlist?id=<%= item._id %>" class="like_us">
+                                            <i class="ti-heart"></i> 
+                                            </a>
+                                        <% } %>
+                    <a href="/addToCart?id=<%= item._id %>" class="add_cart">+ add to cart</a>
                      
                 </div>
             </div>

@@ -193,43 +193,140 @@
       </div>
     </div>
     <!--================End Single Product Area =================-->
-
-    <section class="product_list section_padding">
-      <div class="container">
-        <div class="row">
-          <h1>Featured Products</h1>
-          <div class="col-lg-12">
-            <div class="product_list_slider owl-carousel">
-              <div class="single_product_list_slider">
-                <div class="row align-items-center justify-content-between">
-                  <% featured.forEach(function(item) { %>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="single_product_item">
-                      <img
-                        src="/productImages/<%= item.productImages[0] %>"
-                        alt=""
-                      />
-                      <div class="single_product_text">
-                        <h4><%= item.productName %></h4>
-                        <h3>$<%= item.price %></h3>
-                        <a href="/productShop?id=<%= item._id %>"
+   <!-- product_list part start-->
+  <section class="product_list best_seller">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="section_tittle text-center">
+            <h2>Similar Product <span>shop</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-12">
+          <div class="best_product_slider owl-carousel">
+            
+            
+             <% featured.forEach(function(item) { %>
+            <div class="single_product_item">
+              <img class="img-fluid" src="/productImages/<%= item.productImages[0] %>" alt="">
+              <div class="single_product_text">
+                <h4><%= item.productName %></h4>
+                <h3>$<%= item.price %></h3>
+                <a href="/productShop?id=<%= item._id %>"
                           >View Details</a
                         >
-                        <a href="/addToCart?id=<%= item._id %>" class="add_cart"
-                          >+ add to cart<i class="ti-heart"></i
-                        ></a>
-                      </div>
+              </div>
+            </div>
+            <% }); %>
+            
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- product_list part end-->
+
+  <section class="product_description_area">
+    <div class="container">
+     <ul class="nav nav-tabs" id="myTab" role="tablist">
+       
+        <li class="nav-item">
+          <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+            aria-selected="false">Reviews</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        
+        
+       
+        <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row total_rate">
+                <div class="col-6">
+                 
+                </div>
+                <div class="col-6">
+                  <div class="rating_list">
+                    
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="review_list">
+  <% for (let i = 0; i < product.review.length; i++) { %>
+    <div class="review_item">
+      <div class="media">
+        <div class="d-flex">
+          
+       <% let images = [
+        'images/avathar1.jpg',
+        'images/avathar2.jpg',
+        'images/avathar3.jpg'
+        ]; %>
+
+
+      <% var randomIndex = Math.floor(Math.random() * images.length); %>
+
+
+    <img  class="rounded-circle img-fluid" style="width: 50px;" src="<%= images[randomIndex] %>" alt="" />
+
+          
+        </div>
+        <div class="media-body">
+          <h4><%= product.review[i].userName %></h4>
+        </div>
+      </div>
+      <p><%= product.review[i].message %></p>
+    </div>
+  <% } %>
+</div>
+
+            </div>
+            <div class="col-lg-6">
+              <div class="review_box">
+                <h4>Add a Review</h4>
+                
+                
+                <form class="row contact_form" action="/productShop?id=<%= product._id %>" method="post" novalidate="novalidate">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="name" placeholder="Your Full name" />
                     </div>
                   </div>
-                  <% }); %>
-                </div>
+                  
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea class="form-control" name="message" rows="1" placeholder="Review"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12 text-right">
+                    <button type="submit" value="submit" class="btn_3">
+                      Submit Now
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </section>
     <!-- jquery plugins here-->
     <!-- jquery -->
     <script src="js/jquery-1.12.1.min.js"></script>
@@ -263,3 +360,4 @@
 
   </body>
 </html>
+
