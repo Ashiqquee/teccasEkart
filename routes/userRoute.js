@@ -11,6 +11,8 @@ user_route.set("views", "./views/users");
 
 const userController = require("../controllers/userController");
 
+const couponController = require('../controllers/couponController')
+
 user_route.get("/signup", auth.isLogout,blocked.isBlocked, userController.loadRegister);
 
 user_route.post("/signup",auth.isLogout,blocked.isBlocked,userController.insertUser);
@@ -69,6 +71,8 @@ user_route.get("/editAddress", blocked.isBlocked, userController.editAddressLoad
 
 user_route.post("/editAddress", blocked.isBlocked, userController.editAddress);
 
+user_route.get("/deleteAddress",blocked.isBlocked,userController.deleteAddress);
+
 user_route.post('/shop',blocked.isBlocked,userController.filterPrice);
 
 user_route.post("/paymentPage", blocked.isBlocked, userController.loadPaymentPage);
@@ -87,9 +91,11 @@ user_route.get("/success",blocked.isBlocked,userController.confirmPayment);
 
 user_route.get("/removeFromWishlist",blocked.isBlocked,userController.removeFromWishlist);
 
-user_route.post("/checkCoupon", userController.applyCoupon);
+user_route.post("/checkCoupon", blocked.isBlocked, userController.applyCoupon);
+
+user_route.post("/shopFilter", blocked.isBlocked, userController.productFilter);
 
 user_route.get('/404',userController.loadSearch)
 
-user_route.get("/search",userController.ok)
+
 module.exports = user_route;

@@ -19,6 +19,11 @@ paypal.configure({
   client_secret:
     "EDCS5oFBCV_A-8nA3Ts-yPHFEvFxtmnPg0RN0H2raHt73hwg1kwmk6tuoAKI6beXOUnULNu2yfYGsrU1",
 });
+const Razorpay = require('razorpay')
+const rzp = new Razorpay({
+  key_id: "rzp_test_vXi9kqY9B879FW",
+  key_secret: "TNWyqoxsQB6a9p6KIqFRiC93",
+});
 
 const accountsid = process.env.TWILIO_ACCOUNT_SID;
 const authtoken = process.env.TWILIO_AUTH_TOKEN;
@@ -282,10 +287,11 @@ const verifyReset = async (req, res) => {
 const profileLoad = async (req, res) => {
   try {
     const session = req.session.user_id;
-    let message = "";
+    
     if (req.session.user_id) {
       const userData = await User.findOne({ _id: session });
-      res.render("profile", { user: userData, session });
+      const orders = await Orders.find({userId:session});
+      res.render("profile", { user: userData, session,orders });
     } else {
       message = "Login with your account to access this page";
       res.redirect("/login");
@@ -824,6 +830,24 @@ const editAddress = async (req, res) => {
   }
 };
 
+
+const deleteAddress = async (req, res) => {
+  try {
+    const session = req.session.user_id;
+    const index = req.query.index;
+    const deletedAddress = await User.updateOne(
+      { _id: session },
+      { $unset: { [`address.${index}`]: "" } }
+    );
+    await User.updateOne({ _id: session }, { $pull: { address: null } });
+
+    console.log(deletedAddress);
+    res.redirect("/checkout");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 ////////////////Order Managemnet///////////////////////
 
 loadPaymentPage = async (req, res) => {
@@ -912,7 +936,19 @@ const orderConfirm = async (req, res) => {
       } else {
         res.send("fail");
       }
-    } else {
+    }else if (payment.flexRadioDefault == "razorpay"){
+     const totalPrice =  req.session.total;
+      console.log(totalPrice);
+      var options = {
+        amount: totalPrice*100,
+        currency: "INR",
+        receipt: "order_rcptid_11qsasdasdasd",
+      };
+    const order = await instance.orders.create(options 
+        
+      );
+    }
+     else {
       res.send("error");
     }
   } catch (error) {
@@ -1113,6 +1149,7 @@ const returnOrder = async (req, res) => {
 const applyCoupon = async (req, res) => {
   try {
     let code = req.body.coupon;
+    const session = req.session.user_id;
     const cart = await Cart.findOne({userId:session});
     req.session.coupon = code;
 
@@ -1191,79 +1228,108 @@ const userLogout = async (req, res) => {
   }
 };
 
-//////////////////////////Filter//////////////////////////////////
-const ok = async (req, res) => {
-  let { page, search, category, brand, sort, minPrice, maxPrice } = req.query;
-  page = parseInt(page) || 1;
-  console.log(page);
 
-  const limit = 4;
 
-  const searchCondition = search
-    ? {
-        productName: {
-          $regex: search,
-          $options: "i",
-        },
-      }
-    : {};
-  const filterCondition = {
-    ...searchCondition,
-    ...(category
-      ? {
-          category: mongoose.Types.ObjectId(category),
-        }
-      : {}),
-    ...(brand
-      ? {
-          brand: mongoose.Types.ObjectId(brand),
-        }
-      : {}),
-    ...(minPrice && maxPrice
-      ? {
-          price: {
-            $gte: minPrice,
-            $lte: maxPrice,
-          },
-        }
-      : minPrice
-      ? {
-          price: {
-            $gte: minPrice,
-          },
-        }
-      : maxPrice
-      ? {
-          price: {
-            $lte: maxPrice,
-          },
-        }
-      : {}),
-  };
-  const sortCondition =
-    sort === "low-to-high"
-      ? { price: 1 }
-      : sort === "high-to-low"
-      ? { price: -1 }
-      : {};
 
+const productFilter = async (req, res) => {
   try {
-    const products = await Product.find(filterCondition)
-      .sort(sortCondition)
-      .skip((page - 1) * limit)
-      .limit(limit * 1);
-    const count = await Product.find(filterCondition).countDocuments();
-    const totalPage = Math.ceil(count / limit);
+    let product;
+    let products = [];
+    let Categorys;
+    let Data = [];
 
-    res.send({
-      products,
-      count,
-      totalPage,
-      currentPage: page,
+    const { categorys, search, filterprice } = req.body;
+    
+    if (!search) {
+      if (filterprice != 0) {
+        if (filterprice.length == 2) {
+          product = await Product
+            .find({
+              status:0,
+              $and: [
+                { price: { $lte: Number(filterprice[1]) } },
+                { price: { $gte: Number(filterprice[0]) } },
+              ],
+            })
+            .populate("category");
+        } else {
+          product = await Product.find({
+            status: 0,
+            $and: [{ price: { $gte: Number(filterprice[0]) } }],
+          }).populate("category");
+        }
+      } else {
+        product = await Product.find({ status:0}).populate("category");
+      }
+    } else {
+      if (filterprice != 0) {
+        if (filterprice.length == 2) {
+          product = await Product.find({
+            status: 0,
+            $and: [
+              { price: { $lte: Number(filterprice[1]) } },
+              { price: { $gte: Number(filterprice[0]) } },
+              {
+                $or: [
+                  
+                  { productName: { $regex: ".*" + search + ".*", $options: "i" } },
+                ],
+              },
+            ],
+          }).populate("category");
+        } else {
+          product = await Product.find({
+            status: 0,
+            $and: [
+              { price: { $gte: Number(filterprice[0]) } },
+              {
+                $or: [
+                  
+                  {
+                    productName: {
+                      $regex: ".*" + search + ".*",
+                      $options: "i",
+                    },
+                  },
+                ],
+              },
+            ],
+          }).populate("category");
+        }
+      } else {
+        product = await Product.find({
+          status: 0,
+          $or: [
+            
+            { productName: { $regex: ".*" + search + ".*", $options: "i" } },
+          ],
+        }).populate("category");
+      }
+    }
+
+    Categorys = categorys.filter((value) => {
+      return value !== null;
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
+    console.log(product);
+    if (Categorys[0]) {
+      Categorys.forEach((element, i) => {
+        products[i] = product.filter((value) => {
+          return value.category.name == element;
+   });
+      });
+        console.log(products);
+      products.forEach((value, i) => {
+        Data[i] = value.filter((v) => {
+          return v;
+        });
+      });
+    } else {
+      Data[0] = product;
+    }
+    console.log(Data);
+    res.json({ Data });
+  } catch (error) {
+    console.log(error.message);
   }
 };
 
@@ -1324,8 +1390,9 @@ const addReview = async (req, res) => {
 
 
 
+
+
 module.exports = {
-  ok,
   loadRegister,
   insertUser,
   loginLoad,
@@ -1356,6 +1423,7 @@ module.exports = {
   addAddress,
   editAddressLoad,
   editAddress,
+  deleteAddress,
   loadPaymentPage,
   orderDetails,
   orderConfirm,
@@ -1366,4 +1434,5 @@ module.exports = {
   removeFromWishlist,
   applyCoupon,
   updateProfile,
+  productFilter,
 };

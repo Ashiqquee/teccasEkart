@@ -20,19 +20,19 @@
         <h2 class="tm-block-title">Orders</h2>
         
           <%for(let i=0;i<orders.length;i++){ %>
-            <table class="table  text-center">
+            <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Product</th>
-                  <th scope="col">quantity</th>
-                  <th scope="col">price</th>
-                  <th scope="col">Status</th>
+                  <th >No</th>
+                  <th >Product</th>
+                  <th >quantity</th>
+                  <th >price</th>
+                  <th >Status</th>
                 </tr>
               </thead>
               <tbody>
                 <%for(let j=0;j<orders[i].item.length;j++){%>
-                  <tr scope="row">
+                  <tr >
                     <td>
                       <%=j+1%>
                     </td>
@@ -45,21 +45,18 @@
 
                     <td>
                       <%let total=0 %>
-                        <%=total=orders[i].totalPrice%>
+                        <%=orders[i].item[j].quantity*orders[i].item[j].product.price%>
                     </td>
-                                 <% if (orders[i].is_delivered === false && orders[i].is_returned===0) { %>
-  <td>
-    On the way
-  </td>
-<% } else if (orders[i].is_delivered === true  && orders[i].is_returned===0) { %>
-  <td>
-    Delivered
-  </td>
+           <% if (orders[i].is_delivered === false && orders[i].is_returned === 0) { %>
+  <td><span class="status text-info">&bull;</span> Shipped</td>
+<% } else if (orders[i].is_delivered === true && orders[i].is_returned === 0) { %>
+  <td><span class="status text-success">&bull;</span> Delivered</td>
+<% } else if (orders[i].is_returned === 1) { %>
+  <td><span class="status text-warning">&bull;</span> Returned</td>
 <% } else { %>
-  <td>
-    Returned
-  </td>
-<% } %>
+  <td><span class="status text-danger">&bull;</span> Cancelled</td>
+<% } %>```
+
                     <% }%>
         
 

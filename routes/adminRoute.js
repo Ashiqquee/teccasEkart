@@ -18,6 +18,12 @@ const auth = require("../middleware/adminAuth");
 
 const adminController = require("../controllers/adminController");
 
+const couponController = require('../controllers/couponController');
+
+const productController = require('../controllers/productController');
+
+const orderController   = require('../controllers/orderController');
+
 admin_route.use(express.static('public'));
 
 
@@ -55,23 +61,23 @@ admin_route.get("/unBlockUser", auth.isLogin, adminController.unBlockUser);
 
 
 
-admin_route.get("/coupon-dashboard", auth.isLogin, adminController.couponDashboard);
+admin_route.get("/coupon-dashboard",auth.isLogin,couponController.couponDashboard);
 
-admin_route.get("/coupon-details", auth.isLogin, adminController.couponDetails);
+admin_route.get("/coupon-details",auth.isLogin,couponController.couponDetails);
 
-admin_route.get("/new-coupon",auth.isLogin, adminController.newCoupon);
+admin_route.get("/new-coupon", auth.isLogin, couponController.newCoupon);
 
-admin_route.post("/new-coupon", auth.isLogin, adminController.addCoupon);
+admin_route.post("/new-coupon", auth.isLogin, couponController.addCoupon);
 
-admin_route.get("/delete-coupon", auth.isLogin, adminController.deleteCoupon);
+admin_route.get("/delete-coupon", auth.isLogin, couponController.deleteCoupon);
 
-admin_route.get("/blockCoupon", auth.isLogin, adminController.blockCoupon);
+admin_route.get("/blockCoupon", auth.isLogin, couponController.blockCoupon);
 
-admin_route.get("/unBlockCoupon", auth.isLogin, adminController.unBlockCoupon);
+admin_route.get("/unBlockCoupon", auth.isLogin, couponController.unBlockCoupon);
 
-admin_route.get("/edit-coupon", auth.isLogin, adminController.editCouponLoad);
+admin_route.get("/edit-coupon", auth.isLogin, couponController.editCouponLoad);
 
-admin_route.post("/edit-coupon", auth.isLogin, adminController.updateCoupon);
+admin_route.post("/edit-coupon", auth.isLogin, couponController.updateCoupon);
 
 
 
@@ -79,17 +85,27 @@ admin_route.post("/edit-coupon", auth.isLogin, adminController.updateCoupon);
 
 
 
-admin_route.get("/category-dashboard", auth.isLogin,adminController.categoryDashboard);
+admin_route.get(
+  "/category-dashboard",
+  auth.isLogin,
+  productController.categoryDashboard
+);
 
-// admin_route.get("/deleteCategory",auth.isLogin, adminController.deleteCatogery);
+admin_route.get(
+  "/edit-category",
+  auth.isLogin,
+  productController.editCategoryLoad
+);
 
-admin_route.get("/edit-category",auth.isLogin,adminController.editCategoryLoad);
+admin_route.post(
+  "/edit-category",
+  auth.isLogin,
+  productController.updateCategory
+);
 
-admin_route.post("/edit-category",auth.isLogin,adminController.updateCategory);
+admin_route.get("/new-category", auth.isLogin, productController.newCategory);
 
-admin_route.get("/new-category",auth.isLogin, adminController.newCategory);
-
-admin_route.post("/new-category", auth.isLogin, adminController.addCategory);
+admin_route.post("/new-category", auth.isLogin, productController.addCategory);
 
 
 
@@ -97,23 +113,49 @@ admin_route.post("/new-category", auth.isLogin, adminController.addCategory);
 ///////////////////////Product Controll  Route////////////////////
 
 
-admin_route.get("/product-dashboard", auth.isLogin,adminController.productDashboard);
+admin_route.get(
+  "/product-dashboard",
+  auth.isLogin,
+  productController.productDashboard
+);
 
-admin_route.get("/addProduct", auth.isLogin, adminController.addProduct);
+admin_route.get("/addProduct", auth.isLogin, productController.addProduct);
 
-admin_route.post("/addProduct",upload.array("file",5),auth.isLogin,adminController.insertProduct);
+admin_route.post(
+  "/addProduct",
+  upload.array("file", 5),
+  auth.isLogin,
+  productController.insertProduct
+);
 
-admin_route.get("/product-details", auth.isLogin, adminController.productDetails);
+admin_route.get(
+  "/product-details",
+  auth.isLogin,
+  productController.productDetails
+);
 
-admin_route.get("/blockProduct",auth.isLogin,adminController.blockProduct);
+admin_route.get("/blockProduct", auth.isLogin, productController.blockProduct);
 
-admin_route.get("/unBlockProduct",auth.isLogin,adminController.unBlockProduct);
+admin_route.get(
+  "/unBlockProduct",
+  auth.isLogin,
+  productController.unBlockProduct
+);
 
-admin_route.get("/edit-product", auth.isLogin, adminController.editProductLoad);
+admin_route.get(
+  "/edit-product",
+  auth.isLogin,
+  productController.editProductLoad
+);
 
-admin_route.post("/edit-product",upload.array("file",5), auth.isLogin, adminController.updateProduct);
+admin_route.post(
+  "/edit-product",
+  upload.array("file", 5),
+  auth.isLogin,
+  productController.updateProduct
+);
 
-admin_route.get("/deletImage",auth.isLogin,adminController.deleteImage);
+admin_route.get("/deletImage", auth.isLogin, productController.deleteImage);
 
 
 
@@ -121,26 +163,30 @@ admin_route.get("/deletImage",auth.isLogin,adminController.deleteImage);
 ///////////////////////Brand Controll  Route////////////////////
 
 
-admin_route.get("/brand-dashboard",auth.isLogin,adminController.brandDashboard);
+admin_route.get(
+  "/brand-dashboard",
+  auth.isLogin,
+  productController.brandDashboard
+);
 
-admin_route.get("/new-brand", auth.isLogin, adminController.newBrand);
+admin_route.get("/new-brand", auth.isLogin, productController.newBrand);
 
-admin_route.post("/new-brand", auth.isLogin, adminController.addBrand);
+admin_route.post("/new-brand", auth.isLogin, productController.addBrand);
 
-admin_route.get("/edit-brand", auth.isLogin, adminController.editBrandLoad);
+admin_route.get("/edit-brand", auth.isLogin, productController.editBrandLoad);
 
-admin_route.post("/edit-brand", auth.isLogin, adminController.updateBrand);
+admin_route.post("/edit-brand", auth.isLogin, productController.updateBrand);
 
-admin_route.get("/order-dashboard", auth.isLogin, adminController.orderLoad);
+
 
 ///////////////////////Special Route////////////////////
+admin_route.get("/order-dashboard", auth.isLogin, orderController.orderLoad);
 
+admin_route.get("/cancelOrder", auth.isLogin, orderController.cancelOrder);
 
-admin_route.get("/cancelOrder",auth.isLogin,adminController.cancelOrder);
+admin_route.get("/orderStatus", auth.isLogin, orderController.orderDelivered);
 
-admin_route.get("/orderStatus",auth.isLogin,adminController.orderDelivered);
-
-admin_route.get("/viewOrder",auth.isLogin,adminController.DetailedOrderView);
+admin_route.get("/viewOrder", auth.isLogin, orderController.DetailedOrderView);
 
 
 
@@ -149,9 +195,9 @@ admin_route.get("/logout", auth.isLogin, adminController.logout);
 
 
 
-admin_route.get("*", function (req, res) {
-  res.redirect("/admin");
-});
+// admin_route.get("*", function (req, res) {
+//   res.redirect("/admin");
+// });
 
 
 

@@ -155,6 +155,7 @@
                   <thead>
                     <tr style="font-family: 'EB Garamond', serif">
                       <th scope="col">Order Count </th>
+                                <th scope="col">User</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Location</th>
@@ -166,6 +167,7 @@
                           <%if(orders[i].user_cancelled==true||orders[i].admin_cancelled==true){%>
                             <tr>
                                 <th scope="row"><b><%=orders[i].orderCount%></b></th>
+                                <th scope="row"><b><%=orders[i].userId.mobile%></b></th>
                                 <td>
                                     <div class="tm-status-circle cancelled">
                                     </div>Cancelled
@@ -183,6 +185,7 @@
                           <%}else if(orders[i].is_delivered==true){%>
                             <tr>
                                 <th scope="row"><b><%=orders[i].orderCount%></b></th>
+                                <th scope="row"><b><%=orders[i].userId.mobile%></b></th>
                                 <td>
                                     <div class="tm-status-circle moving">
                                     </div>Delivered
@@ -200,6 +203,7 @@
                           <%}else{%>
                             <tr>
                                 <th scope="row"><b><%=orders[i].orderCount%></b></th>
+                                <th scope="row"><b><%=orders[i].userId.mobile%></b></th>
                                 <td>
                                     <div class="tm-status-circle pending">
                                     </div>Pending
