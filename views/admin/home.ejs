@@ -43,6 +43,13 @@
 
 
 </style>
+<style>
+		#sales-chart {
+			width: 80%;
+			margin: auto;
+			margin-top: 50px;
+		}
+	</style>
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet" />
   </head>
@@ -131,6 +138,16 @@
         <li class="nav-item">
         <a class="nav-link " data-bs-target="#components-nav"  href="/admin/category-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Category</span><i class="bi  ms-auto"></i>
+        </a>
+        </li>
+          <li class="nav-item">
+        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav" >
+          <i class="bi bi-menu-button-wide"></i><span>Orders</span><i class="bi  ms-auto"></i>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav" >
+          <i class="bi bi-menu-button-wide"></i><span>Banner</span><i class="bi  ms-auto"></i>
         </a>
         </li>
 
@@ -231,7 +248,7 @@
 
               </div>
             </div><!-- End Revenue Card -->
-
+            
             <!-- Customers Card -->
             <div class="col-xxl-4 col-xl-12">
 
@@ -268,23 +285,75 @@
               </div>
 
             </div><!-- End Customers Card -->
+<!-- <canvas id="monthly-sales-chart" width="400" height="400"></canvas> -->
 
+                  <!-- Line Chart -->
+              <div id="reportsChart"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    
+    
+
+    const monthlySalesDetails =JSON.parse('<%=monthlySalesDetails%>');
+    // const monthlySalesDetails = [0, 0, 13095, 0,0, 0,0, 0,0, 0,0, 0]
+    console.log(typeof monthlySalesDetails);
+        console.log(monthlySalesDetails);
+    new ApexCharts(document.querySelector("#reportsChart"), {
+      series: [{
+        name: 'Sales',
+        data: monthlySalesDetails,
+      }],
+      chart: {
+        height: 350,
+        type: 'area',
+        toolbar: {
+          show: false
+        },
+      },
+      markers: {
+        size: 4
+      },
+      colors: ['#4154f1', '#2eca6a', '#ff771d'],
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.3,
+          opacityTo: 0.4,
+          stops: [0, 90, 100]
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth',
+        width: 2
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      },
+      tooltip: {
+        x: {
+          format: 'MMM'
+        },
+        y: {
+          formatter: function (value) {
+            return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
+        }
+      }
+    }).render();
+  });
+</script>
+
+                 
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
 
-                <div class="filter">
-                  <a class="icon"  data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" >Today</a></li>
-                    <li><a class="dropdown-item" >This Month</a></li>
-                    <li><a class="dropdown-item" >This Year</a></li>
-                  </ul>
-                </div>
+                
 
                 <div class="card-body">
                   <h5 class="card-title">Sales <span>/Reports</span></h5>
@@ -318,7 +387,7 @@
   </div>
   <button type="submit" class="btn  mt-1"style="color: white;background-color: #012970;">Submit</button>
 </form>
-
+  
           
                   <table class="table table-borderless datatable" id="salesTable">
                     <thead>
@@ -376,10 +445,9 @@
     <a
       
       class="back-to-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+      ><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
+    
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -584,6 +652,35 @@ function printTable() {
   });
 </script>
 
+	 <script>
+    
+      
+      const monthlySalesData = '<%= monthlySalesDetails %>';
+    console.log(monthlySalesData);
+      
+      const chart = new Chart(document.getElementById("monthly-sales-chart"), {
+        type: "line",
+        data: {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets: [
+            {
+              label: "Monthly Sales",
+              data: monthlySalesData,
+              fill: false,
+              borderColor: "rgb(75, 192, 192)",
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
   </body>
 </html>
 

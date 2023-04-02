@@ -2410,7 +2410,7 @@ ul {
 /* line 2, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_banner.scss */
 .banner_part {
   position: relative;
-  background-color: #ecfdff;
+  background-color: #e9ecef;
   overflow: hidden;
 }
 
@@ -4359,8 +4359,8 @@ ul {
 
 /* line 1097, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_product.scss */
 .cart_inner .table tbody tr td .product_count input {
-  width: 100px;
-  padding-left: 30px;
+ width: 49px;
+    padding-left: 18px;
   height: 40px;
   outline: none;
   box-shadow: none;
@@ -4435,6 +4435,36 @@ ul {
   margin-right: -3px;
   outline: none;
   box-shadow: none;
+}
+.pagination__option a {
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	border: 1px solid #f2f2f2;
+	border-radius: 50%;
+	font-size: 14px;
+	color: #111111;
+	font-weight: 600;
+	line-height: 40px;
+	text-align: center;
+	-webkit-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;
+	margin-right: 6px;
+}
+
+.pagination__option a:last-child {
+	margin-right: 0;
+}
+
+.pagination__option a i {
+	font-weight: 600;
+}
+
+.pagination__option a:hover {
+	background: #0d0d0d;
+	border-color: #0d0d0d;
+	color: #ffffff;
 }
 
 /* line 65, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_mixins.scss */
@@ -7793,3 +7823,4 @@ h6 {
 	}
 
 /*# sourceMappingURL=style.css.map */
+

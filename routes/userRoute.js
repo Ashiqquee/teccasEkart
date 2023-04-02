@@ -77,7 +77,7 @@ user_route.post('/shop',blocked.isBlocked,userController.filterPrice);
 
 user_route.post("/paymentPage", blocked.isBlocked, userController.loadPaymentPage);
 
-user_route.get("/orders",blocked.isBlocked,userController.orderDetails);
+user_route.get("/orderConfirmation",blocked.isBlocked,userController.orderDetails);
 
 user_route.post("/orderConfirm",blocked.isBlocked,userController.orderConfirm);
 
@@ -95,7 +95,13 @@ user_route.post("/checkCoupon", blocked.isBlocked, userController.applyCoupon);
 
 user_route.post("/shopFilter", blocked.isBlocked, userController.productFilter);
 
-user_route.get('/404',userController.loadSearch)
+user_route.get("/orders",auth.isLogin, blocked.isBlocked, userController.orderData);
+
+user_route.get('/404',(req,res) => {
+    res.render('razorpay')
+})
+
+user_route.get("/razorpayPayment", userController.razorpayConfirm);
 
 
 module.exports = user_route;

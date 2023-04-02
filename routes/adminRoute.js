@@ -24,6 +24,8 @@ const productController = require('../controllers/productController');
 
 const orderController   = require('../controllers/orderController');
 
+const bannerController = require("../controllers/bannerController");
+
 admin_route.use(express.static('public'));
 
 
@@ -187,6 +189,14 @@ admin_route.get("/cancelOrder", auth.isLogin, orderController.cancelOrder);
 admin_route.get("/orderStatus", auth.isLogin, orderController.orderDelivered);
 
 admin_route.get("/viewOrder", auth.isLogin, orderController.DetailedOrderView);
+
+admin_route.get("/banner-dashboard", auth.isLogin,bannerController.bannerDashboard );
+
+admin_route.get("/addBanner", auth.isLogin, bannerController.addBanner);
+
+admin_route.post("/addBanner",auth.isLogin,upload.array("file", 1),bannerController.newBanner);
+
+admin_route.get("/delete-banner", auth.isLogin,bannerController.deletebanner);
 
 
 

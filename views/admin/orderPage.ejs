@@ -33,6 +33,8 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+    
   </head>
 
   <body>
@@ -121,6 +123,16 @@
           <i class="bi bi-menu-button-wide"></i><span>Category</span><i class="bi  ms-auto"></i>
         </a>
         </li>
+          <li class="nav-item">
+        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav" >
+          <i class="bi bi-menu-button-wide"></i><span>Orders</span><i class="bi  ms-auto"></i>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav" >
+          <i class="bi bi-menu-button-wide"></i><span>Banner</span><i class="bi  ms-auto"></i>
+        </a>
+        </li>
 
 
         </ul>
@@ -138,103 +150,156 @@
 
 
 
-<section class="h-100 h-custom mt-5 " >
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-8 col-xl-6">
-          <div class="card border-top border-bottom border-3" style="border-color: #ecfdff !important;">
-            <div class="card-body p-5">
-  
-              <p class="lead fw-bold mb-5" style="color:black;">Purchase Reciept</p>
-             <div class="row">
-                <div class="col mb-3">
-                  <p class="small text-muted mb-1">Order Date</p>
-                  <p><%=orders.start_date.toDateString()%></p>
-                </div>
-                <div class="col mb-3">
-                  <p class="small text-muted mb-1">Order No.</p>
-                  <p><%=orders._id%></p>
-                </div>
-              </div>
-              
-  
-              <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
-                <div class="row">
-                    <%orders.item.forEach(item => {%>
-                        <div class="col-md-8 col-lg-9">
-                            <p><%=item.product.productName%> <span class=" ms-5 middle">x <%= item.quantity %></span></p>
-                            
-                          </div>
-                          <div class="col-md-4 col-lg-3">
-                            <p>$ <%=item.price*item.quantity%></p>
-                          </div>
-                    <%})%>
-                </div>  
-                 <div class="row">
-                  <div class="col-md-8 col-lg-9">
-                    <p class="mb-0">Payment Type</p>
-                  </div>
-                  <div class="col-md-4 col-lg-3">
-                    <p class="mb-0"><%=orders.paymentType %></p>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-md-8 col-lg-9">
-                    <p class="mb-0">Status</p>
-                  </div>
-                  <div class="col-md-4 col-lg-3">
-                    <p class="mb-0"> <% if (orders.is_delivered === false && orders.is_returned===0) { %>
-  <td>
-            Shipped
-  </td>
-<% } else if (orders.is_delivered === true  && orders.is_returned===0) { %>
-  <td>
-  Delivered
-                    </td>
-                    <% } else { %>
-                     <td>
-                    Returned
-                    </td>
-                    <% } %></p>
-                  </div>
-                </div>
-                
-                
-                <div class="row">
-                  <div class="col-md-8 col-lg-9">
-                    <p class="mb-0">Total Amount</p>
-                  </div>
-                  <div class="col-md-4 col-lg-3">
-                    <p class="mb-0">$ $<%=parseInt(orders.totalPrice) %></p>
-                  </div>
-                </div>
-                  <div class="row mt-2">
-                  <div class="col-md-4 col-lg-4">
-                    <p class="mb-0">Address</p>
-                  </div>
-                  <div class="col-md-8 col-lg-8">
-                    <p class="mb-0"><%=orders.address[0].address%>,<%=orders.address[0].city%>,<%=orders.address[0].district%>,
-                    <%=orders.address[0].state%>,<%=orders.address[0].zip%></p>
-                  </div>
-                </div>
-              </div>
 
-              
-  
-              
-  
+
+
+
+
+  <!--================ confirmation part start =================-->
+  <section class="confirmation_part padding_top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          
+        </div>
+        <div class="col-lg-6 col-lx-4" >
+          <div class="single_confirmation_details" style="background-color: #4154f1 !important;">
+            <h4 style="color: white;">Order Info</h4>
+            <ul >
              
-  
-  
+              <li>
+                <p style="color: white;" >order number</p><span style="color: white;">: <%=orders._id.toString().substr(0, 5) %></span>
+              </li>
+              <li>
+                <p style="color: white;">date</p><span style="color: white;">: <%=orders.start_date.toDateString()%></span>
+              </li>
+              <li>
+                <p style="color: white;">total</p><span style="color: white;">: $ <%=orders.totalPrice%></span>
+              </li>
+              <li>
+                <p style="color: white;">payment methord</p><span style="color: white;">: <%=orders.paymentType %></span>
+              </li>
+               <li>
+  <p style="color: white;">Delivery Status</p>
+  <span style="color: white;">: 
+      
+                    
+           <% if (orders.is_delivered === false && orders.is_returned === 0 && orders.user_cancelled == false && orders.admin_cancelled == false) { %>
+   Shipped
+<% } else if (orders.is_delivered === true && orders.is_returned === 0 && orders.user_cancelled == false && orders.admin_cancelled == false) { %>
+  Delivered
+<% } else if (orders.is_returned === 1 && orders.user_cancelled == false && orders.admin_cancelled == false) { %>
+  Returned
+<% } else { %>
+   Cancelled
+<% } %>
+
+                    
+  </span>
+</li>
+
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 col-lx-4">
+          <div class="single_confirmation_details" style="background-color: #4154f1 !important;">
+            <h4 style="color: white;">Billing Address</h4>
+            <ul>
+              <li>
+                <p style="color: white;">Street</p><span style="color: white;">: <%=orders.address[0].address%></span>
+              </li>
+              <li>
+                <p style="color: white;">city</p><span style="color: white;" >: <%=orders.address[0].city%></span>
+              </li>
+              <li>
+                <p style="color: white;">District</p><span style="color: white;">: <%=orders.address[0].district%></span>
+              </li>
+              <li>
+                <p style="color: white;">postcode</p><span style="color: white;">: <%=orders.address[0].zip%></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 col-lx-4">
+          <div class="single_confirmation_details" style="background-color: #4154f1 !important;">
+            <h4 style="color: white;">shipping Address</h4>
+            <ul>
+              <li>
+                <p style="color: white;">Street</p><span style="color: white;">:  <%=orders.address[0].address%></span>
+              </li>
+              <li>
+                <p style="color: white;">city</p><span style="color: white;"> : <%=orders.address[0].city%></span>
+              </li>
+              <li>
+                <p style="color: white;">District</p><span style="color: white;">: <%=orders.address[0].district%></span>
+              </li>
+              <li>
+                <p style="color: white;">postcode</p><span style="color: white;">: <%=orders.address[0].zip%></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+           <div class="col-lg-6 col-lx-4">
+          <div class="single_confirmation_details" style="background-color: #4154f1 !important;">
+            <h4 style="color: white;">Items</h4>
+            <ul style="color: white;">
+                <%orders.item.forEach(item => {%>
+              <li>
+                <p style="color: white;"><span style="color: white;"><%=item.product.productName%> </span></p><span><img style="width: 75px; height: 75px"
+              class="rounded-circle" src="/productImages/<%=item.product.productImages[0]%>" style="height: 80px;width: 80px;" alt=""> </span>
+              </li>
               
-  
-            </div>
+              
+              <%})%>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="order_details_iner" style="background-color: #4154f1 !important;">
+            <h3 style="color: white;">Bill</h3>
+            <table class="table table-borderless">
+              
+              <thead>
+                <tr>
+                  <th scope="col" style="color: white;" colspan="2">Product</th>
+                  <!-- <th scope="col" colspan="2"></th> -->
+                  <th scope="col" style="color: white;">Quantity</th>
+                  <th scope="col" style="color: white;">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%orders.item.forEach(item => {%>
+                <tr>
+                  <th colspan="2"><span style="color: white;"><%=item.product.productName%> </span></th>
+                  
+                  <th> <span style="color: white;">x <%=item.quantity%></span></th>
+                  <th> <span style="color: white;">$ <%=item.price*item.quantity%></span></th>
+                </tr>
+               <%})%>
+                <tr>
+                  <th colspan="3" style="color: white;">Subtotal</th>
+                  <th> <span style="color: white;">$ <%=parseInt(orders.totalPrice)  %></span></th>
+                </tr>
+                <tr>
+                  <th colspan="3" style="color: white;">shipping</th>
+                  <th><span style="color: white;">0</span></th>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="col" style="color: white;" colspan="3">Total</th>
+                  <th style="color: white;" scope="col">$ <%=parseInt(orders.totalPrice)  %></th>
+                </tr>
+              </tfoot>
+            </table>
           </div>
         </div>
       </div>
     </div>
   </section>
-
 </main>
 
   

@@ -68,8 +68,8 @@ const loadDashboard = async (req, res) => {
       0
     ));
 
-    let yearlyStart = new Date(new Date().getFullYear(), 0, 1);
-    let yearlyEnd = new Date(new Date().getFullYear(), 11, 31);
+      let yearlyStart = new Date(new Date().getFullYear(), 0, 1);
+      let yearlyEnd = new Date(new Date().getFullYear(), 11, 31);
 
     let dailySalesData = await Orders.find({
       is_delivered: true,
@@ -188,13 +188,14 @@ const loadDashboard = async (req, res) => {
       return total + itemTotal;
     }, 0);
 
-
-
-
     const startDate = req.query.start_date
       ? new Date(req.query.start_date)
       : null;
     const endDate = req.query.end_date ? new Date(req.query.end_date) : null;
+    if (endDate) {
+      endDate.setDate(endDate.getDate() + 1);
+    }
+      console.log(startDate, endDate);
     let query = { is_delivered: true, is_returned: 0 };
     if (startDate && endDate) {
       query.delivered_date = { $gte: startDate, $lte: endDate };
@@ -205,10 +206,33 @@ const loadDashboard = async (req, res) => {
     }
     const salesData = await Orders.find(query).populate("userId");
     let totalAmount = 0;
-    for(i=0;i<salesData.length;i++){
+    for (i = 0; i < salesData.length; i++) {
       totalAmount += parseInt(salesData[i].totalPrice);
     }
-    console.log(totalAmount);
+
+    const monthlySalesDetails = [];
+    for (let i = 0; i < 12; i++) {
+      const salesOfMonth = yearlySalesData.filter((order) => {
+        return order.delivered_date.getMonth() === i;
+      });
+
+      const totalSalesOfMonth = salesOfMonth.reduce((total, order) => {
+        return (
+          total +
+          order.item.reduce((sum, item) => {
+            return sum + item.price * item.quantity;
+          }, 0)
+        );
+      }, 0);
+
+      monthlySalesDetails.push(totalSalesOfMonth);
+    }
+     
+   
+    
+
+   
+    
     res.render("home", {
       dailySales,
       monthlySales,
@@ -221,6 +245,7 @@ const loadDashboard = async (req, res) => {
       yearlySalesProduct,
       data: salesData,
       totalAmount,
+      monthlySalesDetails: JSON.stringify(monthlySalesDetails),
     });
   } catch (error) {
     console.log(error.message);
