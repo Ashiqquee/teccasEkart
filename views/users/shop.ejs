@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <!-- swiper CSS -->
     <link rel="stylesheet" href="css/slick.css">
+    <link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
     <link rel="stylesheet" href="css/price_rangs.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -59,6 +60,9 @@
                                         Shop
                                     </a>
                                    
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/profile">Profile</a>
                                 </li>
                               
                                 
@@ -195,14 +199,14 @@
                                      <ul class="list">
                                 <li>
                                     <label for="">
-                                    5000-above
-                                    <input onclick="price(4)" type="checkbox" value="5000" id="FOUR">
+                                    3000-above
+                                    <input onclick="price(4)" type="checkbox" value="3000" id="FOUR">
                                 </label><br>
                                 </li>
                                 <li>
                                     <label for="">
-                                    2000-4999
-                                    <input onclick="price(3)" type="checkbox" value="2000,4999" id="THREE">
+                                    2000-2999
+                                    <input onclick="price(3)" type="checkbox" value="2000,2999" id="THREE">
                                 </label><br>
                                 </li>
                                 <li class="active">
@@ -452,18 +456,7 @@ function submit(categorys,brands) {
                                         }
                                     })
                                 }
-                                // function brand(ID){
-                                //     if($(`#${ID})`).is(`:checked`)== true){
-                                //         brands[b++] = $(`#${ID}`).val()
-
-                                //     }else{
-                                //         const index = brands.indexOf($(`#${ID}`).val())
-                                //         brands.splice(index,1)
-                                //         b--
-                                //     }
-                                //     console.log(brands,'=============');
-                                //     submit(categorys,brands,search,filterprice)
-                                // }
+                               
                                  function brand(id) {
     if ($('#' + id).is(':checked')== true) {
       brands[b++] = $('#' + id).val();

@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const Orders = require("../models/orderModel");
 const mime = require("mime-types");
 const { db } = require("../models/userModel");
+const { json } = require("body-parser");
 let message;
 
 ////////////////////Admin Controller/////////////////////////////
@@ -228,6 +229,43 @@ const loadDashboard = async (req, res) => {
       monthlySalesDetails.push(totalSalesOfMonth);
     }
      
+
+const allMonthsUser = [...Array(12).keys()].map((m) => m + 1);
+
+let monthlyOrderCounts = allMonthsUser.reduce((acc, cur) => {
+  acc[cur - 1] = 0;
+  return acc;
+}, []);
+
+yearlySalesData.forEach((order) => {
+  let deliveredDate = new Date(order.delivered_date);
+  let month = deliveredDate.getMonth() + 1; 
+  monthlyOrderCounts[month - 1]++;
+});
+
+
+
+
+
+const allMonthsProduct = [...Array(12).keys()].map((m) => m + 1); 
+
+let monthlyProductCounts = allMonthsProduct.reduce((acc, cur) => {
+  acc[cur - 1] = 0;
+  return acc;
+}, []);
+
+yearlySalesData.forEach((order) => {
+  let deliveredDate = new Date(order.delivered_date);
+  let month = deliveredDate.getMonth() + 1; 
+  order.item.forEach((item) => {
+    monthlyProductCounts[month - 1] += item.quantity;
+  });
+});
+
+console.log(monthlyProductCounts);
+
+
+
    
     
 
@@ -246,6 +284,8 @@ const loadDashboard = async (req, res) => {
       data: salesData,
       totalAmount,
       monthlySalesDetails: JSON.stringify(monthlySalesDetails),
+      monthlyOrderCounts: JSON.stringify(monthlyOrderCounts),
+      monthlyProductCounts: JSON.stringify(monthlyProductCounts),
     });
   } catch (error) {
     console.log(error.message);

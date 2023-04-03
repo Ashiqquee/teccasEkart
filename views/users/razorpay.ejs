@@ -9,6 +9,7 @@
   
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
   <!-- animate CSS -->
   <link rel="stylesheet" href="css/animate.css">
   <!-- owl carousel CSS -->
@@ -42,7 +43,7 @@
               <div class="payment_item">
                 <div class="radion_btn">
                   <input type="radio" id="f-option9"value="wallet" name="flexRadioDefault" onclick="razorpay()" />
-                  <label for="f-option9">Wallet</label>
+                  <label for="f-option9">Razorpay</label>
                   <div class="check"></div>
                 </div>
                 <p>
@@ -116,7 +117,14 @@ document.getElementById('rzp-button').onclick = function(e){
     })
    }
    function success(){
+    location.href='/orderConfirmation'
+    //  $.ajax({
     
+    //     // url:'/orderConfirmation',
+    //     // type:'get',
+    //     // dataType:'json',
+    //     // contentType:'appilaction/json',
+    //   })
    }
 </script>
 

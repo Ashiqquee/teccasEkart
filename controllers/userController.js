@@ -574,6 +574,7 @@ const incrementCart = async (req, res) => {
         const updatedPrice = (updatedItem.price * updatedItem.quantity).toFixed(
           2
         );
+        
         res.json({ success: true, updatedPrice });
       }
     }
@@ -959,17 +960,14 @@ const orderConfirm = async (req, res) => {
         );
         res.redirect("/orderConfirmation");
       } else {
+         orderStatus = 1;
         const totalPrice = req.session.total;
         console.log(totalPrice);
         const remainingAmount =totalPrice-user.wallet;
+         req.session.balance = remainingAmount;
         console.log(remainingAmount);
         res.render('razorpay',{remainingAmount})
       }
-    }else if (payment.flexRadioDefault == "razorpay"){
-     const totalPrice =  req.session.total;
-      console.log(totalPrice);
-      
-    
     }
      else {
       res.send("error");
@@ -1013,7 +1011,7 @@ const confirmPayment = async (req, res) => {
 const razorpayConfirm = async(req,res) => {
   try {
     var options = {
-      amount: 10000,
+      amount: req.session.balance*100,
       currency: "INR",
       receipt: "order_rcptid_11qsasdasdasd",
     };
@@ -1029,7 +1027,7 @@ const orderDetails = async (req, res) => {
   try {
     const session = req.session.user_id;
     let message = null;
-
+    console.log("razorpay");
     if (!session) {
       res.redirect("/login");
       message = "Login to Access this page";
@@ -1493,6 +1491,14 @@ const orderData = async (req,res) => {
 
 
 
+const notFound = async(req,res) => {
+  try {
+    res.render('404')
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 
 
@@ -1543,4 +1549,5 @@ module.exports = {
   productFilter,
   razorpayConfirm,
   orderData,
+  notFound,
 };

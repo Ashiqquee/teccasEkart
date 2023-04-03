@@ -97,11 +97,9 @@ user_route.post("/shopFilter", blocked.isBlocked, userController.productFilter);
 
 user_route.get("/orders",auth.isLogin, blocked.isBlocked, userController.orderData);
 
-user_route.get('/404',(req,res) => {
-    res.render('razorpay')
-})
-
 user_route.get("/razorpayPayment", userController.razorpayConfirm);
+
+// user_route.get('*',userController.notFound)
 
 
 module.exports = user_route;

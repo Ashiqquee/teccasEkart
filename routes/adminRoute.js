@@ -205,9 +205,9 @@ admin_route.get("/logout", auth.isLogin, adminController.logout);
 
 
 
-// admin_route.get("*", function (req, res) {
-//   res.redirect("/admin");
-// });
+admin_route.get("*", function (req, res) {
+  res.redirect("/admin");
+});
 
 
 

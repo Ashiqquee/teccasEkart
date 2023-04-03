@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const nocache = require("nocache");
 const morgan = require('morgan');
 
+
 require("dotenv").config();
 const PORT= process.env.PORT;
 
@@ -43,6 +44,8 @@ app.use("/", userRoute);
 
 const adminRoute = require("./routes/adminRoute");
 app.use("/admin", adminRoute);
+
+
 
 ////////////PORT/////////////////////////
 app.listen(PORT, () => {
