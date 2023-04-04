@@ -124,13 +124,13 @@
               <div id="vertical">
                  <div class="xzoom-container">
            <div class="col-md-8" style="float: left;">
-             <img class="xzoom" width="350px" height="400px"  id="xzoom-default" src="/productImages/<%= product.productImages[0]%>" xoriginal="/productImages/<%= product.productImages[0]%>" />
+             <img class="xzoom" width="350px" height="400px"  id="xzoom-default" src="<%= product.productImages[0]%>" xoriginal="<%= product.productImages[0]%>" />
            </div>
      <div class="col-md-3" style="float: right;">
             <div class="xzoom-thumbs">
-              <a style="height: 80px; " href="/productImages/<%= product.productImages[0]%>"><img style="margin-left: -74px;  margin-right: 50px;" class="xzoom-gallery" width="80" height="80px" src="/productImages/<%= product.productImages[0]%>" xpreview="/productImages/<%= product.productImages[0]%>" ></a>
-              <a href="/productImages/<%= product.productImages[1]%>"><img style="margin-left: -74px; margin-right: 50px;" class="xzoom-gallery" width="80" height="80px" src="/productImages/<%= product.productImages[1]%>" ></a>
-              <a href="/productImages/<%= product.productImages[2]%>"><img style="margin-left: -74px ;  margin-right: 50px;" class="xzoom-gallery" width="80" height="80px" src="/productImages/<%= product.productImages[2]%>" ></a>
+              <a style="height: 80px; " href="<%= product.productImages[0]%>"><img style="margin-left: -74px;  margin-right: 50px;" class="xzoom-gallery" width="80" height="80px" src="<%= product.productImages[0]%>" xpreview="<%= product.productImages[0]%>" ></a>
+              <a href="<%= product.productImages[1]%>"><img style="margin-left: -74px; margin-right: 50px;" class="xzoom-gallery" width="80" height="80px" src="<%= product.productImages[1]%>" ></a>
+              <a href="<%= product.productImages[2]%>"><img style="margin-left: -74px ;  margin-right: 50px;" class="xzoom-gallery" width="80" height="80px" src="<%= product.productImages[2]%>" ></a>
               
             </div>
           </div>
@@ -193,7 +193,7 @@
             
              <% featured.forEach(function(item) { %>
             <div class="single_product_item">
-              <img class="img-fluid" src="/productImages/<%= item.productImages[0] %>" alt="">
+              <img class="img-fluid" src="<%= item.productImages[0] %>" alt="">
               <div class="single_product_text">
                 <h4><%= item.productName %></h4>
                 <h3>$<%= item.price %></h3>

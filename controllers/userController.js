@@ -292,8 +292,9 @@ const profileLoad = async (req, res) => {
 
     if (req.session.user_id) {
       const userData = await User.findOne({ _id: session });
+      const wallet = userData.wallet
       const orders = await Orders.find({ userId: session });
-      res.render("profile", { user: userData, session, orders });
+      res.render("profile", { user: userData, session, orders,wallet });
     } else {
       message = "Login with your account to access this page";
       res.redirect("/login");
@@ -414,58 +415,6 @@ const productShop = async (req, res) => {
   }
 };
 
-const filterPrice = async (req, res) => {
-  try {
-    const category = req.body.category;
-    const brand = req.body.brand;
-    const price = req.body.price;
-    const sort = req.body.sort;
-
-    const productList = await Product.find()
-      .populate("category")
-      .populate("brand");
-    let product = productList.filter(
-      (ok) =>
-        (ok.category._id == category || ok.category == category || !category) &&
-        (ok.brand._id == brand || ok.brand == brand || !brand) &&
-        (price === "1-1000"
-          ? ok.price >= 1 && ok.price <= 1000
-          : price === "1000-1500"
-          ? ok.price >= 1000 && ok.price <= 1500
-          : price === "1500-2000"
-          ? ok.price >= 1500 && ok.price <= 2000
-          : price === "2000-3000"
-          ? ok.price >= 2000 && ok.price <= 3000
-          : price === "3000-1000000"
-          ? ok.price >= 3000
-          : true)
-    );
-
-    if (sort === "low-to-high") {
-      product.sort((a, b) => a.price - b.price);
-    } else if (sort === "high-to-low") {
-      product.sort((a, b) => b.price - a.price);
-    }
-    const categoryData = await Category.find();
-    const brandData = await Brand.find();
-
-    let session = req.body.user_id;
-    const user = User.findOne({ _id: session });
-    res.render("shop", {
-      product,
-      session,
-      category: categoryData,
-      brand: brandData,
-      message,
-      user,
-    });
-
-    message = null;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
 
 /////////////////////////////////Cart///////////////////////////////////////////
 
@@ -980,9 +929,7 @@ const orderConfirm = async (req, res) => {
           }
         }
       });
-    }  else {
-      res.send("error");
-    }
+    } 
   } catch (error) {
     console.log(error);
   }
@@ -1530,7 +1477,6 @@ module.exports = {
   addReview,
   loadCart,
   addToCart,
-  filterPrice,
   incrementCart,
   decrementCart,
   removeCart,

@@ -10,6 +10,12 @@ const cloudinary = require("cloudinary").v2;
 const { db } = require("../models/userModel");
 let message;
 
+cloudinary.config({
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret,
+});
+
 const categoryDashboard = async (req, res) => {
   try {
     const categoryData = await Category.find();
@@ -147,19 +153,21 @@ const insertProduct = async (req, res) => {
   try {
     const category = await Category.findOne({ name: req.body.category });
     const brand = await Brand.findOne({ brandName: req.body.brand });
-    console.log(req.files);
+
     let arrImages = [];
     if (req.files) {
-      req.files.forEach((file) => {
+      for await (const file of req.files) {
         const mimeType = mime.lookup(file.originalname);
         if (mimeType && mimeType.includes("image/")) {
-          arrImages.push(file.filename);
+          const result = await cloudinary.uploader.upload(file.path);
+          arrImages.push(result.secure_url);
         } else {
           res.render("addProduct");
-          // message="Add Valid Image"
+          
         }
-      });
+      }
     }
+
     const product = new Product({
       productName: req.body.productName,
       price: req.body.price,
@@ -242,17 +250,18 @@ const updateProduct = async (req, res) => {
     const brand = await Brand.findOne({ brandName: req.body.brand });
     console.log(req.files);
 
-    if (req.files) {
-      for (let i = 0; i < req.files.length; i++) {
-        const image = req.files[i].filename;
-        console.log(image);
-        const addImage = await Product.updateOne(
-          { _id: req.query.id },
-          { $push: { productImages: image } }
-        );
-        console.log(addImage);
-      }
-    }
+   if (req.files) {
+     for (let i = 0; i < req.files.length; i++) {
+       const image = req.files[i].path;
+       const uploadResponse = await cloudinary.uploader.upload(image);
+       const imageURL = uploadResponse.secure_url;
+       const addImage = await Product.updateOne(
+         { _id: req.query.id },
+         { $push: { productImages: imageURL } }
+       );
+     }
+   }
+
 
     const productData = await Product.updateOne(
       { _id: req.query.id },

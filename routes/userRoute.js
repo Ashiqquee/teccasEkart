@@ -73,8 +73,6 @@ user_route.post("/editAddress", blocked.isBlocked, userController.editAddress);
 
 user_route.get("/deleteAddress",blocked.isBlocked,userController.deleteAddress);
 
-user_route.post('/shop',blocked.isBlocked,userController.filterPrice);
-
 user_route.post("/paymentPage", blocked.isBlocked, userController.loadPaymentPage);
 
 user_route.get("/orderConfirmation",blocked.isBlocked,userController.orderDetails);
@@ -99,7 +97,7 @@ user_route.get("/orders",auth.isLogin, blocked.isBlocked, userController.orderDa
 
 user_route.get("/razorpayPayment", userController.razorpayConfirm);
 
-// user_route.get('*',userController.notFound)
+
 
 
 module.exports = user_route;
