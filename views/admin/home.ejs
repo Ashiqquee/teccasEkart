@@ -153,7 +153,7 @@
 
 
         </ul>
-         </ul>
+        
       
 
     </aside>
@@ -288,7 +288,9 @@
 <!-- <canvas id="monthly-sales-chart" width="400" height="400"></canvas> -->
 
                   <!-- Line Chart -->
+                  <h1 style="font-weight: bolder;color: #4154f1;">Sales Report</h1>
               <div id="reportsChart"></div>
+              <h1 style="font-weight: bolder;color: #4154f1;">Customer and Product Report</h1>
               <div id="reportsChart1"></div>
 
 <script>
@@ -463,8 +465,10 @@
                         <th scope="col">id</th>
                         <th scope="col">Customer</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Products</th>
+                        <th scope="col">quantity</th>
                         <th scope="col">City</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
                         
                       </tr>
                     </thead>
@@ -474,9 +478,19 @@
                       for (let i = 0; i < data.length; i++) { %>
                          
                       <tr>
-                       <td ><a><%= data[i]._id.toString().substr(0, 5)  %></a></th>
+                       <td ><a><%= data[i]._id.toString().substr(0, 5)  %></a></td>
                        <td><%= data[i].userId.mobile %></td>
                        <td><%= data[i].delivered_date.toDateString() %></td>
+                     <td>  <% data[i].item.forEach(function(item) { %>
+                        <%= item.product.productName %>  <br>
+                        <% }) %>
+                      </td>
+                      <td>
+                         <% data[i].item.forEach(function(item) { %>
+                        <%=item.quantity%>
+                        <br>
+                        <% }) %>
+                      </td>
                        <td><%= data[i].address[0].city %></td>
                        <td>$<%= data[i].totalPrice %></td>
     

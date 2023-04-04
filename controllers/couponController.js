@@ -27,14 +27,7 @@ const newCoupon = async (req, res) => {
   }
 };
 
-const couponDetails = async (req, res) => {
-  try {
-    const couponData = await Coupon.findOne({ _id: req.query.id });
-    res.render("couponDetails", { coupon: couponData });
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 const addCoupon = async (req, res) => {
   try {
@@ -196,7 +189,6 @@ module.exports = {
   blockCoupon,
   unBlockCoupon,
   couponDashboard,
-  couponDetails,
   newCoupon,
   addCoupon,
   deleteCoupon,

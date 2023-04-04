@@ -12,6 +12,7 @@
     "@paypal/paypal-js": "^5.1.5",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
+    "cloudinary": "^1.35.0",
     "devenv": "^1.0.1",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",

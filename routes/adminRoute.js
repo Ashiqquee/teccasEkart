@@ -65,8 +65,6 @@ admin_route.get("/unBlockUser", auth.isLogin, adminController.unBlockUser);
 
 admin_route.get("/coupon-dashboard",auth.isLogin,couponController.couponDashboard);
 
-admin_route.get("/coupon-details",auth.isLogin,couponController.couponDetails);
-
 admin_route.get("/new-coupon", auth.isLogin, couponController.newCoupon);
 
 admin_route.post("/new-coupon", auth.isLogin, couponController.addCoupon);

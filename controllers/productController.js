@@ -6,6 +6,7 @@ const Brand = require("../models/brandModel");
 const bcrypt = require("bcrypt");
 const Orders = require("../models/orderModel");
 const mime = require("mime-types");
+const cloudinary = require("cloudinary").v2;
 const { db } = require("../models/userModel");
 let message;
 

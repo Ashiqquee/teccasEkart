@@ -244,18 +244,34 @@
                                     
                                     <span id="disc" name="disc" class="text-success">0</span>
                 </li>
+                
                 <li>
                   <a href="#">Total
-                    <span id="ok">$ <%= totalPrice %></span>
+                    <span id="ok">$ <%=(totalPrice).toFixed(2)  %></span>
                   </a>
                 </li>
               </ul>
              
+            
+              
+              <div class="payment_item active">
+                <div class="radion_btn">
+                  <input type="radio" id="f-option6" value="wallet" name="flexRadioDefault" />
+                  <label for="f-option6">Use Wallet </label>
+                  
+                  <div class="check"></div>
+                </div>
+                <p>
+                 Balance: <%= wallet %>
+                </p>
+              </div>
+               
+              
+              <input type="hidden" name="totalPrice" id="totalPrice" value="<%= totalPrice.toFixed(2)  %>">
+
+
+              <button type="submit"class="btn_3 mt-3">Proceed to Payment</button>
              
-              <input type="hidden" name="totalPrice" id="totalPrice" value="<%= totalPrice %>">
-
-
-              <button type="submit" class="btn_3">Proceed to Payment</button>
             </div>
           </div>
         </div>
@@ -307,6 +323,7 @@
             </div>
 
         </div>
+         
         <div class="d-flex justify-content-center mt-5">
                         <div class="footer_icon social_icon">
                             <ul class="list-unstyled">
@@ -349,14 +366,7 @@
   <script src="js/price_rangs.js"></script>
   <!-- custom js -->
   <script src="js/custom.js"></script>
-</body>
-
-</html>
-
-
-
-</script>
-
+      
 <script>
   
     $("#coupon-form-submit").submit((e) => {
@@ -377,7 +387,9 @@
                     document.getElementById('disc').innerText = '$' + response.discountPrice
                     console.log(response.amount);
                     document.getElementById('ok').innerText = '$' + response.amount
-                     document.getElementById('totalPrice').value = response.amount;
+                    
+                     document.getElementById('totalPrice').value = parseInt( response.amount);
+                    
                     document.getElementById('codestate').style.color = "green"
                     document.getElementById('codestate').innerText = 'Coupon applied successfully'
                       $("#cancelBtn").show();

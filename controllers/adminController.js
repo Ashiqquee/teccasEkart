@@ -205,7 +205,7 @@ const loadDashboard = async (req, res) => {
     } else if (endDate) {
       query.delivered_date = { $lte: endDate };
     }
-    const salesData = await Orders.find(query).populate("userId");
+    const salesData = await Orders.find(query).populate("userId").populate('item.product');
     let totalAmount = 0;
     for (i = 0; i < salesData.length; i++) {
       totalAmount += parseInt(salesData[i].totalPrice);

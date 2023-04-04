@@ -171,8 +171,18 @@
                       <th style="font-family: 'EB Garamond', serif" scope="col">
                         Code
                       </th>
+                      
                       <th style="font-family: 'EB Garamond', serif" scope="col">
-                        Quantity
+                        StartDate
+                      </th>
+                      <th style="font-family: 'EB Garamond', serif" scope="col">
+                        EndDate
+                      </th>
+                      <th style="font-family: 'EB Garamond', serif" scope="col">
+                        maxDiscount
+                      </th>
+                      <th style="font-family: 'EB Garamond', serif" scope="col">
+                        minPurchase
                       </th>
                       <th style="font-family: 'EB Garamond', serif" scope="col">
                         Status
@@ -181,6 +191,7 @@
                       <th style="font-family: 'EB Garamond', serif" scope="col">
                         Action
                       </th>
+                      
                     </tr>
                   </thead>
 
@@ -190,17 +201,16 @@
                     <tr style="font-family: 'Oxygen', sans-serif">
                       <td><%= coupon.couponName %></td>
                       <td><%= coupon.couponCode %></td>
-                      <td><%= coupon.quantity %></td>
+                      <td><%= coupon.startDate.toDateString()  %></td>
+                      <td><%= coupon.endDate.toDateString()  %></td>
+                      <td><%= coupon.maxDiscount %></td>
+                      <td><%= coupon.minAmount %></td>
                       <td>
                         <% if (coupon.status === 0) { %> Active <% } else if
                         (coupon.status === 1) { %> Inactive <% } %>
                       </td>
                       <td>
-                        <a
-                          href="/admin/coupon-details?id=<%= coupon._id %>"
-                          class="btn btn-primary btn-sm mt-1"
-                          >View</a
-                        >
+                       
                         <a
                           href="/admin/edit-coupon?id=<%= coupon._id %>"
                           class="btn btn-success btn-sm mt-1"

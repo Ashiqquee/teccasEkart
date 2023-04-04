@@ -33,6 +33,7 @@ app.use(
 app.use(nocache());
 
 app.set("view engine", "ejs");
+app.set("views", "./views/users");
 app.use(express.static(path.join(__dirname, "public")));
 
 /////////////////for user routes///////////////
@@ -45,7 +46,9 @@ app.use("/", userRoute);
 const adminRoute = require("./routes/adminRoute");
 app.use("/admin", adminRoute);
 
-
+app.use(function (req, res, next) {
+  res.status(404).render("404");
+});
 
 ////////////PORT/////////////////////////
 app.listen(PORT, () => {

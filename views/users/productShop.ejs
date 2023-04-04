@@ -218,7 +218,7 @@
      <ul class="nav nav-tabs" id="myTab" role="tablist">
        
         <li class="nav-item">
-          <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+          <a class="nav-link active" id="review-tab" data-toggle="tab" role="tab" aria-controls="review"
             aria-selected="false">Reviews</a>
         </li>
       </ul>
@@ -273,7 +273,7 @@
             <div class="col-lg-6">
               <div class="review_box">
                 <h4>Add a Review</h4>
-                
+                   <% if (hasPurchasedProduct) { %>
                 
                 <form class="row contact_form" action="/productShop?id=<%= product._id %>" method="post" novalidate="novalidate">
                   <div class="col-md-12">
@@ -294,6 +294,9 @@
                     </button>
                   </div>
                 </form>
+                 <% } else { %>
+                   <p>You must purchase this product to leave a review.</p>
+    <% } %>
               </div>
             </div>
           </div>
