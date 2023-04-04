@@ -1,29 +1,29 @@
-const Banner =  require('../models/bannerModel');
+const Banner = require('../models/bannerModel');
 const mime = require("mime-types");
 const { findByIdAndDelete } = require('../models/bannerModel');
-const bannerDashboard = async (req,res) => {
-    try {
-        const banner = await Banner.find();
-        res.render("bannerDash", { banner });
-    } catch (error) {
-        console.log(error);
-    }
+const bannerDashboard = async (req, res) => {
+  try {
+    const banner = await Banner.find();
+    res.render("bannerDash", { banner });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
-const addBanner = async(req,res) => {
-    try {
-        
-        res.render('addBanner')
-    } catch (error) {
-        console.log(error);
-    }
+const addBanner = async (req, res) => {
+  try {
+
+    res.render('addBanner')
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const newBanner = async (req, res) => {
   try {
     const { mainHeading, description } = req.body;
-    console.log(mainHeading, description); 
+    console.log(mainHeading, description);
     let arrImages = [];
     if (req.files) {
       req.files.forEach((file) => {
@@ -32,7 +32,7 @@ const newBanner = async (req, res) => {
           arrImages.push(file.filename);
         } else {
           res.redirect("/admin/addBanner");
-          
+
         }
       });
     }
@@ -48,10 +48,10 @@ const newBanner = async (req, res) => {
   }
 };
 
-const deletebanner = async (req,res) => {
+const deletebanner = async (req, res) => {
   try {
     const id = req.query.id;
-    await Banner.findByIdAndDelete({_id:id})
+    await Banner.findByIdAndDelete({ _id: id })
     res.redirect('/admin/banner-dashboard')
   } catch (error) {
     console.log(error);

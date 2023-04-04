@@ -163,7 +163,7 @@ const insertProduct = async (req, res) => {
           arrImages.push(result.secure_url);
         } else {
           res.render("addProduct");
-          
+
         }
       }
     }
@@ -250,17 +250,17 @@ const updateProduct = async (req, res) => {
     const brand = await Brand.findOne({ brandName: req.body.brand });
     console.log(req.files);
 
-   if (req.files) {
-     for (let i = 0; i < req.files.length; i++) {
-       const image = req.files[i].path;
-       const uploadResponse = await cloudinary.uploader.upload(image);
-       const imageURL = uploadResponse.secure_url;
-       const addImage = await Product.updateOne(
-         { _id: req.query.id },
-         { $push: { productImages: imageURL } }
-       );
-     }
-   }
+    if (req.files) {
+      for (let i = 0; i < req.files.length; i++) {
+        const image = req.files[i].path;
+        const uploadResponse = await cloudinary.uploader.upload(image);
+        const imageURL = uploadResponse.secure_url;
+        const addImage = await Product.updateOne(
+          { _id: req.query.id },
+          { $push: { productImages: imageURL } }
+        );
+      }
+    }
 
 
     const productData = await Product.updateOne(

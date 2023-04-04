@@ -1,84 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>teccas</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet"
-    />
-<link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
-    <!-- Vendor CSS Files -->
-    <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+  <title>teccas</title>
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
 
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-  </head>
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet" />
+  <link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
 
-  <body>
-    <header id="header" class="header fixed-top d-flex align-items-center">
-      <div class="d-flex align-items-center justify-content-between">
-        <a class="logo d-flex align-items-center">
-          <span class="d-none d-lg-block">Teccas</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-      </div>
-      <!-- End Logo -->
-      <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
-          <li class="nav-item dropdown pe-3">
-            <a
-              class="nav-link nav-profile d-flex align-items-center pe-0"
-              href="#"
-              data-bs-toggle="dropdown"
-            >
-              <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
-            </a>
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet" />
+</head>
 
-            <ul
-              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
-            >
-              <li>
-                <a
-                  class="dropdown-item d-flex align-items-center"
-                  href="/admin/logout"
-                >
-                  <i class="bi bi-box-arrow-right"></i>
-                  <span>Sign Out</span>
-                </a>
-              </li>
-            </ul>
-            <!-- End Profile Dropdown Items -->
-          </li>
-          <!-- End Profile Nav -->
-        </ul>
-      </nav>
-      <!-- End Icons Navigation -->
-    </header>
-    <!-- End Header -->
+<body>
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block">Teccas</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+    <!-- End Logo -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item dropdown pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
+          </a>
 
-    <!-- ======= Sidebar ======= -->
-     <aside id="sidebar" class="sidebar">
-     
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/admin/logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul>
+          <!-- End Profile Dropdown Items -->
+        </li>
+        <!-- End Profile Nav -->
+      </ul>
+    </nav>
+    <!-- End Icons Navigation -->
+  </header>
+  <!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
@@ -89,261 +74,210 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/dashboard">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/dashboard">
           <i class="bi bi-menu-button-wide"></i><span>User</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-       
+      </li>
 
-          <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/product-dashboard">
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/product-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
 
-         <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/coupon-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/coupon-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Coupon</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/brand-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/brand-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Brand </span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/category-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/category-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Category</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-          <li class="nav-item">
-        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav" >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav">
           <i class="bi bi-menu-button-wide"></i><span>Orders</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav" >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav">
           <i class="bi bi-menu-button-wide"></i><span>Banner</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
 
-        </ul>
-         </ul>
-      
+    </ul>
+    </ul>
 
-    </aside>
 
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h1>Add Coupon</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a>Data</a></li>
-            <li class="breadcrumb-item">Coupon</li>
-            <li class="breadcrumb-item active">add-Coupon</li>
-          </ol>
-        </nav>
-      </div>
-      <!-- End Page Title -->
-      <section class="section">
-        <div class="row">
-          <div class="col-lg-6"></div>
+  </aside>
 
-          <div class="col-lg-12">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Coupon</h5>
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Add Coupon</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a>Data</a></li>
+          <li class="breadcrumb-item">Coupon</li>
+          <li class="breadcrumb-item active">add-Coupon</li>
+        </ol>
+      </nav>
+    </div>
+    <!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6"></div>
 
-                <!-- Floating Labels Form -->
-                <form class="row g-3" action="" method="post">
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="floatingName"
-                        name="couponName"
-                        placeholder="Coupon Name"
-                        required
-                      />
-                      <label for="productName">Coupon Name</label>
-                    </div>
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Coupon</h5>
+
+              <!-- Floating Labels Form -->
+              <form class="row g-3" action="" method="post">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingName" name="couponName"
+                      placeholder="Coupon Name" required />
+                    <label for="productName">Coupon Name</label>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input
-                        type="text"
-                        name="couponCode"
-                        class="form-control"
-                        id="floatingPassword"
-                        placeholder="Password"
-                      />
-                      <label for="price">Enter Code</label>
-                    </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" name="couponCode" class="form-control" id="floatingPassword"
+                      placeholder="Password" />
+                    <label for="price">Enter Code</label>
                   </div>
-                  <div class="col-md-6">
-                    <div class="col-md-12">
-                      <div class="form-floating">
-                        <input
-                          id="floatingPassword"
-                          type="date"
-                          name="startDate"
-                          class="form-control"
-                          id="floatingCity"
-                          placeholder="Start Date"
-                        />
-                        <label for="Quantity">Start Date</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                      <input
-                        id="floatingPassword"
-                        type="date"
-                        name="endDate"
-                        id="form3Example3c"
-                        class="form-control"
-                        required
-                      />
-                      <label class="form-label" for="form3Example3c"
-                        >End Date</label
-                      >
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                      <input
-                        type="text"
-                        name="minAmount"
-                        id="floatingPassword"
-                        id="form3Example1c"
-                        class="form-control"
-                        required
-                        placeholder="Minimum Amount"
-                      />
-                      <label class="form-label" for="form3Example1c"
-                        >Minimum Amount</label
-                      >
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="floatingName"
-                        name="quantity"
-                        placeholder="Quantity"
-                        required
-                      />
-                      <label for="productName">Quantity</label>
-                    </div>
-                  </div>
-
+                </div>
+                <div class="col-md-6">
                   <div class="col-md-12">
-                    <div class="form-floating mb-3">
-                      <input
-                        type="text"
-                        name="maxDiscount"
-                        id="form3Example4c"
-                        class="form-control"
-                        id="floatingPassword"
-                        placeholder="Max Discount"
-                        required
-                      />
-                      <label class="form-label" for="form3Example4c"
-                        >Max Discount</label
-                      >
+                    <div class="form-floating">
+                      <input id="floatingPassword" type="date" name="startDate" class="form-control" id="floatingCity"
+                        placeholder="Start Date" />
+                      <label for="Quantity">Start Date</label>
                     </div>
                   </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
-                      Submit
-                    </button>
-                    <button type="cancel" class="btn btn-secondary">
-                      Cancel
-                    </button>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input id="floatingPassword" type="date" name="endDate" id="form3Example3c" class="form-control"
+                      required />
+                    <label class="form-label" for="form3Example3c">End Date</label>
                   </div>
-                  <% if(typeof message !== 'undefined' ){ %>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input type="text" name="minAmount" id="floatingPassword" id="form3Example1c" class="form-control"
+                      required placeholder="Minimum Amount" />
+                    <label class="form-label" for="form3Example1c">Minimum Amount</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingName" name="quantity" placeholder="Quantity"
+                      required />
+                    <label for="productName">Quantity</label>
+                  </div>
+                </div>
 
-                  <p
-                    style="
+                <div class="col-md-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" name="maxDiscount" id="form3Example4c" class="form-control" id="floatingPassword"
+                      placeholder="Max Discount" required />
+                    <label class="form-label" for="form3Example4c">Max Discount</label>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">
+                    Submit
+                  </button>
+                  <button type="cancel" class="btn btn-secondary">
+                    Cancel
+                  </button>
+                </div>
+                <% if(typeof message !=='undefined' ){ %>
+
+                  <p style="
                       font-size: small;
                       color: red;
                       font-family: 'Tilt Warp', cursive;
-                    "
-                    class="ms-3"
-                  >
+                    " class="ms-3">
                     <%= message %>
                   </p>
 
                   <% } %>
-                </form>
-                <!-- End floating Labels Form -->
-              </div>
+              </form>
+              <!-- End floating Labels Form -->
             </div>
           </div>
         </div>
-      </section>
-    </main>
-    <!-- End #main -->
+      </div>
+    </section>
+  </main>
+  <!-- End #main -->
 
-    <!-- ======= Footer ======= -->
+  <!-- ======= Footer ======= -->
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/chart.js/chart.umd.js"></script>
-    <script src="assets/vendor/echarts/echarts.min.js"></script>
-    <script src="assets/vendor/quill/quill.min.js"></script>
-    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
 
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-    <script>
- const form = document.querySelector('form');
-const couponName = document.querySelector('input[name="couponName"]');
-const couponCode = document.querySelector('input[name="couponCode"]');
-const startDate = document.querySelector('input[name="startDate"]');
-const endDate = document.querySelector('input[name="endDate"]');
-const minAmount = document.querySelector('input[name="minAmount"]');
-const quantity = document.querySelector('input[name="quantity"]');
-const maxDiscount = document.querySelector('input[name="maxDiscount"]');
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    const form = document.querySelector('form');
+    const couponName = document.querySelector('input[name="couponName"]');
+    const couponCode = document.querySelector('input[name="couponCode"]');
+    const startDate = document.querySelector('input[name="startDate"]');
+    const endDate = document.querySelector('input[name="endDate"]');
+    const minAmount = document.querySelector('input[name="minAmount"]');
+    const quantity = document.querySelector('input[name="quantity"]');
+    const maxDiscount = document.querySelector('input[name="maxDiscount"]');
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
 
-  const now = new Date();
-  const start = new Date(startDate.value);
-  const end = new Date(endDate.value);
+      const now = new Date();
+      const start = new Date(startDate.value);
+      const end = new Date(endDate.value);
 
-  if (!couponName.value || !couponCode.value || !startDate.value || !endDate.value || !minAmount.value || !quantity.value || !maxDiscount.value) {
-    return alert('Please fill in all fields.');
-  }
+      if (!couponName.value || !couponCode.value || !startDate.value || !endDate.value || !minAmount.value || !quantity.value || !maxDiscount.value) {
+        return alert('Please fill in all fields.');
+      }
 
-  if (isNaN(minAmount.value) || isNaN(quantity.value) || isNaN(maxDiscount.value)) {
-    return alert('Minimum amount, quantity, and max discount must be numbers.');
-  }
+      if (isNaN(minAmount.value) || isNaN(quantity.value) || isNaN(maxDiscount.value)) {
+        return alert('Minimum amount, quantity, and max discount must be numbers.');
+      }
 
-  if (start <= now) {
-    return alert('Start date must be greater than current date/time.');
-  }
+      if (start <= now) {
+        return alert('Start date must be greater than current date/time.');
+      }
 
-  if (end <= start) {
-    return alert('End date must be after start date.');
-  }
+      if (end <= start) {
+        return alert('End date must be after start date.');
+      }
 
-  // Submit the form if all validations pass
-  form.submit();
-});
+      // Submit the form if all validations pass
+      form.submit();
+    });
 
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>

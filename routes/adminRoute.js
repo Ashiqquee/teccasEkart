@@ -22,7 +22,7 @@ const couponController = require('../controllers/couponController');
 
 const productController = require('../controllers/productController');
 
-const orderController   = require('../controllers/orderController');
+const orderController = require('../controllers/orderController');
 
 const bannerController = require("../controllers/bannerController");
 
@@ -63,7 +63,7 @@ admin_route.get("/unBlockUser", auth.isLogin, adminController.unBlockUser);
 
 
 
-admin_route.get("/coupon-dashboard",auth.isLogin,couponController.couponDashboard);
+admin_route.get("/coupon-dashboard", auth.isLogin, couponController.couponDashboard);
 
 admin_route.get("/new-coupon", auth.isLogin, couponController.newCoupon);
 
@@ -85,23 +85,11 @@ admin_route.post("/edit-coupon", auth.isLogin, couponController.updateCoupon);
 
 
 
-admin_route.get(
-  "/category-dashboard",
-  auth.isLogin,
-  productController.categoryDashboard
-);
+admin_route.get("/category-dashboard",auth.isLogin,productController.categoryDashboard);
 
-admin_route.get(
-  "/edit-category",
-  auth.isLogin,
-  productController.editCategoryLoad
-);
+admin_route.get("/edit-category",auth.isLogin,productController.editCategoryLoad);
 
-admin_route.post(
-  "/edit-category",
-  auth.isLogin,
-  productController.updateCategory
-);
+admin_route.post("/edit-category",auth.isLogin,productController.updateCategory);
 
 admin_route.get("/new-category", auth.isLogin, productController.newCategory);
 
@@ -113,47 +101,21 @@ admin_route.post("/new-category", auth.isLogin, productController.addCategory);
 ///////////////////////Product Controll  Route////////////////////
 
 
-admin_route.get(
-  "/product-dashboard",
-  auth.isLogin,
-  productController.productDashboard
-);
+admin_route.get("/product-dashboard",auth.isLogin,productController.productDashboard);
 
 admin_route.get("/addProduct", auth.isLogin, productController.addProduct);
 
-admin_route.post(
-  "/addProduct",
-  upload.array("file", 5),
-  auth.isLogin,
-  productController.insertProduct
-);
+admin_route.post("/addProduct",upload.array("file", 5),auth.isLogin,productController.insertProduct);
 
-admin_route.get(
-  "/product-details",
-  auth.isLogin,
-  productController.productDetails
-);
+admin_route.get("/product-details",auth.isLogin,productController.productDetails);
 
 admin_route.get("/blockProduct", auth.isLogin, productController.blockProduct);
 
-admin_route.get(
-  "/unBlockProduct",
-  auth.isLogin,
-  productController.unBlockProduct
-);
+admin_route.get("/unBlockProduct",auth.isLogin,productController.unBlockProduct);
 
-admin_route.get(
-  "/edit-product",
-  auth.isLogin,
-  productController.editProductLoad
-);
+admin_route.get("/edit-product",auth.isLogin,productController.editProductLoad);
 
-admin_route.post(
-  "/edit-product",
-  upload.array("file", 5),
-  auth.isLogin,
-  productController.updateProduct
-);
+admin_route.post("/edit-product",upload.array("file", 5),auth.isLogin,productController.updateProduct);
 
 admin_route.get("/deletImage", auth.isLogin, productController.deleteImage);
 
@@ -163,11 +125,7 @@ admin_route.get("/deletImage", auth.isLogin, productController.deleteImage);
 ///////////////////////Brand Controll  Route////////////////////
 
 
-admin_route.get(
-  "/brand-dashboard",
-  auth.isLogin,
-  productController.brandDashboard
-);
+admin_route.get("/brand-dashboard",auth.isLogin,productController.brandDashboard);
 
 admin_route.get("/new-brand", auth.isLogin, productController.newBrand);
 
@@ -188,13 +146,13 @@ admin_route.get("/orderStatus", auth.isLogin, orderController.orderDelivered);
 
 admin_route.get("/viewOrder", auth.isLogin, orderController.DetailedOrderView);
 
-admin_route.get("/banner-dashboard", auth.isLogin,bannerController.bannerDashboard );
+admin_route.get("/banner-dashboard", auth.isLogin, bannerController.bannerDashboard);
 
 admin_route.get("/addBanner", auth.isLogin, bannerController.addBanner);
 
-admin_route.post("/addBanner",auth.isLogin,upload.array("file", 1),bannerController.newBanner);
+admin_route.post("/addBanner", auth.isLogin, upload.array("file", 1), bannerController.newBanner);
 
-admin_route.get("/delete-banner", auth.isLogin,bannerController.deletebanner);
+admin_route.get("/delete-banner", auth.isLogin, bannerController.deletebanner);
 
 
 
@@ -203,9 +161,7 @@ admin_route.get("/logout", auth.isLogin, adminController.logout);
 
 
 
-admin_route.get("*", function (req, res) {
-  res.redirect("/admin");
-});
+admin_route.get("*", function (req, res) {res.redirect("/admin");});
 
 
 

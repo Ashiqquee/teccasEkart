@@ -53,28 +53,34 @@
                                     <input type="text" class="form-control" id="name" name="mno" value=""
                                         placeholder="Mobile">
                                 </div>
-                                
+
                                 <div class="col-md-12 form-group">
-                                    
-                       <% if(typeof message !== 'undefined' ){ %>
-                  
-                   <p style="font-size: small; color: red;font-family: 'Tilt Warp', cursive;" class="ms-3"> <%= message %></p>
-                  
 
-                  <% } %> 
-                  <% if(typeof msg !== 'undefined' ){ %>
-                  
-                   <p style="font-size: small; color: rgb(0, 61, 3);font-family: 'EB Garamond', serif;" class="ms-3"> <%= msg %></p>
-                  
+                                    <% if(typeof message !=='undefined' ){ %>
 
-                  <% } %> 
+                                        <p style="font-size: small; color: red;font-family: 'Tilt Warp', cursive;"
+                                            class="ms-3">
+                                            <%= message %>
+                                        </p>
 
-                                    <button type="submit" value="submit" class="btn_3">
-                                        Signup
-                                    </button>
-                                    
-                                   
-                                    
+
+                                        <% } %>
+                                            <% if(typeof msg !=='undefined' ){ %>
+
+                                                <p style="font-size: small; color: rgb(0, 61, 3);font-family: 'EB Garamond', serif;"
+                                                    class="ms-3">
+                                                    <%= msg %>
+                                                </p>
+
+
+                                                <% } %>
+
+                                                    <button type="submit" value="submit" class="btn_3">
+                                                        Signup
+                                                    </button>
+
+
+
                                 </div>
                             </form>
                         </div>
@@ -117,7 +123,3 @@
 </body>
 
 </html>
-
-
-
-

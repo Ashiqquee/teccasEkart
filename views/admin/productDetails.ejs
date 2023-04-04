@@ -1,89 +1,73 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>teccas</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet"
-    />
+  <title>teccas</title>
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
 
-    <!-- Vendor CSS Files -->
-    <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
-    <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet" />
 
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-  </head>
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
 
-  <body>
-    <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top d-flex align-items-center">
-      <div class="d-flex align-items-center justify-content-between">
-        <a class="logo d-flex align-items-center">
-          <span class="d-none d-lg-block">Teccas</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-      </div>
-      <!-- End Logo -->
-      <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
-         
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet" />
+</head>
 
-          <li class="nav-item dropdown pe-3">
-            <a
-              class="nav-link nav-profile d-flex align-items-center pe-0"
-              href="#"
-              data-bs-toggle="dropdown"
-            >
-              <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
-            </a>
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block">Teccas</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+    <!-- End Logo -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
 
-            <ul
-              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
-            >
-              <li>
-                <a
-                  class="dropdown-item d-flex align-items-center"
-                  href="/admin/logout"
-                >
-                  <i class="bi bi-box-arrow-right"></i>
-                  <span>Sign Out</span>
-                </a>
-              </li>
-            </ul>
-            <!-- End Profile Dropdown Items -->
-          </li>
-          <!-- End Profile Nav -->
-        </ul>
-      </nav>
-      <!-- End Icons Navigation -->
-    </header>
-    <!-- End Header -->
 
-    <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-     
+        <li class="nav-item dropdown pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/admin/logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul>
+          <!-- End Profile Dropdown Items -->
+        </li>
+        <!-- End Profile Nav -->
+      </ul>
+    </nav>
+    <!-- End Icons Navigation -->
+  </header>
+  <!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
@@ -94,71 +78,71 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/dashboard">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/dashboard">
           <i class="bi bi-menu-button-wide"></i><span>User</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-       
+      </li>
 
-          <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/product-dashboard">
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/product-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
 
-         <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/coupon-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/coupon-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Coupon</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/brand-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/brand-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Brand </span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/category-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/category-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Category</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-          <li class="nav-item">
-        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav" >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav">
           <i class="bi bi-menu-button-wide"></i><span>Orders</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav" >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav">
           <i class="bi bi-menu-button-wide"></i><span>Banner</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
 
-        </ul>
-         </ul>
-      
-
-    </aside>
-    <!-- End Sidebar-->
+    </ul>
+    </ul>
 
 
+  </aside>
+  <!-- End Sidebar-->
 
 
-<main id="main" class="main">
 
-<section class="section profile">
+
+  <main id="main" class="main">
+
+    <section class="section profile">
       <div class="row">
         <div class="col-xl-4">
-           
+
           <div class="card">
-            <div class="card-body profile-card pt-4 "> 
-              <img src="<%=product.productImages[0]%>" alt="Profile" style="max-width: 163px; margin-bottom: 5px;" >
-              <img src="<%=product.productImages[1]%>" alt="Profile" style="max-width: 163px; margin-bottom: 5px;" >
+            <div class="card-body profile-card pt-4 ">
+              <img src="<%=product.productImages[0]%>" alt="Profile" style="max-width: 163px; margin-bottom: 5px;">
+              <img src="<%=product.productImages[1]%>" alt="Profile" style="max-width: 163px; margin-bottom: 5px;">
               <div class="d-flex justify-content-center">
-              <img src="<%=product.productImages[2]%>" alt="Profile" style="max-width: 163px; "  >
-           </div>
+                <img src="<%=product.productImages[2]%>" alt="Profile" style="max-width: 163px; ">
+              </div>
             </div>
           </div>
         </div>
@@ -172,52 +156,65 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                
+
 
                   <h5 class="card-title">Product Details</h5>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Product name : </div>
-                    <div class="col-lg-9 col-md-8"><%= product.productName %> </div>
+                    <div class="col-lg-9 col-md-8">
+                      <%= product.productName %>
+                    </div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Catogery : </div>
-                    <div class="col-lg-9 col-md-8"><%= product.category.name %> </div>
+                    <div class="col-lg-9 col-md-8">
+                      <%= product.category.name %>
+                    </div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Price : </div>
-                    <div class="col-lg-9 col-md-8">$<%= product.price %></div>
+                    <div class="col-lg-9 col-md-8">$<%= product.price %>
+                    </div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Brand : </div>
-                    <div class="col-lg-9 col-md-8"><%= product.brand.brandName %></div>
+                    <div class="col-lg-9 col-md-8">
+                      <%= product.brand.brandName %>
+                    </div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Quantity : </div>
-                    <div class="col-lg-9 col-md-8"><%= product.quantity %></div>
+                    <div class="col-lg-9 col-md-8">
+                      <%= product.quantity %>
+                    </div>
                   </div>
 
-                  
+
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Status : </div>
-                    <div class="col-lg-9 col-md-8"><%= product.status === 0 ? "Active":"Inactive" %></div>
+                    <div class="col-lg-9 col-md-8">
+                      <%= product.status===0 ? "Active" :"Inactive" %>
+                    </div>
                   </div>
 
                   <h5 class="card-title">Product description</h5>
-                  <p class="small fst-italic"><%= product.description %></p>
+                  <p class="small fst-italic">
+                    <%= product.description %>
+                  </p>
 
                 </div>
 
-                
 
-                  
 
-               
+
+
+
 
               </div><!-- End Bordered Tabs -->
 
@@ -227,25 +224,22 @@
         </div>
       </div>
     </section>
-</main>
+  </main>
 
 
-    
-    <a
-      href="#"
-      class="back-to-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/chart.js/chart.umd.js"></script>
-    <script src="assets/vendor/echarts/echarts.min.js"></script>
-    <script src="assets/vendor/quill/quill.min.js"></script>
-    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>

@@ -294,7 +294,7 @@ const profileLoad = async (req, res) => {
       const userData = await User.findOne({ _id: session });
       const wallet = userData.wallet
       const orders = await Orders.find({ userId: session });
-      res.render("profile", { user: userData, session, orders,wallet });
+      res.render("profile", { user: userData, session, orders, wallet });
     } else {
       message = "Login with your account to access this page";
       res.redirect("/login");
@@ -671,7 +671,7 @@ const loadCheckOut = async (req, res) => {
       const cart = await Cart.findOne({ userId: session }).populate(
         "item.product"
       );
-        const wallet  =  userDetails.wallet
+      const wallet = userDetails.wallet
       const items = cart.item;
       if (cart && cart.item != null) {
         cart.item.forEach((value) => {
@@ -718,13 +718,13 @@ const addAddress = async (req, res) => {
     const data = req.body;
     if (
       (data.address,
-      data.city,
-      data.district,
-      data.state,
-      data.zip,
-      data.name,
-      data.mobile,
-      data.email)
+        data.city,
+        data.district,
+        data.state,
+        data.zip,
+        data.name,
+        data.mobile,
+        data.email)
     ) {
       const userData = await User.findOne({ _id: new Object(id) });
       userData.address.push(data);
@@ -775,13 +775,13 @@ const editAddress = async (req, res) => {
     const key = `address.${index}`;
     if (
       (data.address,
-      data.city,
-      data.district,
-      data.state,
-      data.zip,
-      data.name,
-      data.mobile,
-      data.email)
+        data.city,
+        data.district,
+        data.state,
+        data.zip,
+        data.name,
+        data.mobile,
+        data.email)
     ) {
       const editAddress = {
         name: data.name,
@@ -843,32 +843,33 @@ loadPaymentPage = async (req, res) => {
     const user = await User.findOne({ _id: session });
 
     wallet = user.wallet;
-   
-    if(req.body.flexRadioDefault==="wallet"){
-      if(wallet>=Total){const ok = await User.updateOne(
-        { _id: session },
-        { $inc: { wallet: -Total } }
-      );
-      console.log(ok);
-      paymentType = req.body.flexRadioDefault;
-      console.log("okok");
-      if (wallet >= Total) {
-        console.log("hmmm");
-        orderStatus = 1;
 
-        res.redirect("/orderConfirmation");
+    if (req.body.flexRadioDefault === "wallet") {
+      if (wallet >= Total) {
+        const ok = await User.updateOne(
+          { _id: session },
+          { $inc: { wallet: -Total } }
+        );
+        console.log(ok);
+        paymentType = req.body.flexRadioDefault;
+        console.log("okok");
+        if (wallet >= Total) {
+          console.log("hmmm");
+          orderStatus = 1;
+
+          res.redirect("/orderConfirmation");
+        }
       }
+
     }
-     
-    }
-    if (req.body.flexRadioDefault === "wallet"){
-      req.session.ok = Total-wallet;
+    if (req.body.flexRadioDefault === "wallet") {
+      req.session.ok = Total - wallet;
       req.session.wallet = wallet;
       res.render("paymentPage", { Total, session, msg, wallet });
-    }else{
-      let wallet =0;  
+    } else {
+      let wallet = 0;
       req.session.wallet = null;
-      req.session.ok = Total; 
+      req.session.ok = Total;
       res.render("paymentPage", { Total, session, msg, wallet });
     }
   } catch (error) {
@@ -929,7 +930,7 @@ const orderConfirm = async (req, res) => {
           }
         }
       });
-    } 
+    }
   } catch (error) {
     console.log(error);
   }
@@ -947,7 +948,7 @@ const confirmPayment = async (req, res) => {
           currency: "USD",
           total: req.session.ok,
         },
-      }, 
+      },
     ],
   };
 
@@ -960,8 +961,8 @@ const confirmPayment = async (req, res) => {
         throw error;
       } else {
         console.log(JSON.stringify(payment));
-         
-     
+
+
         res.redirect("/orderConfirmation");
       }
     }
@@ -980,7 +981,7 @@ const razorpayConfirm = async (req, res) => {
     const order = await instance.orders.create(options);
     console.log(order + "==========");
     res.json({ order });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 const orderDetails = async (req, res) => {
@@ -1000,7 +1001,7 @@ const orderDetails = async (req, res) => {
       { _id: session },
       { $inc: { wallet: -decreasingAmount } }
     );
-    
+
 
     if (orderStatus === 1) {
       console.log("hadhashd");

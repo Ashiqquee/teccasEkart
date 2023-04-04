@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +13,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +29,7 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-<link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
+  <link rel="shortcut icon" href="/images/teccas.jpg" type="image/x-icon">
 </head>
 
 <body>
@@ -37,25 +38,25 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a  class="logo d-flex align-items-center">
-        
+      <a class="logo d-flex align-items-center">
+
         <span class="d-none d-lg-block">Teccas</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-   
 
-     
 
-       
+
+
+
 
 
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-     
+  <aside id="sidebar" class="sidebar">
+
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
@@ -66,53 +67,53 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/dashboard">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/dashboard">
           <i class="bi bi-menu-button-wide"></i><span>User</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-       
+      </li>
 
-          <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/product-dashboard">
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/product-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
 
-         <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/coupon-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/coupon-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Coupon</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/brand-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/brand-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Brand </span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav"  href="/admin/category-dashboard">
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" href="/admin/category-dashboard">
           <i class="bi bi-menu-button-wide"></i><span>Category</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-          <li class="nav-item">
-        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav" >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/order-dashboard" data-bs-target="#components-nav">
           <i class="bi bi-menu-button-wide"></i><span>Orders</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav" >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/banner-dashboard" data-bs-target="#components-nav">
           <i class="bi bi-menu-button-wide"></i><span>Banner</span><i class="bi  ms-auto"></i>
         </a>
-        </li>
+      </li>
 
 
-        </ul>
-         </ul>
-      
+    </ul>
+    </ul>
 
-    </aside><!-- End Sidebar-->
+
+  </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
 
@@ -120,7 +121,7 @@
       <h1>User Table</h1>
       <nav>
         <ol class="breadcrumb">
-         
+
           <li class="breadcrumb-item">User</li>
           <li class="breadcrumb-item active">Data</li>
         </ol>
@@ -133,49 +134,50 @@
 
           <div class="card">
             <div class="card-body">
-             
+
 
 
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
                   <tr>
-                   
-                    
+
+
                     <th scope="col">Mobile</th>
                     <th scope="col">Action</th>
                     <th scope="col">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <%
-                if(users.length>0){
-                    for(let i=0;i<users.length;i++){
-                     %>
-                     <tr>
-                        
-                        <td><%=users[i].mobile%></td>
-        
+                  <% if(users.length>0){
+                    for(let i=0;i<users.length;i++){ %>
+                      <tr>
+
                         <td>
-                            
-                            <%if(users[i].is_blocked==0){%>
-                                 
-                                <a href="/admin/blockUser?id=<%=users[i]._id%>"><button type="button" class="btn btn-danger" style="font-size: small;">Block</button></a>
-                           <%}else{%>
-                            <a href="/admin/unBlockUser?id=<%=users[i]._id%>"><button type="button" class="btn btn-success" style="font-size: small;">Unblock</button></a>
-                           <%}%>
-                            
-                       </td>
-                       <td><%=users[i].is_blocked ===0 ? "Active" : "Block" %></td>
-                    </tr>
-                    <%
-                      }
-                } else{
-                    %>
-             <tr>
-                 <td colspan="5">Users Not Found</td>
-             </tr>
-        <% } %>
+                          <%=users[i].mobile%>
+                        </td>
+
+                        <td>
+
+                          <%if(users[i].is_blocked==0){%>
+
+                            <a href="/admin/blockUser?id=<%=users[i]._id%>"><button type="button" class="btn btn-danger"
+                                style="font-size: small;">Block</button></a>
+                            <%}else{%>
+                              <a href="/admin/unBlockUser?id=<%=users[i]._id%>"><button type="button"
+                                  class="btn btn-success" style="font-size: small;">Unblock</button></a>
+                              <%}%>
+
+                        </td>
+                        <td>
+                          <%=users[i].is_blocked===0 ? "Active" : "Block" %>
+                        </td>
+                      </tr>
+                      <% } } else{ %>
+                        <tr>
+                          <td colspan="5">Users Not Found</td>
+                        </tr>
+                        <% } %>
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
@@ -191,7 +193,8 @@
 
 
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -209,5 +212,3 @@
 </body>
 
 </html>
-
-

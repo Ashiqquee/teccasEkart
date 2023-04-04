@@ -69,8 +69,8 @@ const loadDashboard = async (req, res) => {
       0
     ));
 
-      let yearlyStart = new Date(new Date().getFullYear(), 0, 1);
-      let yearlyEnd = new Date(new Date().getFullYear(), 11, 31);
+    let yearlyStart = new Date(new Date().getFullYear(), 0, 1);
+    let yearlyEnd = new Date(new Date().getFullYear(), 11, 31);
 
     let dailySalesData = await Orders.find({
       is_delivered: true,
@@ -196,7 +196,7 @@ const loadDashboard = async (req, res) => {
     if (endDate) {
       endDate.setDate(endDate.getDate() + 1);
     }
-      console.log(startDate, endDate);
+    console.log(startDate, endDate);
     let query = { is_delivered: true, is_returned: 0 };
     if (startDate && endDate) {
       query.delivered_date = { $gte: startDate, $lte: endDate };
@@ -228,49 +228,49 @@ const loadDashboard = async (req, res) => {
 
       monthlySalesDetails.push(totalSalesOfMonth);
     }
-     
-
-const allMonthsUser = [...Array(12).keys()].map((m) => m + 1);
-
-let monthlyOrderCounts = allMonthsUser.reduce((acc, cur) => {
-  acc[cur - 1] = 0;
-  return acc;
-}, []);
-
-yearlySalesData.forEach((order) => {
-  let deliveredDate = new Date(order.delivered_date);
-  let month = deliveredDate.getMonth() + 1; 
-  monthlyOrderCounts[month - 1]++;
-});
 
 
+    const allMonthsUser = [...Array(12).keys()].map((m) => m + 1);
+
+    let monthlyOrderCounts = allMonthsUser.reduce((acc, cur) => {
+      acc[cur - 1] = 0;
+      return acc;
+    }, []);
+
+    yearlySalesData.forEach((order) => {
+      let deliveredDate = new Date(order.delivered_date);
+      let month = deliveredDate.getMonth() + 1;
+      monthlyOrderCounts[month - 1]++;
+    });
 
 
 
-const allMonthsProduct = [...Array(12).keys()].map((m) => m + 1); 
-
-let monthlyProductCounts = allMonthsProduct.reduce((acc, cur) => {
-  acc[cur - 1] = 0;
-  return acc;
-}, []);
-
-yearlySalesData.forEach((order) => {
-  let deliveredDate = new Date(order.delivered_date);
-  let month = deliveredDate.getMonth() + 1; 
-  order.item.forEach((item) => {
-    monthlyProductCounts[month - 1] += item.quantity;
-  });
-});
-
-console.log(monthlyProductCounts);
 
 
+    const allMonthsProduct = [...Array(12).keys()].map((m) => m + 1);
 
-   
-    
+    let monthlyProductCounts = allMonthsProduct.reduce((acc, cur) => {
+      acc[cur - 1] = 0;
+      return acc;
+    }, []);
 
-   
-    
+    yearlySalesData.forEach((order) => {
+      let deliveredDate = new Date(order.delivered_date);
+      let month = deliveredDate.getMonth() + 1;
+      order.item.forEach((item) => {
+        monthlyProductCounts[month - 1] += item.quantity;
+      });
+    });
+
+    console.log(monthlyProductCounts);
+
+
+
+
+
+
+
+
     res.render("home", {
       dailySales,
       monthlySales,

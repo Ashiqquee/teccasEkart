@@ -11,7 +11,7 @@ const morgan = require('morgan');
 
 
 require("dotenv").config();
-const PORT= process.env.PORT;
+const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
