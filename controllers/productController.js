@@ -72,7 +72,7 @@ const addCategory = async (req, res) => {
       return res.render("new-category", {
         message: "Category is Already added",
       });
-      console.log("scene");
+
     }
 
     const category = new Category({
@@ -82,7 +82,7 @@ const addCategory = async (req, res) => {
     const categoryData = await category.save();
 
     if (categoryData) {
-      console.log("ok");
+
       res.redirect("/admin/category-dashboard");
     }
   } catch (error) {
@@ -105,10 +105,10 @@ const editCategoryLoad = async (req, res) => {
 };
 
 const updateCategory = async (req, res) => {
-  console.log(req.query);
+
 
   const id = req.query.id;
-  console.log(id);
+
 
   const existingCategory = await Category.findOne({
     name: req.body.name,
@@ -248,7 +248,7 @@ const updateProduct = async (req, res) => {
   try {
     const category = await Category.findOne({ name: req.body.category });
     const brand = await Brand.findOne({ brandName: req.body.brand });
-    console.log(req.files);
+
 
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
@@ -278,7 +278,7 @@ const updateProduct = async (req, res) => {
       }
     );
 
-    console.log(productData);
+
 
     if (productData) {
       res.redirect("/admin/product-dashboard");
@@ -342,7 +342,7 @@ const addBrand = async (req, res) => {
       res.redirect("/admin/new-brand");
       message = "Brand is Already added";
 
-      console.log("scene");
+
     }
 
     const brand = new Brand({
@@ -352,7 +352,7 @@ const addBrand = async (req, res) => {
     const brandData = await brand.save();
 
     if (brandData) {
-      console.log("ok");
+
       res.redirect("/admin/brand-dashboard");
     }
   } catch (error) {

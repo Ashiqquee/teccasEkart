@@ -196,7 +196,7 @@ const loadDashboard = async (req, res) => {
     if (endDate) {
       endDate.setDate(endDate.getDate() + 1);
     }
-    console.log(startDate, endDate);
+
     let query = { is_delivered: true, is_returned: 0 };
     if (startDate && endDate) {
       query.delivered_date = { $gte: startDate, $lte: endDate };
@@ -262,7 +262,7 @@ const loadDashboard = async (req, res) => {
       });
     });
 
-    console.log(monthlyProductCounts);
+
 
 
 

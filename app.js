@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://127.0.0.1:27017/teccas");
 const path = require("path");
 const express = require("express");
 const app = express();
@@ -8,9 +6,10 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const nocache = require("nocache");
 const morgan = require('morgan');
-
+const config = require('./config/config')
 
 require("dotenv").config();
+config.mongooseConnection()
 const PORT = process.env.PORT;
 
 app.use(bodyParser.json());

@@ -392,7 +392,7 @@ const productShop = async (req, res) => {
       .populate("brand");
 
     const user = await User.findOne({ _id: session });
-    console.log(user);
+
     const order = await Orders.findOne({
       userId: session,
       "item.product": id,
@@ -454,7 +454,7 @@ const addToCart = async (req, res) => {
 
       const product = await Product.findOne({ _id: productId });
       const userCart = await Cart.findOne({ userId: userId });
-      console.log(product.quantity);
+
       if (product.quantity < 1) {
         return res.status(200).json({
           message: "Sorry,Out of Stock",
@@ -541,7 +541,7 @@ const incrementCart = async (req, res) => {
 };
 
 const decrementCart = async (req, res) => {
-  console.log("Ajax ok ok");
+
 
   try {
     const userId = req.session.user_id;
@@ -645,7 +645,7 @@ const removeFromWishlist = async (req, res) => {
 
     const session = req.session.user_id;
     const user = await User.findById({ _id: session });
-    console.log(user);
+
     user.wishlist.pull(productId);
     await user.save();
     res.redirect("/wishlist");
@@ -745,10 +745,9 @@ const editAddressLoad = async (req, res) => {
   try {
     const session = req.session.user_id;
     const index = req.query.index;
-    console.log(index);
+
     const findUser = await User.findById({ _id: session });
     const address = findUser.address[index];
-    console.log(address);
     if (session === undefined) {
       res.redirect("/login");
       message = "Login with your account";
@@ -823,7 +822,7 @@ const deleteAddress = async (req, res) => {
     );
     await User.updateOne({ _id: session }, { $pull: { address: null } });
 
-    console.log(deletedAddress);
+
     res.redirect("/checkout");
   } catch (error) {
     console.log(error);
@@ -835,8 +834,7 @@ const deleteAddress = async (req, res) => {
 loadPaymentPage = async (req, res) => {
   try {
     index = req.body.address;
-    console.log(index);
-    console.log(req.body);
+
     let session = req.session.user_id;
     const Total = req.body.totalPrice;
     req.session.total = Total;
@@ -850,11 +848,11 @@ loadPaymentPage = async (req, res) => {
           { _id: session },
           { $inc: { wallet: -Total } }
         );
-        console.log(ok);
+
         paymentType = req.body.flexRadioDefault;
-        console.log("okok");
+
         if (wallet >= Total) {
-          console.log("hmmm");
+
           orderStatus = 1;
 
           res.redirect("/orderConfirmation");
@@ -880,9 +878,9 @@ loadPaymentPage = async (req, res) => {
 const orderConfirm = async (req, res) => {
   try {
     const payment = req.body;
-    console.log(payment);
+
     paymentType = payment.flexRadioDefault;
-    console.log(paymentType);
+
 
     if (payment.flexRadioDefault == "COD") {
       orderStatus = 1;
@@ -971,15 +969,14 @@ const confirmPayment = async (req, res) => {
 
 const razorpayConfirm = async (req, res) => {
   try {
-    console.log("okok");
-    console.log(req.session.ok);
+
     var options = {
       amount: req.session.ok * 100,
       currency: "INR",
       receipt: "order_rcptid_11qsasdasdasd",
     };
     const order = await instance.orders.create(options);
-    console.log(order + "==========");
+
     res.json({ order });
   } catch (error) { }
 };
@@ -988,7 +985,7 @@ const orderDetails = async (req, res) => {
   try {
     const session = req.session.user_id;
     let message = null;
-    console.log("razorpay");
+
     if (!session) {
       res.redirect("/login");
       message = "Login to Access this page";
@@ -1004,7 +1001,7 @@ const orderDetails = async (req, res) => {
 
 
     if (orderStatus === 1) {
-      console.log("hadhashd");
+
       const cart = await Cart.findOne({ userId: session }).populate(
         "item.product"
       );
@@ -1034,16 +1031,16 @@ const orderDetails = async (req, res) => {
       });
 
       await order.save();
-      console.log("prrrr");
+
 
       const orderData = await Orders.findOne({ userId: session })
         .sort({ _id: -1 })
         .populate("item.product");
-      console.log("ssss");
+
       orderData.item.forEach(async (item) => {
         const productid = item.product._id;
         const decreaseQuantity = item.quantity;
-        console.log("kkkkk");
+
         await Product.updateOne(
           { _id: productid },
           { $inc: { quantity: -decreaseQuantity } }
@@ -1054,13 +1051,13 @@ const orderDetails = async (req, res) => {
 
       orderStatus = 0;
     }
-    console.log("hlooo");
+
 
     const orders = await Orders.findOne({ userId: session })
       .sort({ _id: -1 })
       .limit(1)
       .populate("item.product");
-    console.log(orders);
+
     res.render("orderConfirmation", { orders, session, msg });
   } catch (error) {
     console.log(error);
@@ -1071,7 +1068,7 @@ const cancelOrder = async (req, res) => {
   try {
     const id = req.query.orderId;
     session = req.session.user_id;
-    console.log(id);
+
     const orderDetails = await Orders.updateOne(
       { _id: id },
       { $set: { user_cancelled: true } }
@@ -1079,24 +1076,23 @@ const cancelOrder = async (req, res) => {
     const orderData = await Orders.findOne({ userId: session })
       .sort({ _id: -1 })
       .populate("item.product");
-    console.log("ssss");
+
     orderData.item.forEach(async (item) => {
       const productid = item.product._id;
       const increaseQuantity = item.quantity;
-      console.log("kkkkk");
+
       await Product.updateOne(
         { _id: productid },
         { $inc: { quantity: increaseQuantity } }
       );
     });
-    console.log(orderData);
-    console.log(orderData.paymentType);
+
     if (
       orderData.paymentType === "online" ||
       orderData.paymentType === "wallet"
     ) {
       increaseAmount = orderData.totalPrice;
-      console.log(increaseAmount);
+
       await User.updateOne(
         { _id: session },
         { $inc: { wallet: increaseAmount } }
@@ -1129,7 +1125,7 @@ const returnOrder = async (req, res) => {
   try {
     const id = req.query.orderId;
     const session = req.session.user_id;
-    console.log(id, session);
+
     const orderDetails = await Orders.findById({ _id: id });
     increaseAmount = orderDetails.totalPrice;
 
@@ -1172,7 +1168,7 @@ const applyCoupon = async (req, res) => {
               { couponId: code, user: userId._id },
               {}
             ).lean();
-            console.log("okok");
+
 
             const cart = await Cart.findOne(
               { userId: req.session.user_id },
@@ -1180,7 +1176,7 @@ const applyCoupon = async (req, res) => {
             );
 
             let userID = userId._id;
-            console.log(userID);
+
             if (userfind == null) {
               let discount = 10;
 
@@ -1188,7 +1184,7 @@ const applyCoupon = async (req, res) => {
                 coupons.maxDiscount,
                 (cart.totalPrice * discount) / 100
               );
-              console.log(discountPrice);
+
 
               amount = cart.totalPrice - discountPrice;
 
@@ -1200,7 +1196,7 @@ const applyCoupon = async (req, res) => {
               res.json({ status: true, discountPrice, amount });
             } else {
               res.json({ used: true });
-              console.log("useddd");
+
             }
           } else {
             res.json({ expired: true });
@@ -1238,7 +1234,7 @@ const productFilter = async (req, res) => {
     let Datas = [];
 
     const { categorys, search, brands, filterprice } = req.body;
-    console.log(req.body);
+
 
     if (!search) {
       if (filterprice != 0) {

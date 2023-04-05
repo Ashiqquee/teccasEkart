@@ -40,7 +40,7 @@
 
       <div class="order_box">
 
-        <form action="/orderConfirm" method="post">
+        <form action="/orderConfirm" id="payment" method="post">
           <div class="payment_item">
             <div class="radion_btn">
               <input type="radio" id="f-option5" value="COD" name="flexRadioDefault" />
@@ -122,7 +122,36 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<script>
+  
+    const radioButtons = document.getElementsByName("flexRadioDefault");
 
+   
+    document.getElementById("payment").addEventListener("submit", function (event) {
+      
+      event.preventDefault();
+
+      let radioButtonSelected = false;
+
+      
+      for (let i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked) {
+          radioButtonSelected = true;
+          break;
+        }
+      }
+
+     
+      if (!radioButtonSelected) {
+        alert("Please select a payment option.");
+        return;
+      }
+
+  
+      this.submit();
+    });
+
+</script>
 
 
 
