@@ -182,7 +182,7 @@ const loadHome = async (req, res) => {
     const session = req.session.user_id;
     const categoryData = await Category.find();
     const banner = await Banner.find();
-    console.log(banner);
+    
     let wallet;
     let user;
     if (session) {
@@ -1162,10 +1162,10 @@ const applyCoupon = async (req, res) => {
       if (coupons != null) {
         if (cart.totalPrice > coupons.minAmount) {
           let today = new Date();
-
+          console.log(code);
           if (coupons.endDate > today) {
             let userfind = await Coupon.findOne(
-              { couponId: code, user: userId._id },
+              { couponCode: code, user: userId._id },
               {}
             ).lean();
 
@@ -1190,7 +1190,7 @@ const applyCoupon = async (req, res) => {
 
               await userId.save();
               await Coupon.findOneAndUpdate(
-                { couponId: code },
+                { couponCode: code },
                 { $push: { user: userId._id } }
               );
               res.json({ status: true, discountPrice, amount });

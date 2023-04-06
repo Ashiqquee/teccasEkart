@@ -39,6 +39,7 @@ const addCoupon = async (req, res) => {
     const minAmount = req.body.minAmount;
     const maxDiscount = req.body.maxDiscount;
     const currentDate = new Date();
+    console.log(req.body);
 
     if (!code || code.trim().length < 6) {
       return res.render("new-coupon", { message: "Please enter a valid code" });
@@ -48,12 +49,7 @@ const addCoupon = async (req, res) => {
         message: "Please enter a valid code starting with #",
       });
     }
-    const existingCode = await Coupon.findOne({ code: req.body.couponCode });
-    if (existingCode) {
-      return res.render("new-coupon", {
-        message: "Code is Already added",
-      });
-    }
+   
 
     if (startDate.getTime() <= currentDate.getTime()) {
       return res.render("new-coupon", {
