@@ -496,9 +496,8 @@ const addToCart = async (req, res) => {
           ],
         });
       }
-      message = "Item Added Successfully";
-      const referer = req.headers.referer || "/";
-      res.redirect(referer);
+      
+      res.redirect('/cart');
     } else {
       res.redirect("/login");
       message = "Login with your account to access this page";
@@ -530,8 +529,15 @@ const incrementCart = async (req, res) => {
         const updatedPrice = (updatedItem.price * updatedItem.quantity).toFixed(
           2
         );
-
-        res.json({ success: true, updatedPrice });
+        let total = 0;
+        updatedCartCount.item.forEach((value) => {
+          total += value.price * value.quantity
+        })
+        console.log(total);
+        await Cart.updateOne({ userId: userId }, { $set: { totalPrice: total } })
+        totalPrice = total;
+        
+        res.json({ success: true, updatedPrice,totalPrice });
       }
     }
   } catch (error) {
@@ -561,7 +567,14 @@ const decrementCart = async (req, res) => {
           { $inc: { "item.$.quantity": -1 } }
         );
         const updatedCart = await Cart.findOne({ userId: userId });
-        totalPrice = updatedCart.totalPrice.toFixed(2);
+       
+        let total=0;
+        updatedCart.item.forEach((value) => {
+          total += value.price * value.quantity
+        })
+        console.log(total);
+        await Cart.updateOne({userId:userId},{$set:{totalPrice:total}})
+         totalPrice = total;
         const updatedItem = updatedCart.item.find(
           (item) => item._id.toString() === itemid
         );
@@ -833,8 +846,11 @@ const deleteAddress = async (req, res) => {
 
 loadPaymentPage = async (req, res) => {
   try {
+   
     index = req.body.address;
-
+    if (!index) {
+      res.redirect('/addAddress')
+    }
     let session = req.session.user_id;
     const Total = req.body.totalPrice;
     req.session.total = Total;
@@ -899,7 +915,7 @@ const orderConfirm = async (req, res) => {
         total: req.session.ok,
       };
 
-      orderStatus = 1;
+      
       const create_payment_json = {
         intent: "sale",
         payer: {
@@ -960,7 +976,7 @@ const confirmPayment = async (req, res) => {
       } else {
         console.log(JSON.stringify(payment));
 
-
+        orderStatus = 1;
         res.redirect("/orderConfirmation");
       }
     }

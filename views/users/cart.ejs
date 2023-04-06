@@ -127,7 +127,7 @@
                   <td>
                     <div class="media">
                       <div class="d-flex">
-                        <img style="height: 100px;width: 100px;" src="<%= item.product.productImages[0] %>"
+                        <img class="img-fluid" style="height: 100px;width: 100px;" src="<%= item.product.productImages[0] %>"
                           alt="<%= item.product.productName %>" />
 
                       </div>
@@ -316,6 +316,9 @@
           const updatedPrice = response.updatedPrice;
           const priceElement = document.querySelector(`#price-${itemId}`);
           priceElement.textContent = updatedPrice;
+          const totalElement = document.querySelector('#total-price');
+          console.log(response.totalPrice);
+          totalElement.textContent = response.totalPrice.toFixed(2);
         } else {
           console.log(xhr.statusText);
         }
