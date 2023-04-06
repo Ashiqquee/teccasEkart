@@ -71,14 +71,14 @@ const insertUser = async (req, res) => {
     req.session.phone = mno;
     try {
       const verification = await client.verify
-        .services(TWILIO_SERVICE_SID)
+        .v2.services(TWILIO_SERVICE_SID)
         .verifications.create({ to: `+91${mno}`, channel: "sms" });
       console.log(mno);
       res.render("verifySignup");
     } catch (err) {
       console.error(err);
-      redirect("/signup");
-      msg = "Failed to send Otp ";
+      res.redirect("/signup");
+      message = "Failed to send Otp ";
     }
   } catch (error) {
     console.error(error);
