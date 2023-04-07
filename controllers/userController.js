@@ -914,8 +914,8 @@ const orderConfirm = async (req, res) => {
           payment_method: "paypal",
         },
         redirect_urls: {
-          return_url: "http://localhost:1212/success",
-          cancel_url: "http://localhost:1212/checkout",
+          return_url: "https://teccas.store/success",
+          cancel_url: "https://teccas.store/checkout",
         },
         transactions: [
           {
