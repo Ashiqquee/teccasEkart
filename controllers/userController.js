@@ -914,13 +914,13 @@ const orderConfirm = async (req, res) => {
           payment_method: "paypal",
         },
         redirect_urls: {
-          return_url: "https://teccas.store/success",
-          cancel_url: "https://teccas.store/checkout",
+          return_url: process.env.SITE_URL+"/success",
+          cancel_url: process.env.SITE_URL + "/checkout",
         },
         transactions: [
           {
             amount,
-            description: "Washing Bar soap",
+            description: "New Fashion",
           },
         ],
       };
