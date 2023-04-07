@@ -166,7 +166,8 @@
                 </tr>
                 <% }); %>
                   <tr>
-                    <td></td>
+                    <td> </td>
+                    
                     <td></td>
                     <td>
 
@@ -179,7 +180,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td></td>
+                    <td><h5 style="font-weight: bolder;">Total Amount = <span id="total-price"></span></td>
+                    
                     <td></td>
                     <td>
                     <td>
@@ -187,8 +189,8 @@
                     </td>
                     </td>
                     <td>
-                      <h5 style="font-weight: bolder;">Total Amount = $<span id="total-price">
-                          <%= totalPrice.toFixed(2) %>
+                      
+                          $<%= totalPrice.toFixed(2) %>
                         </span></h5>
 
                     </td>
@@ -198,7 +200,7 @@
           </table>
           <div class="checkout_btn_inner float-right">
             <a class="btn_1" href="/shop">Continue Shopping</a>
-            <a class="btn_1 checkout_btn_1" href="/checkout">Proceed to checkout</a>
+            <a class="btn_1 checkout_btn_1 mt-3" href="/checkout">Proceed to checkout</a>
           </div>
         </div>
       </div>

@@ -124,7 +124,7 @@
 
 
 
-    <div class="col-lg-4">
+    <div class="col-lg-6 ">
       <h3> Enter Your Details</h3>
 
 
@@ -192,48 +192,51 @@
 
 
     </div>
-    <div class="col-lg-4">
-      <h3> Update Address</h3>
-
-      <% for (let i=0; i < user.address.length; i++) { %>
-        <div class="border">
-          <label>
-
-            <div>
-              <%= user.address[i].name %>,<%= user.address[i].address %>
-            </div>
-
-            <div>
-              <%= user.address[i].city %>,<%= user.address[i].zip %>
-            </div>
-
-            <div>
-              <%= user.address[i].district %>
-            </div>
-            <div>
-              <%= user.address[i].state %>
-            </div>
-            <div>
-              <%= user.address[i].mobile %>,<%= user.address[i].number %>,
-            </div>
-            <div>
-              <a href="/editAddress?index=<%= i %>">Edit</a>
-              <a style="color: red;" href="/deleteAddress?index=<%= i %>">Delete</a>
-            </div>
-
-          </label>
-
-        </div>
-        <% } %>
-    </div>
+   
 
 
   </div>
-
+  <section class="address d-flex justify-content-center">
+  
+  <div class="col-lg-6">
+    <h3> Update Address</h3>
+  
+    <% for (let i=0; i < user.address.length; i++) { %>
+      <div class="border mt-2">
+        <label>
+  
+          <div>
+            <%= user.address[i].name %>,<%= user.address[i].address %>
+          </div>
+  
+          <div>
+            <%= user.address[i].city %>,<%= user.address[i].zip %>
+          </div>
+  
+          <div>
+            <%= user.address[i].district %>
+          </div>
+          <div>
+            <%= user.address[i].state %>
+          </div>
+          <div>
+            <%= user.address[i].mobile %>,<%= user.address[i].number %>,
+          </div>
+          <div>
+            <a href="/editAddress?index=<%= i %>">Edit</a>
+            <a style="color: red;" href="/deleteAddress?index=<%= i %>">Delete</a>
+          </div>
+  
+        </label>
+  
+      </div>
+      <% } %>
+  </div>
+</section>
 
 
   <!-- ::footer_part start:: -->
-  <footer class="footer_part" style="background-color:#e9ecef;">
+  <footer class="footer_part mt-3" style="background-color:#e9ecef;">
     <div class="container">
       <div class="row justify-content-around">
         <div class="col-sm-6 col-lg-2">

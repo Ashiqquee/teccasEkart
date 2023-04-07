@@ -64,7 +64,7 @@ const insertUser = async (req, res) => {
 
     const existingNumber = await User.findOne({ mobile: mno });
     if (existingNumber) {
-      redirect("/signup");
+      res.render("signup");
       msg = "Mobile already registered";
     }
 
@@ -373,15 +373,7 @@ const loadShop = async (req, res) => {
   }
 };
 
-const loadSearch = async (Req, res) => {
-  try {
-    const categoryData = await Category.find();
-    const brandData = await Brand.find();
-    res.render("404", { category: categoryData, brand: brandData });
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 const productShop = async (req, res) => {
   try {
@@ -992,7 +984,7 @@ const razorpayConfirm = async (req, res) => {
       receipt: "order_rcptid_11qsasdasdasd",
     };
     const order = await instance.orders.create(options);
-
+    orderStatus = 1;
     res.json({ order });
   } catch (error) { }
 };
@@ -1477,7 +1469,6 @@ module.exports = {
   verifyLogin,
   resendOTP,
   loadHome,
-  loadSearch,
   userLogout,
   verifyReset,
   sendReset,
