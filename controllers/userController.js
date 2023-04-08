@@ -115,6 +115,7 @@ const otpVerify = async (req, res) => {
         const user = new User({
           mobile: phone,
           password: spassword,
+          is_verified:1
         });
         const userData = user.save();
         if (userData) {
