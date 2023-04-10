@@ -159,7 +159,7 @@
                     </div>
                   </td>
                   <td>
-                    <p style="font-weight: bolder;">Price: $<span id="price-<%= item._id %>">
+                    <p style="font-weight: bolder;"> $<span id="price-<%= item._id %>">
                         <%= (item.price * item.quantity).toFixed(2) %>
                       </span></p>
                   </td>
@@ -180,7 +180,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><h5 style="font-weight: bolder;">Total Amount = <span id="total-price"></span></td>
+                    <td><h5 style="font-weight: bolder;">Total Amount = </td>
                     
                     <td></td>
                     <td>
@@ -190,7 +190,7 @@
                     </td>
                     <td>
                       
-                          $<%= totalPrice.toFixed(2) %>
+                        <span style="font-weight: bolder;" id="total-price">$<%= totalPrice.toFixed(2) %></span> 
                         </span></h5>
 
                     </td>
