@@ -271,7 +271,7 @@
                 <div class="col-lg-7">
 
                 </div>
-                <div class="col-lg-5      ">
+                <div class=" d-flex justify-content-center align-items-center" id="pagination">
                     <div class="pagination__option">
                         <%for(let j=1;j<=totalPages;j++){%>
                             <a href="?page=<%=j%>">
@@ -336,7 +336,7 @@
             <div class="footer_icon social_icon">
                 <ul class="list-unstyled">
                     <li><a class="single_social_icon" href="https://github.com/Ashiqquee" target="_blank"><i
-                                class="fa-brands fa-github"></i></a></li>
+                                 class="fa-brands fa-github"></i></a></li>
                     <li><a class="single_social_icon" href="https://twitter.com/ashiqquee" target="_blank"><i
                                 class="fab fa-twitter"></i></a></li>
                     <li><a class="single_social_icon" href="https://www.linkedin.com/in/muhammed-ashique-701125249"
@@ -377,6 +377,7 @@
     <script src="js/mail-script.js"></script>
     <script src="js/stellar.js"></script>
     <script src="js/price_rangs.js"></script>
+
     <!-- custom js -->
     <%if(message){%>
         <script>
@@ -397,6 +398,7 @@
                 let categorys = []
                 let brands = []
                 let search
+                let page;
                 let prices = []
                 let filterprice = []
                 function category(ID) {
@@ -415,24 +417,29 @@
                         n--
                         console.log(categorys);
                     }
-                    submit(categorys, filterprice, search, brands)
+                    submit(categorys, filterprice, search, brands, page)
 
                 }
-
+                function pagination(button) {
+                    page = button.value;
+                    console.log(page);
+                    submit(categorys, brands, search, filterprice, page)
+                }
 
                 function submit(categorys, brands) {
+                    hidePagination();
                     $.ajax({
                         url: '/shopFilter',
                         type: 'post',
                         dataType: 'json',
                         contentType: 'application/json',
-                        data: JSON.stringify({ categorys, brands, filterprice, search }),
+                        data: JSON.stringify({ categorys, brands, filterprice, search, page }),
                         success: (res) => {
                             let html = []
-                            if (res.Data) {
-                                console.log(res.Data);
+                            if (res.itemsToShow) {
+
                                 $('#Filter').html('')
-                                res.Data.forEach(value => {
+                                res.itemsToShow.forEach(value => {
                                     value.forEach((item, i) => {
                                         html += `<div class="col-lg-4 col-sm-6">
                             <div class="single_product_item">
@@ -462,11 +469,25 @@
 
 
                             }
+                            if (res.totalPages) {
+                                console.log(res.totalPages);
+                                let html = '';
+                                for (let i = 1; i <= res.totalPages; i++) {
+                                    html += `<div style="display: flex;margin-left: 5px;background-color: "white"; justify-content: center; align-items: center;">   
+  <button style="border-radius: 50%; width: 39px; height: 39px;" id="ashiq${i}" onclick="pagination(this)" value="${i}">${i}</button>
+</div>
+`;
+                                }
+                                $('#pagination').html(html);
+                            }
+
+
                         }
                     })
                 }
 
                 function brand(id) {
+                    hidePagination();
                     if ($('#' + id).is(':checked') == true) {
                         brands[b++] = $('#' + id).val();
                     } else {
@@ -475,16 +496,18 @@
                         b--;
                     }
                     console.log(brands, '=============');
-                    submit(categorys, brands, search, filterprice);
+                    submit(categorys, brands, search, filterprice, page);
                 }
 
                 function filtersearch() {
+                    hidePagination();
                     search = $('#search').val()
-                    submit(categorys, brands, search, filterprice)
+                    submit(categorys, brands, search, filterprice, page)
                 }
 
 
                 function price(check) {
+                    hidePagination();
                     filterprice = []
                     let one, two, three, fore
                     let n = 0, index
@@ -558,7 +581,18 @@
                         console.log(filterprice);
                         console.log('dhcf');
                     }
-                    submit(categorys, brands, search, filterprice)
+                    submit(categorys, brands, search, filterprice, page)
+                }
+
+
+            </script>
+            <script>
+
+                function hidePagination() {
+                    var paginationElement = document.querySelector('.pagination__option');
+                    if (paginationElement) {
+                        paginationElement.style.display = 'none';
+                    }
                 }
 
             </script>

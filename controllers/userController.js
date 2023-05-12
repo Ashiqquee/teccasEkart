@@ -1243,8 +1243,8 @@ const productFilter = async (req, res) => {
     let Datas = [];
 
     const { categorys, search, brands, filterprice } = req.body;
-
-
+    let page = req.body.page || 1;
+    
     if (!search) {
       if (filterprice != 0) {
         if (filterprice.length == 2) {
@@ -1255,18 +1255,26 @@ const productFilter = async (req, res) => {
               { price: { $gte: Number(filterprice[0]) } },
             ],
           })
+           
+          
             .populate("category")
             .populate("brand");
+            
         } else {
           product = await Product.find({
             status: 0,
             $and: [{ price: { $gte: Number(filterprice[0]) } }],
           })
+           
+          
+            
             .populate("category")
             .populate("brand");
         }
       } else {
         product = await Product.find({ status: 0 })
+         
+       
           .populate("category")
           .populate("brand");
       }
@@ -1290,6 +1298,9 @@ const productFilter = async (req, res) => {
               },
             ],
           })
+           
+          
+
             .populate("category")
             .populate("brand");
         } else {
@@ -1309,6 +1320,9 @@ const productFilter = async (req, res) => {
               },
             ],
           })
+           
+         
+
             .populate("category")
             .populate("brand");
         }
@@ -1319,6 +1333,9 @@ const productFilter = async (req, res) => {
             { productName: { $regex: ".*" + search + ".*", $options: "i" } },
           ],
         })
+         
+       
+
           .populate("category")
           .populate("brand");
       }
@@ -1364,8 +1381,12 @@ const productFilter = async (req, res) => {
         Data[0] = product;
       }
     }
-    console.log(Data);
-    res.json({ Data });
+    
+    const totalPages = Math.ceil(Data[0].length / 3);
+    const itemsPerPage = 3;
+    const startingIndex = (page - 1) * itemsPerPage;
+    const itemsToShow = [Data.flatMap(innerArray => innerArray.slice(startingIndex, startingIndex + itemsPerPage))];
+    res.json({ itemsToShow ,totalPages});
   } catch (error) {
     console.log(error.message);
   }
